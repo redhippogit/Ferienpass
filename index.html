@@ -4,11 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>goSNOB.ai × Basler Ferienpass — Offerte</title>
+<title>goSNOB.ai x Basler Ferienpass</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html,body{background:#fff;color:#0a0a0a;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:crosshair;}
+html{scroll-behavior:smooth;}
+body{background:#fff;color:#0a0a0a;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:crosshair;}
 #intro{position:fixed;inset:0;z-index:9000;background:#fff;display:flex;align-items:flex-start;justify-content:flex-start;padding:clamp(32px,6vw,72px);transition:opacity .6s ease;}
 #intro.hide{opacity:0;pointer-events:none;}
 #intro-out{display:flex;flex-direction:column;gap:0;}
@@ -23,156 +24,191 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .n-r{display:flex;align-items:center;gap:16px;}
 .n-badge{font-size:8px;letter-spacing:.2em;text-transform:uppercase;border:1px solid #0a0a0a;padding:4px 10px;}
 .n-client{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:100px 40px 80px;border-bottom:1px solid #f0f0f0;position:relative;overflow:hidden;}
-.hero-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#bbb;margin-bottom:20px;}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 40px 80px;border-bottom:1px solid #f0f0f0;position:relative;overflow:hidden;padding-top:120px;}
+.hero-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#bbb;margin-bottom:16px;}
 .hero-label span{color:#d946ef;}
-.hero-word1{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,16vw,240px);line-height:.88;letter-spacing:-.02em;}
-.hero-word2{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,16vw,240px);line-height:.88;letter-spacing:-.02em;color:#e8e8e8;}
-.hero-corner{position:absolute;top:100px;right:40px;text-align:right;max-width:360px;}
-.hero-corner-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3vw,36px);line-height:1.05;}
-.hero-corner-sub{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-top:8px;}
-.hero-meta{display:flex;align-items:flex-end;gap:40px;margin-top:48px;padding-top:32px;border-top:1px solid #f0f0f0;flex-wrap:wrap;}
-.hero-meta-txt{font-size:10px;letter-spacing:.1em;color:#bbb;max-width:280px;line-height:1.9;}
-.hero-stat{text-align:center;}
-.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:#f0f0f0;}
-.hero-stat-lbl{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#ccc;margin-top:2px;}
-#stmt{min-height:60vh;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #f0f0f0;padding:80px 40px;}
-#stmt-txt{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,110px);line-height:.9;text-align:center;}
-#stmt-txt .g{color:#ddd;}
+.hw1{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,220px);line-height:.88;letter-spacing:-.02em;display:block;}
+.hw2{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,220px);line-height:.88;letter-spacing:-.02em;color:#e0e0e0;display:block;}
+.hero-right{position:absolute;top:120px;right:40px;text-align:right;max-width:300px;}
+.hero-right-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.5vw,32px);line-height:1.1;}
+.hero-right-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:8px;}
+.hero-bottom{display:flex;align-items:flex-end;gap:32px;margin-top:40px;padding-top:28px;border-top:1px solid #f0f0f0;flex-wrap:wrap;}
+.hero-txt{font-size:10px;letter-spacing:.08em;color:#bbb;max-width:260px;line-height:1.9;}
+.hstat{text-align:center;}
+.hstat-n{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:#ebebeb;}
+.hstat-l{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#ccc;margin-top:2px;}
+#stmt{min-height:50vh;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #f0f0f0;padding:80px 40px;}
+.stmt-txt{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,7vw,100px);line-height:.92;text-align:center;}
+.stmt-txt .g{color:#ddd;}
 .sec{border-bottom:1px solid #f0f0f0;}
-.sec-head{display:grid;grid-template-columns:72px 1fr;border-bottom:1px solid #f0f0f0;}
-.sec-num-cell{padding:32px 20px;border-right:1px solid #f0f0f0;display:flex;align-items:center;justify-content:center;}
-.sec-num-txt{font-family:'Bebas Neue',sans-serif;font-size:48px;color:#ececec;line-height:1;}
-.sec-title-cell{padding:32px 40px;}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,64px);line-height:.9;margin-bottom:4px;}
-.sec-sub{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
-.radio-grid{display:grid;grid-template-columns:repeat(3,1fr);}
-@media(max-width:720px){.radio-grid{grid-template-columns:1fr;}}
-.r-card{padding:36px 32px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;}
-.r-card:last-child{border-right:none;}
-.r-card:hover{background:#fafafa;}
-.r-card.sel{background:#0a0a0a;color:#fff;}
-.r-card.sel .r-dot{border-color:#d946ef;background:#d946ef;}
-.r-card.sel .r-dot::after{opacity:1;}
-.r-card.sel .r-tier,.r-card.sel .r-chf,.r-card.sel .r-list li{color:#555;}
-.r-card.sel .r-price{color:#fff;}
-.r-card.sel .r-price-pink{color:#d946ef;}
-@media(max-width:720px){.r-card{border-right:none;border-bottom:1px solid #f0f0f0;}}
-.r-dot{width:11px;height:11px;border-radius:50%;border:1px solid #ccc;margin-bottom:18px;position:relative;transition:all .2s;}
-.r-dot::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:#fff;opacity:0;transition:opacity .2s;}
-.r-tier{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:10px;}
-.r-price{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;margin-bottom:3px;}
-.r-price.sm{font-size:40px;line-height:1.1;}
-.r-chf{font-size:9px;letter-spacing:.13em;color:#bbb;margin-bottom:20px;}
-.r-list{list-style:none;}
-.r-list li{font-size:9px;color:#888;padding:5px 0;border-bottom:1px solid #f5f5f5;line-height:1.6;}
-.r-card.sel .r-list li{border-color:#1c1c1c;}
-.opt-grid{display:grid;grid-template-columns:repeat(4,1fr);}
-@media(max-width:900px){.opt-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:480px){.opt-grid{grid-template-columns:1fr;}}
-.opt-card{padding:28px 24px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;}
-.opt-card:hover{background:#fafafa;}
-.opt-card.sel{background:#0a0a0a;}
-.opt-card.sel .opt-title{color:#fff;}
-.opt-card.sel .opt-desc{color:#555;}
-.opt-card.sel .opt-price{color:#d946ef;}
-.opt-card.sel .o-check{background:#d946ef;border-color:#d946ef;}
-.opt-card.sel .o-check::after{opacity:1;}
-.opt-card.req{background:#fafafa;cursor:default;}
-.opt-card.req .o-check{background:#0a0a0a;border-color:#0a0a0a;}
-.opt-card.req .o-check::after{opacity:1;}
-.o-check{width:11px;height:11px;border:1px solid #ccc;margin-bottom:14px;position:relative;transition:all .2s;}
-.o-check::after{content:'';position:absolute;top:1px;left:3px;width:3px;height:6px;border:1px solid #fff;border-top:none;border-left:none;transform:rotate(45deg);opacity:0;transition:opacity .2s;}
-.opt-icon{font-size:20px;margin-bottom:10px;display:block;}
-.opt-title{font-family:'Bebas Neue',sans-serif;font-size:18px;margin-bottom:6px;color:#0a0a0a;line-height:1.1;}
-.opt-desc{font-size:9px;color:#bbb;line-height:1.7;}
-.opt-price{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#0a0a0a;margin-top:12px;}
-.opt-price.incl{color:#ccc;}
-.supp-grid{display:grid;grid-template-columns:repeat(3,1fr);}
-@media(max-width:720px){.supp-grid{grid-template-columns:1fr;}}
-.supp-card{padding:36px 32px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
-.supp-card:last-child{border-right:none;}
-.supp-card:hover{background:#fafafa;}
-.supp-card.sel{background:#0a0a0a;}
-.supp-card.sel .supp-tier,.supp-card.sel .supp-chf,.supp-card.sel .supp-desc{color:#555;}
-.supp-card.sel .supp-price{color:#d946ef;}
-.supp-card.sel .r-dot{border-color:#d946ef;background:#d946ef;}
-.supp-card.sel .r-dot::after{opacity:1;}
-@media(max-width:720px){.supp-card{border-right:none;border-bottom:1px solid #f0f0f0;}}
-.supp-tier{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:10px;}
-.supp-price{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;margin-bottom:3px;}
-.supp-chf{font-size:9px;letter-spacing:.13em;color:#bbb;margin-bottom:16px;}
-.supp-desc{font-size:9px;color:#888;line-height:1.7;}
-#sticky{position:fixed;bottom:0;left:0;right:0;z-index:300;background:#fff;border-top:2px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;gap:16px;}
-.s-left{display:flex;align-items:center;gap:24px;min-width:0;flex:1;}
-.s-label{font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:#bbb;white-space:nowrap;}
-.s-chips{display:flex;gap:5px;flex-wrap:wrap;}
-.s-chip{font-size:8px;letter-spacing:.08em;text-transform:uppercase;border:1px solid #e8e8e8;padding:3px 8px;color:#999;white-space:nowrap;}
-.s-right{display:flex;align-items:center;gap:20px;flex-shrink:0;}
-.s-total-wrap{text-align:right;}
-.s-total-lbl{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;}
-.s-total{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;}
-.s-total span{color:#d946ef;}
-.s-monat{font-size:8px;color:#bbb;margin-top:1px;}
-.s-btn{background:#0a0a0a;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.08em;padding:12px 28px;border:none;cursor:pointer;transition:background .2s;white-space:nowrap;position:relative;overflow:hidden;}
-.s-btn::before{content:'';position:absolute;inset:0;background:#d946ef;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
-.s-btn:hover::before{transform:scaleX(1);}
-.s-btn span{position:relative;z-index:1;}
-.modal-ov{position:fixed;inset:0;z-index:500;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
-.modal-ov.open{opacity:1;pointer-events:all;}
-.modal{background:#fff;border:1px solid #0a0a0a;padding:48px;max-width:560px;width:calc(100% - 32px);max-height:92vh;overflow-y:auto;transform:translateY(14px);transition:transform .3s;}
-.modal-ov.open .modal{transform:translateY(0);}
-.m-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,80px);line-height:.9;margin-bottom:5px;}
-.m-title span{color:#d946ef;}
-.m-sub{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#bbb;margin-bottom:28px;line-height:1.9;}
-.o-rows{border-top:1px solid #f0f0f0;margin-bottom:20px;}
-.o-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f0f0f0;font-size:10px;}
-.o-name{color:#888;}.o-pr{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#d946ef;}
-.o-tot{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0 0;}
-.o-tot-lbl{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;}
-.o-tot-num{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;}
-.f-sep{border-top:1px solid #f0f0f0;padding-top:24px;margin-top:18px;}
-.f-row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.f-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
-.f-field label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;}
-.f-field input,.f-field textarea{background:transparent;border:none;border-bottom:1px solid #e8e8e8;color:#0a0a0a;font-family:'DM Mono',monospace;font-size:13px;padding:7px 0;outline:none;transition:border-color .2s;resize:none;}
-.f-field input:focus,.f-field textarea:focus{border-color:#0a0a0a;}
-.f-field input::placeholder,.f-field textarea::placeholder{color:#ccc;}
-.m-actions{display:flex;gap:10px;margin-top:24px;}
-.m-cancel{background:none;border:1px solid #e8e8e8;color:#bbb;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;padding:12px 18px;cursor:pointer;transition:all .2s;flex:1;}
-.m-cancel:hover{border-color:#0a0a0a;color:#0a0a0a;}
-.m-gen{background:#0a0a0a;color:#fff;border:none;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.06em;padding:12px 28px;cursor:pointer;flex:2;position:relative;overflow:hidden;}
-.m-gen::before{content:'';position:absolute;inset:0;background:#d946ef;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
-.m-gen:hover::before{transform:scaleX(1);}
-.m-gen span{position:relative;z-index:1;}
-#footer-spam{border-top:1px solid #f0f0f0;padding:22px 40px;text-align:center;}
-footer{padding:18px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.f-logo{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.5em;color:#ccc;}
-.f-links{display:flex;gap:24px;list-style:none;}
-.f-links a{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#ddd;text-decoration:none;transition:color .2s;}
-.f-links a:hover{color:#0a0a0a;}
-.f-copy{font-size:9px;color:#ddd;text-align:right;line-height:1.8;}
-.toast{position:fixed;top:76px;right:24px;z-index:999;background:#0a0a0a;color:#fff;font-size:8px;letter-spacing:.22em;text-transform:uppercase;padding:11px 18px;transform:translateX(130%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.sec-head{display:grid;grid-template-columns:64px 1fr;border-bottom:1px solid #f0f0f0;}
+.sec-nc{padding:28px 16px;border-right:1px solid #f0f0f0;display:flex;align-items:center;justify-content:center;}
+.sec-nt{font-family:'Bebas Neue',sans-serif;font-size:44px;color:#ececec;line-height:1;}
+.sec-tc{padding:28px 40px;}
+.sec-ti{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,4vw,56px);line-height:.92;margin-bottom:4px;}
+.sec-su{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);}
+@media(max-width:700px){.rgrid{grid-template-columns:1fr;}}
+.rc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
+.rc:last-child{border-right:none;}
+.rc:hover{background:#fafafa;}
+.rc.sel{background:#0a0a0a;}
+.rc.sel .rdot{border-color:#d946ef;background:#d946ef;}
+.rc.sel .rdot::after{opacity:1;}
+.rc.sel .rt,.rc.sel .rchf,.rc.sel .rli li{color:#555;}
+.rc.sel .rpr{color:#fff;}
+@media(max-width:700px){.rc{border-right:none;border-bottom:1px solid #f0f0f0;}}
+.rdot{width:11px;height:11px;border-radius:50%;border:1px solid #ccc;margin-bottom:16px;position:relative;transition:all .2s;}
+.rdot::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:#fff;opacity:0;transition:opacity .2s;}
+.rt{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:8px;}
+.rpr{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;margin-bottom:3px;}
+.rpr.sm{font-size:36px;line-height:1.1;}
+.rchf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:16px;}
+.rli{list-style:none;}
+.rli li{font-size:9px;color:#888;padding:5px 0;border-bottom:1px solid #f5f5f5;line-height:1.6;}
+.rc.sel .rli li{border-color:#1c1c1c;}
+.ogrid{display:grid;grid-template-columns:repeat(4,1fr);}
+@media(max-width:880px){.ogrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:460px){.ogrid{grid-template-columns:1fr;}}
+.oc{padding:24px 20px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
+.oc:hover{background:#fafafa;}
+.oc.sel{background:#0a0a0a;}
+.oc.sel .oti{color:#fff;}.oc.sel .ode{color:#555;}.oc.sel .opr{color:#d946ef;}
+.oc.sel .ochk{background:#d946ef;border-color:#d946ef;}
+.oc.sel .ochk::after{opacity:1;}
+.oc.req{background:#fafafa;cursor:default;}
+.oc.req .ochk{background:#0a0a0a;border-color:#0a0a0a;}
+.oc.req .ochk::after{opacity:1;}
+.oc.snob-opt{border:1px solid transparent;}
+.oc.snob-opt:hover{border-color:#d946ef22;background:#fff9ff;}
+.oc.snob-opt.sel{background:#1a0020;border-color:#d946ef44;}
+.oc.snob-opt.sel .oti{color:#fff;}.oc.snob-opt.sel .ode{color:#d946ef88;}.oc.snob-opt.sel .opr{color:#d946ef;}
+.oc.snob-opt.sel .ochk{background:#d946ef;border-color:#d946ef;}
+.oc.snob-opt.sel .ochk::after{opacity:1;}
+.snob-pill{display:inline-block;font-size:7px;letter-spacing:.2em;text-transform:uppercase;background:#d946ef;color:#fff;padding:2px 6px;margin-bottom:8px;}
+.ochk{width:11px;height:11px;border:1px solid #ccc;margin-bottom:12px;position:relative;transition:all .2s;}
+.ochk::after{content:'';position:absolute;top:1px;left:3px;width:3px;height:6px;border:1px solid #fff;border-top:none;border-left:none;transform:rotate(45deg);opacity:0;transition:opacity .2s;}
+.oic{font-size:18px;margin-bottom:8px;display:block;}
+.oti{font-family:'Bebas Neue',sans-serif;font-size:16px;margin-bottom:5px;color:#0a0a0a;line-height:1.1;}
+.ode{font-size:9px;color:#bbb;line-height:1.7;}
+.opr{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#0a0a0a;margin-top:10px;}
+.opr.incl{color:#ccc;}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);}
+@media(max-width:700px){.sgrid{grid-template-columns:1fr;}}
+.sc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
+.sc:last-child{border-right:none;}
+.sc:hover{background:#fafafa;}
+.sc.sel{background:#0a0a0a;}
+.sc.sel .rdot{border-color:#d946ef;background:#d946ef;}
+.sc.sel .rdot::after{opacity:1;}
+.sc.sel .st,.sc.sel .schf,.sc.sel .sde{color:#555;}
+.sc.sel .spr{color:#d946ef;}
+@media(max-width:700px){.sc{border-right:none;border-bottom:1px solid #f0f0f0;}}
+.st{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:8px;}
+.spr{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:1;margin-bottom:3px;}
+.schf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:14px;}
+.sde{font-size:9px;color:#888;line-height:1.7;}
+#sticky{position:fixed;bottom:0;left:0;right:0;z-index:300;background:#fff;border-top:2px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;padding:12px 40px;gap:16px;}
+.sl{display:flex;align-items:center;gap:20px;flex:1;min-width:0;}
+.slbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;white-space:nowrap;}
+.schips{display:flex;gap:5px;flex-wrap:wrap;}
+.chip{font-size:8px;letter-spacing:.08em;text-transform:uppercase;border:1px solid #e8e8e8;padding:3px 7px;color:#999;white-space:nowrap;}
+.chip.pink{border-color:#d946ef44;color:#d946ef;background:#fff9ff;}
+.sr{display:flex;align-items:center;gap:18px;flex-shrink:0;}
+.stw{text-align:right;}
+.stlbl{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
+.stnum{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;}
+.stnum span{color:#d946ef;}
+.stmo{font-size:8px;color:#bbb;margin-top:1px;}
+.sbtn{background:#0a0a0a;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:.08em;padding:12px 24px;border:none;cursor:pointer;position:relative;overflow:hidden;white-space:nowrap;}
+.sbtn::before{content:'';position:absolute;inset:0;background:#d946ef;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.sbtn:hover::before{transform:scaleX(1);}
+.sbtn span{position:relative;z-index:1;}
+.mov{position:fixed;inset:0;z-index:500;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.mov.open{opacity:1;pointer-events:all;}
+.modal{background:#fff;border:1px solid #0a0a0a;padding:44px;max-width:540px;width:calc(100% - 32px);max-height:90vh;overflow-y:auto;transform:translateY(12px);transition:transform .3s;}
+.mov.open .modal{transform:translateY(0);}
+.mtit{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,72px);line-height:.9;margin-bottom:5px;}
+.mtit span{color:#d946ef;}
+.msub{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bbb;margin-bottom:24px;line-height:1.9;}
+.mrows{border-top:1px solid #f0f0f0;margin-bottom:16px;}
+.mrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:10px;}
+.mrow.pink-row .mprice{color:#d946ef;}
+.mname{color:#888;}.mprice{font-family:'Bebas Neue',sans-serif;font-size:15px;color:#d946ef;}
+.mtot{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0 0;}
+.mtotl{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
+.mtotn{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
+.fsep{border-top:1px solid #f0f0f0;padding-top:22px;margin-top:16px;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ff{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.ff label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;}
+.ff input,.ff textarea{background:transparent;border:none;border-bottom:1px solid #e8e8e8;color:#0a0a0a;font-family:'DM Mono',monospace;font-size:13px;padding:7px 0;outline:none;transition:border-color .2s;resize:none;}
+.ff input:focus,.ff textarea:focus{border-color:#0a0a0a;}
+.ff input::placeholder,.ff textarea::placeholder{color:#ccc;}
+.mact{display:flex;gap:10px;margin-top:20px;}
+.mcanc{background:none;border:1px solid #e8e8e8;color:#bbb;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;padding:12px 16px;cursor:pointer;transition:all .2s;flex:1;}
+.mcanc:hover{border-color:#0a0a0a;color:#0a0a0a;}
+.mgen{background:#0a0a0a;color:#fff;border:none;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.06em;padding:12px 24px;cursor:pointer;flex:2;position:relative;overflow:hidden;}
+.mgen::before{content:'';position:absolute;inset:0;background:#d946ef;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.mgen:hover::before{transform:scaleX(1);}
+.mgen span{position:relative;z-index:1;}
+.fab{position:fixed;bottom:80px;right:24px;z-index:200;}
+.fab-btn{width:40px;height:40px;background:#0a0a0a;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background .2s;}
+.fab-btn:hover,.fab-btn.on{background:#d946ef;}
+.ico-o{display:block;}.ico-c2{display:none;font-size:10px;color:#fff;font-family:'DM Mono',monospace;}
+.fab-btn.on .ico-o{display:none;}.fab-btn.on .ico-c2{display:block;}
+.chat-w{position:fixed;bottom:130px;right:24px;width:300px;background:#fff;border:1px solid #e8e8e8;z-index:199;display:flex;flex-direction:column;max-height:420px;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;}
+.chat-w.on{opacity:1;transform:translateY(0);pointer-events:all;}
+@media(max-width:480px){.chat-w{width:calc(100vw - 32px);right:16px;}}
+.cw-h{padding:14px 18px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px;}
+.cw-av{width:28px;height:28px;background:#0a0a0a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:11px;color:#fff;flex-shrink:0;}
+.cw-name{font-family:'Bebas Neue',sans-serif;font-size:15px;}
+.cw-st{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}
+.cw-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:180px;max-height:220px;scrollbar-width:thin;}
+.msg{max-width:88%;}.msg.bot{align-self:flex-start;}.msg.usr{align-self:flex-end;}
+.mb{padding:9px 12px;font-size:11px;line-height:1.6;animation:mi .2s ease;}
+@keyframes mi{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.msg.bot .mb{background:#f7f7f7;color:#555;}
+.msg.usr .mb{background:#0a0a0a;color:#fff;}
+.cw-qr{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 10px;}
+.qb{background:none;border:1px solid #e8e8e8;color:#bbb;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;cursor:pointer;transition:all .15s;}
+.qb:hover{border-color:#0a0a0a;color:#0a0a0a;}
+.cw-inp{padding:10px 14px;border-top:1px solid #f0f0f0;display:flex;gap:8px;}
+.ci{flex:1;background:transparent;border:none;border-bottom:1px solid #e8e8e8;color:#0a0a0a;font-family:'DM Mono',monospace;font-size:11px;padding:5px 0;outline:none;transition:border-color .2s;}
+.ci:focus{border-color:#0a0a0a;}
+.ci::placeholder{color:#ccc;}
+.cs{background:#0a0a0a;border:none;color:#fff;width:30px;height:30px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
+.cs:hover{background:#d946ef;}
+.ty{display:flex;gap:3px;padding:9px 12px;background:#f7f7f7;width:fit-content;}
+.td{width:4px;height:4px;background:#ccc;border-radius:50%;animation:tb .7s infinite;}
+.td:nth-child(2){animation-delay:.12s}.td:nth-child(3){animation-delay:.24s}
+@keyframes tb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px);background:#d946ef;}}
+#fspam{border-top:1px solid #f0f0f0;padding:20px 40px;text-align:center;}
+footer{padding:16px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.5em;color:#ccc;}
+.flinks{display:flex;gap:24px;list-style:none;}
+.flinks a{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#ddd;text-decoration:none;transition:color .2s;}
+.flinks a:hover{color:#0a0a0a;}
+.fcopy{font-size:9px;color:#ddd;text-align:right;line-height:1.8;}
+.toast{position:fixed;top:72px;right:24px;z-index:999;background:#0a0a0a;color:#fff;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:10px 16px;transform:translateX(130%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
 .toast.show{transform:translateX(0);}
 .pb{padding-bottom:90px;}
-@media(max-width:640px){
-  nav,.sec-title-cell,#hero,#stmt,footer,#footer-spam{padding-left:20px;padding-right:20px;}
-  #sticky{padding:12px 16px;flex-wrap:wrap;}
-  .s-left{display:none;}
-  .s-total{font-size:28px;}
-  .modal{padding:28px 20px;}
-  .f-row2{grid-template-columns:1fr;}
-  .opt-grid{grid-template-columns:1fr 1fr;}
+@media(max-width:620px){
+  nav,#hero,.sec-tc,footer,#fspam{padding-left:20px;padding-right:20px;}
+  #hero{padding-top:100px;}
+  .hero-right{display:none;}
+  #sticky{padding:10px 14px;}
+  .sl{display:none;}
+  .stnum{font-size:26px;}
+  .modal{padding:24px 16px;}
+  .fr2{grid-template-columns:1fr;}
+  .chat-w{width:calc(100vw - 32px);right:16px;}
 }
 </style>
 </head>
 <body>
 
-<!-- INTRO -->
-
 <div id="intro"><div id="intro-out"></div></div>
-
-<!-- NAV -->
 
 <nav>
   <div class="n-logo">goSNOB.ai</div>
@@ -182,79 +218,48 @@ footer{padding:18px 40px;display:flex;justify-content:space-between;align-items:
   </div>
 </nav>
 
-<!-- HERO -->
-
 <div id="hero">
-  <div class="hero-label">Website-Offerte · <span>goSNOB.ai × Basler Ferienpass</span></div>
-  <div class="hero-word1">BASLER</div>
-  <div class="hero-word2">FERIENPASS.</div>
-  <div class="hero-corner">
-    <div class="hero-corner-big">Neue Homepage<br>für 50 Jahre<br>Erfahrung.</div>
-    <div class="hero-corner-sub">Module wählen — Preis live — PDF herunterladen</div>
+  <div class="hero-label">Website-Offerte &middot; <span>goSNOB.ai &times; Basler Ferienpass</span></div>
+  <span class="hw1">BASLER</span>
+  <span class="hw2">FERIENPASS.</span>
+  <div class="hero-right">
+    <div class="hero-right-title">Neue Homepage<br>fuer 50 Jahre<br>Erfahrung.</div>
+    <div class="hero-right-sub">Module waehlen &mdash; Preis live</div>
   </div>
-  <div class="hero-meta">
-    <div class="hero-meta-txt">Wählt die Module auf dieser Seite. Der Preis berechnet sich automatisch. Am Ende als PDF herunterladen und als Auftrag zurückschicken.</div>
-    <div class="hero-stat"><div class="hero-stat-num">50</div><div class="hero-stat-lbl">Jahre Ferienpass</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">100+</div><div class="hero-stat-lbl">Kreativangebote</div></div>
-    <div class="hero-stat"><div class="hero-stat-num">6–16</div><div class="hero-stat-lbl">Jahre Zielgruppe</div></div>
+  <div class="hero-bottom">
+    <div class="hero-txt">Module auswaehlen. Preis berechnet sich automatisch. Als PDF herunterladen und als Auftrag zurueckschicken.</div>
+    <div class="hstat"><div class="hstat-n">50</div><div class="hstat-l">Jahre</div></div>
+    <div class="hstat"><div class="hstat-n">100+</div><div class="hstat-l">Angebote</div></div>
+    <div class="hstat"><div class="hstat-n">6-16</div><div class="hstat-l">Jahre Alt</div></div>
   </div>
 </div>
 
-<!-- STATEMENT -->
-
 <div id="stmt">
-  <div id="stmt-txt"><span class="g">Alte</span> Website.<br><span class="g">Neues</span> Brain.<br>SNOB macht's.</div>
+  <div class="stmt-txt"><span class="g">Alte</span> Website.<br><span class="g">Neues</span> Brain.<br>SNOB macht's.</div>
 </div>
 
 <!-- 01 BASIS -->
 
 <div class="sec">
   <div class="sec-head">
-    <div class="sec-num-cell"><div class="sec-num-txt">01</div></div>
-    <div class="sec-title-cell">
-      <div class="sec-title">Basis-Paket</div>
-      <div class="sec-sub">Umfang der neuen Website — eines wählen</div>
-    </div>
+    <div class="sec-nc"><div class="sec-nt">01</div></div>
+    <div class="sec-tc"><div class="sec-ti">Basis-Paket</div><div class="sec-su">Umfang der neuen Website &mdash; eines waehlen</div></div>
   </div>
-  <div class="radio-grid" id="basis-group">
-    <div class="r-card sel" data-val="b-s" data-price="3900" data-label="Starter — Landingpage" onclick="selBasis(this)">
-      <div class="r-dot"></div>
-      <div class="r-tier">GoSTART</div>
-      <div class="r-price">3'900</div>
-      <div class="r-chf">CHF · Einmalig</div>
-      <ul class="r-list">
-        <li>1-seitige moderne Landingpage</li>
-        <li>Willkommen, Programm-Überblick, Kontakt</li>
-        <li>Responsive Design für alle Geräte</li>
-        <li>Basis-CMS zur Inhaltspflege</li>
-        <li>SSL & DSGVO inklusive</li>
-      </ul>
+  <div class="rgrid" id="bg">
+    <div class="rc sel" data-p="3900" data-l="Starter &mdash; Landingpage" onclick="selB(this)">
+      <div class="rdot"></div><div class="rt">GoSTART</div>
+      <div class="rpr">3'900</div><div class="rchf">CHF &middot; Einmalig</div>
+      <ul class="rli"><li>1-seitige moderne Landingpage</li><li>Willkommen, Programm, Kontakt</li><li>Responsive fuer alle Geraete</li><li>Basis-CMS zur Inhaltspflege</li><li>SSL &amp; DSGVO inklusive</li></ul>
     </div>
-    <div class="r-card" data-val="b-m" data-price="6900" data-label="Standard — Vollständige Website" onclick="selBasis(this)">
-      <div class="r-dot"></div>
-      <div class="r-tier">GoFULL</div>
-      <div class="r-price">6'900</div>
-      <div class="r-chf">CHF · Einmalig</div>
-      <ul class="r-list">
-        <li>Alle aktuellen Seiten modernisiert</li>
-        <li>Programm-Übersicht, News, Partner</li>
-        <li>Online-Anmeldung Kreativangebote</li>
-        <li>Vollständiges CMS mit Schulung</li>
-        <li>SSL & DSGVO inklusive</li>
-      </ul>
+    <div class="rc" data-p="6900" data-l="Standard &mdash; Vollstaendige Website" onclick="selB(this)">
+      <div class="rdot"></div><div class="rt">GoFULL</div>
+      <div class="rpr">6'900</div><div class="rchf">CHF &middot; Einmalig</div>
+      <ul class="rli"><li>Alle aktuellen Seiten modernisiert</li><li>Programm-Uebersicht, News, Partner</li><li>Online-Anmeldung Kreativangebote</li><li>Vollstaendiges CMS mit Schulung</li><li>SSL &amp; DSGVO inklusive</li></ul>
     </div>
-    <div class="r-card" data-val="b-l" data-price="11900" data-label="Premium — Full Redesign + Plattform" onclick="selBasis(this)">
-      <div class="r-dot"></div>
-      <div class="r-tier">GoCORPORATE</div>
-      <div class="r-price sm">11'900</div>
-      <div class="r-chf">CHF · Einmalig</div>
-      <ul class="r-list">
-        <li>Komplettes Redesign + neue Plattform</li>
-        <li>Veranstalter-Portal selbst einpflegen</li>
-        <li>TWINT & Zahlungsintegration</li>
-        <li>Kinder-Login & Eltern-Dashboard</li>
-        <li>SSL & DSGVO inklusive</li>
-      </ul>
+    <div class="rc" data-p="11900" data-l="Premium &mdash; Full Redesign + Plattform" onclick="selB(this)">
+      <div class="rdot"></div><div class="rt">GoCORPORATE</div>
+      <div class="rpr sm">11'900</div><div class="rchf">CHF &middot; Einmalig</div>
+      <ul class="rli"><li>Komplettes Redesign + Plattform</li><li>Veranstalter-Portal selbst einpflegen</li><li>TWINT &amp; Zahlungsintegration</li><li>Kinder-Login &amp; Eltern-Dashboard</li><li>SSL &amp; DSGVO inklusive</li></ul>
     </div>
   </div>
 </div>
@@ -263,37 +268,14 @@ footer{padding:18px 40px;display:flex;justify-content:space-between;align-items:
 
 <div class="sec">
   <div class="sec-head">
-    <div class="sec-num-cell"><div class="sec-num-txt">02</div></div>
-    <div class="sec-title-cell">
-      <div class="sec-title">Design & Branding</div>
-      <div class="sec-sub">Mehrere wählbar</div>
-    </div>
+    <div class="sec-nc"><div class="sec-nt">02</div></div>
+    <div class="sec-tc"><div class="sec-ti">Design &amp; Branding</div><div class="sec-su">Mehrere waehlbar</div></div>
   </div>
-  <div class="opt-grid">
-    <div class="opt-card req">
-      <div class="o-check"></div><span class="opt-icon">🎨</span>
-      <div class="opt-title">Modernes UI-Design</div>
-      <div class="opt-desc">Zeitgemässes, frisches Design passend zu Basel & Kindern. Farben, Typo, Layout komplett neu.</div>
-      <div class="opt-price incl">Im Paket inklusive</div>
-    </div>
-    <div class="opt-card" data-id="branding" data-price="1200" data-label="Logo-Refresh / Branding" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">✏️</span>
-      <div class="opt-title">Logo-Refresh</div>
-      <div class="opt-desc">Modernisierung des Logos & Brand-Guide. Farben, Schriften, Icons, Anwendungsbeispiele.</div>
-      <div class="opt-price">+ CHF 1'200</div>
-    </div>
-    <div class="opt-card" data-id="illustra" data-price="900" data-label="Illustrationen & Grafiken" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">🖼️</span>
-      <div class="opt-title">Illustrationen</div>
-      <div class="opt-desc">5–8 custom Illustrationen & Icons die den Ferienpass-Charakter stärken.</div>
-      <div class="opt-price">+ CHF 900</div>
-    </div>
-    <div class="opt-card" data-id="animation" data-price="800" data-label="Animationen & Micro-Interactions" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">✨</span>
-      <div class="opt-title">Animationen</div>
-      <div class="opt-desc">Scroll-Animationen, Hover-Effekte, Seitenübergänge — lebendig und modern.</div>
-      <div class="opt-price">+ CHF 800</div>
-    </div>
+  <div class="ogrid">
+    <div class="oc req"><div class="ochk"></div><span class="oic">&#127912;</span><div class="oti">Modernes UI-Design</div><div class="ode">Zeitgemaesses Design passend zu Basel und Kindern. Farben, Typo, Layout neu.</div><div class="opr incl">Im Paket inklusive</div></div>
+    <div class="oc" data-id="branding" data-p="1200" data-l="Logo-Refresh / Branding" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#9999;&#65039;</span><div class="oti">Logo-Refresh</div><div class="ode">Modernisierung des Logos und Brand-Guide. Farben, Schriften, Icons.</div><div class="opr">+ CHF 1'200</div></div>
+    <div class="oc" data-id="illustra" data-p="900" data-l="Illustrationen &amp; Grafiken" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128444;&#65039;</span><div class="oti">Illustrationen</div><div class="ode">5-8 custom Motive die den Ferienpass-Charakter staerken.</div><div class="opr">+ CHF 900</div></div>
+    <div class="oc" data-id="animation" data-p="800" data-l="Animationen" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#10024;</span><div class="oti">Animationen</div><div class="ode">Scroll-Animationen, Hover-Effekte, Seitenubergaenge.</div><div class="opr">+ CHF 800</div></div>
   </div>
 </div>
 
@@ -301,61 +283,18 @@ footer{padding:18px 40px;display:flex;justify-content:space-between;align-items:
 
 <div class="sec">
   <div class="sec-head">
-    <div class="sec-num-cell"><div class="sec-num-txt">03</div></div>
-    <div class="sec-title-cell">
-      <div class="sec-title">Features & Funktionen</div>
-      <div class="sec-sub">Mehrere wählbar</div>
-    </div>
+    <div class="sec-nc"><div class="sec-nt">03</div></div>
+    <div class="sec-tc"><div class="sec-ti">Features &amp; Funktionen</div><div class="sec-su">Mehrere waehlbar</div></div>
   </div>
-  <div class="opt-grid">
-    <div class="opt-card req">
-      <div class="o-check"></div><span class="opt-icon">📱</span>
-      <div class="opt-title">Responsive Design</div>
-      <div class="opt-desc">Mobile, Tablet & Desktop. Perfekt auf allen Geräten — immer.</div>
-      <div class="opt-price incl">Im Paket inklusive</div>
-    </div>
-    <div class="opt-card" data-id="cms" data-price="600" data-label="CMS — Inhaltspflege" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">🗂️</span>
-      <div class="opt-title">CMS Inhaltspflege</div>
-      <div class="opt-desc">Texte, Bilder & Programm selbst bearbeiten. Inkl. Schulung für das Team.</div>
-      <div class="opt-price">+ CHF 600</div>
-    </div>
-    <div class="opt-card" data-id="anmeldung" data-price="2200" data-label="Online-Anmeldung Kreativangebote" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">📋</span>
-      <div class="opt-title">Online-Anmeldung</div>
-      <div class="opt-desc">Kreativangebote online buchen. Warteliste, E-Mail-Bestätigung, Eltern-Dashboard.</div>
-      <div class="opt-price">+ CHF 2'200</div>
-    </div>
-    <div class="opt-card" data-id="programm" data-price="1400" data-label="Programm-Datenbank & Filter" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">🗓️</span>
-      <div class="opt-title">Programm-Datenbank</div>
-      <div class="opt-desc">Filter nach Datum, Alter, Kategorie. 100+ Angebote. Sommer + Herbst. Veranstalter pflegen selbst.</div>
-      <div class="opt-price">+ CHF 1'400</div>
-    </div>
-    <div class="opt-card" data-id="twint" data-price="900" data-label="TWINT / Online-Zahlung" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">💳</span>
-      <div class="opt-title">TWINT & Zahlung</div>
-      <div class="opt-desc">Ferienpass online kaufen. Kreativangebote bezahlen via TWINT, Kreditkarte oder Rechnung.</div>
-      <div class="opt-price">+ CHF 900</div>
-    </div>
-    <div class="opt-card" data-id="mehrsprachig" data-price="1100" data-label="Mehrsprachigkeit DE/FR/EN" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">🌍</span>
-      <div class="opt-title">Mehrsprachigkeit</div>
-      <div class="opt-desc">Deutsch, Französisch & Englisch. Für Familien aus dem Dreiland Basel–Elsass–Baden.</div>
-      <div class="opt-price">+ CHF 1'100</div>
-    </div>
-    <div class="opt-card" data-id="karte" data-price="700" data-label="Interaktive Karte" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">🗺️</span>
-      <div class="opt-title">Interaktive Karte</div>
-      <div class="opt-desc">Verkaufsstellen, Grundangebote & Veranstaltungsorte auf einer Karte von Basel.</div>
-      <div class="opt-price">+ CHF 700</div>
-    </div>
-    <div class="opt-card" data-id="newsletter" data-price="400" data-label="Newsletter-Anbindung" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">📬</span>
-      <div class="opt-title">Newsletter</div>
-      <div class="opt-desc">Mailchimp / Mailjet Integration. Anmeldung direkt auf der Website, automatische Bestätigung.</div>
-      <div class="opt-price">+ CHF 400</div>
-    </div>
+  <div class="ogrid">
+    <div class="oc req"><div class="ochk"></div><span class="oic">&#128241;</span><div class="oti">Responsive Design</div><div class="ode">Mobile, Tablet und Desktop. Immer perfekt.</div><div class="opr incl">Im Paket inklusive</div></div>
+    <div class="oc" data-id="cms" data-p="600" data-l="CMS Inhaltspflege" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128194;</span><div class="oti">CMS Inhaltspflege</div><div class="ode">Texte und Bilder selbst bearbeiten. Inkl. Schulung fuer das Team.</div><div class="opr">+ CHF 600</div></div>
+    <div class="oc" data-id="anmeldung" data-p="2200" data-l="Online-Anmeldung Kreativangebote" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128203;</span><div class="oti">Online-Anmeldung</div><div class="ode">Kreativangebote buchen. Warteliste, E-Mail, Eltern-Dashboard.</div><div class="opr">+ CHF 2'200</div></div>
+    <div class="oc" data-id="programm" data-p="1400" data-l="Programm-Datenbank &amp; Filter" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128197;</span><div class="oti">Programm-Datenbank</div><div class="ode">Filter nach Datum, Alter, Kategorie. 100+ Angebote Sommer und Herbst.</div><div class="opr">+ CHF 1'400</div></div>
+    <div class="oc" data-id="twint" data-p="900" data-l="TWINT / Online-Zahlung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128179;</span><div class="oti">TWINT &amp; Zahlung</div><div class="ode">Ferienpass kaufen via TWINT, Kreditkarte oder Rechnung.</div><div class="opr">+ CHF 900</div></div>
+    <div class="oc" data-id="mehrsprachig" data-p="1100" data-l="Mehrsprachigkeit DE/FR/EN" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#127758;</span><div class="oti">Mehrsprachigkeit</div><div class="ode">Deutsch, Franzoesisch und Englisch fuer das Dreiland.</div><div class="opr">+ CHF 1'100</div></div>
+    <div class="oc" data-id="karte" data-p="700" data-l="Interaktive Karte" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128506;&#65039;</span><div class="oti">Interaktive Karte</div><div class="ode">Verkaufsstellen und Veranstaltungsorte auf einer Karte.</div><div class="opr">+ CHF 700</div></div>
+    <div class="oc" data-id="newsletter" data-p="400" data-l="Newsletter-Anbindung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128236;</span><div class="oti">Newsletter</div><div class="ode">Mailchimp / Mailjet Integration mit automatischer Bestaetigung.</div><div class="opr">+ CHF 400</div></div>
   </div>
 </div>
 
@@ -363,212 +302,286 @@ footer{padding:18px 40px;display:flex;justify-content:space-between;align-items:
 
 <div class="sec">
   <div class="sec-head">
-    <div class="sec-num-cell"><div class="sec-num-txt">04</div></div>
-    <div class="sec-title-cell">
-      <div class="sec-title">Technisches & SEO</div>
-      <div class="sec-sub">Performance, Sicherheit und Sichtbarkeit</div>
-    </div>
+    <div class="sec-nc"><div class="sec-nt">04</div></div>
+    <div class="sec-tc"><div class="sec-ti">Technisches &amp; SEO</div><div class="sec-su">Performance, Sicherheit, Sichtbarkeit</div></div>
   </div>
-  <div class="opt-grid">
-    <div class="opt-card req">
-      <div class="o-check"></div><span class="opt-icon">🔒</span>
-      <div class="opt-title">SSL & DSGVO</div>
-      <div class="opt-desc">HTTPS, Cookie-Banner, Datenschutz-Seite, sichere Formulare. Alles DSGVO-konform.</div>
-      <div class="opt-price incl">Im Paket inklusive</div>
+  <div class="ogrid">
+    <div class="oc req"><div class="ochk"></div><span class="oic">&#128274;</span><div class="oti">SSL &amp; DSGVO</div><div class="ode">HTTPS, Cookie-Banner, Datenschutz. Alles DSGVO-konform.</div><div class="opr incl">Im Paket inklusive</div></div>
+    <div class="oc" data-id="seo" data-p="800" data-l="SEO-Optimierung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128200;</span><div class="oti">SEO-Optimierung</div><div class="ode">Meta-Tags, strukturierte Daten, Google Search Console Setup.</div><div class="opr">+ CHF 800</div></div>
+    <div class="oc" data-id="analytics" data-p="300" data-l="Analytics Setup" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128202;</span><div class="oti">Analytics Setup</div><div class="ode">Google Analytics 4 oder Matomo. DSGVO-konform.</div><div class="opr">+ CHF 300</div></div>
+    <div class="oc" data-id="perf" data-p="500" data-l="Performance-Optimierung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#9889;</span><div class="oti">Performance</div><div class="ode">PageSpeed 90+, Bildoptimierung, CDN, Core Web Vitals.</div><div class="opr">+ CHF 500</div></div>
+  </div>
+</div>
+
+<!-- 05 SNOB AI SERVICES -->
+
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-nc"><div class="sec-nt">05</div></div>
+    <div class="sec-tc"><div class="sec-ti">SNOB AI Services</div><div class="sec-su">Telefon-AI und Automatisierung direkt integriert &mdash; mehrere waehlbar</div></div>
+  </div>
+  <div class="ogrid">
+    <div class="oc snob-opt" data-id="snob-inbound" data-p="333" data-l="SNOB AI Inbound (333 CHF/Mt.)" onclick="togO(this)">
+      <div class="snob-pill">SNOB AI</div>
+      <div class="ochk"></div><span class="oic">&#128222;</span>
+      <div class="oti">AI Inbound Calls</div>
+      <div class="ode">SNOB beantwortet eingehende Anrufe automatisch. FAQ, Infos zu Angeboten, Anmeldung per Telefon.</div>
+      <div class="opr">+ CHF 333 / Mt.</div>
     </div>
-    <div class="opt-card" data-id="seo" data-price="800" data-label="SEO-Optimierung" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">📈</span>
-      <div class="opt-title">SEO-Optimierung</div>
-      <div class="opt-desc">Meta-Tags, strukturierte Daten, Google Search Console, Keyword-Analyse Basel/Ferienpass.</div>
-      <div class="opt-price">+ CHF 800</div>
+    <div class="oc snob-opt" data-id="snob-outbound" data-p="333" data-l="SNOB AI Outbound (333 CHF/Mt.)" onclick="togO(this)">
+      <div class="snob-pill">SNOB AI</div>
+      <div class="ochk"></div><span class="oic">&#128225;</span>
+      <div class="oti">AI Outbound Calls</div>
+      <div class="ode">Automatische Erinnerungsanrufe vor Kreativangeboten. Anmeldebestaetigung per Telefon.</div>
+      <div class="opr">+ CHF 333 / Mt.</div>
     </div>
-    <div class="opt-card" data-id="analytics" data-price="300" data-label="Analytics Setup" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">📊</span>
-      <div class="opt-title">Analytics Setup</div>
-      <div class="opt-desc">Google Analytics 4 oder Matomo (DSGVO). Dashboard für Besucherstatistiken.</div>
-      <div class="opt-price">+ CHF 300</div>
+    <div class="oc snob-opt" data-id="snob-chat" data-p="0" data-l="SNOB Chat-Widget (inklusive)" onclick="togO(this)">
+      <div class="snob-pill">SNOB AI</div>
+      <div class="ochk"></div><span class="oic">&#128172;</span>
+      <div class="oti">AI Chat-Widget</div>
+      <div class="ode">SNOB beantwortet Fragen direkt auf der Website. Programm, Anmeldung, Preise rund um die Uhr.</div>
+      <div class="opr">CHF 0 / Mt. inklusive</div>
     </div>
-    <div class="opt-card" data-id="performance" data-price="500" data-label="Performance-Optimierung" onclick="togOpt(this)">
-      <div class="o-check"></div><span class="opt-icon">⚡</span>
-      <div class="opt-title">Performance</div>
-      <div class="opt-desc">Google PageSpeed 90+, Bildoptimierung, CDN-Setup, Lazy Loading, Core Web Vitals.</div>
-      <div class="opt-price">+ CHF 500</div>
+    <div class="oc snob-opt" data-id="snob-full" data-p="777" data-l="SNOB GoFULL Paket (777 CHF/Mt.)" onclick="togO(this)">
+      <div class="snob-pill">SNOB AI</div>
+      <div class="ochk"></div><span class="oic">&#129504;</span>
+      <div class="oti">GoFULL Paket</div>
+      <div class="ode">Alles: Inbound + Outbound + Chat + CRM-Anbindung + Priority Support. Das komplette AI-Gehirn.</div>
+      <div class="opr">+ CHF 777 / Mt.</div>
     </div>
   </div>
 </div>
 
-<!-- 05 SUPPORT -->
+<!-- 06 SUPPORT -->
 
 <div class="sec pb">
   <div class="sec-head">
-    <div class="sec-num-cell"><div class="sec-num-txt">05</div></div>
-    <div class="sec-title-cell">
-      <div class="sec-title">Wartung & Support</div>
-      <div class="sec-sub">Laufend nach dem Launch — eines wählen</div>
-    </div>
+    <div class="sec-nc"><div class="sec-nt">06</div></div>
+    <div class="sec-tc"><div class="sec-ti">Wartung &amp; Support</div><div class="sec-su">Laufend nach dem Launch &mdash; eines waehlen</div></div>
   </div>
-  <div class="supp-grid" id="supp-group">
-    <div class="supp-card sel" data-val="s-0" data-price="0" data-label="" onclick="selSupp(this)">
-      <div class="r-dot"></div>
-      <div class="supp-tier">Kein Support</div>
-      <div class="supp-price">0</div>
-      <div class="supp-chf">CHF / Monat</div>
-      <div class="supp-desc">Übergabe nach Launch. Eigenständiger Betrieb. Keine laufenden Kosten.</div>
+  <div class="sgrid" id="sg">
+    <div class="sc sel" data-p="0" data-l="" onclick="selS(this)">
+      <div class="rdot"></div><div class="st">Kein Support</div>
+      <div class="spr">0</div><div class="schf">CHF / Monat</div>
+      <div class="sde">Uebergabe nach Launch. Eigenstaendiger Betrieb. Keine laufenden Kosten.</div>
     </div>
-    <div class="supp-card" data-val="s-1" data-price="190" data-label="GoWartung CHF 190/Mt." onclick="selSupp(this)">
-      <div class="r-dot"></div>
-      <div class="supp-tier">GoWARTUNG</div>
-      <div class="supp-price">190</div>
-      <div class="supp-chf">CHF / Monat</div>
-      <div class="supp-desc">Updates, Backups, Sicherheits-Monitoring. 2h Support/Monat inklusive. Monatlich kündbar.</div>
+    <div class="sc" data-p="190" data-l="GoWartung CHF 190/Mt." onclick="selS(this)">
+      <div class="rdot"></div><div class="st">GoWARTUNG</div>
+      <div class="spr">190</div><div class="schf">CHF / Monat</div>
+      <div class="sde">Updates, Backups, Sicherheits-Monitoring. 2h Support pro Monat. Monatlich kuendbar.</div>
     </div>
-    <div class="supp-card" data-val="s-2" data-price="390" data-label="GoFullService CHF 390/Mt." onclick="selSupp(this)">
-      <div class="r-dot"></div>
-      <div class="supp-tier">GoFULLSERVICE</div>
-      <div class="supp-price">390</div>
-      <div class="supp-chf">CHF / Monat</div>
-      <div class="supp-desc">Wartung + 5h Inhaltspflege/Monat + Programm-Updates + Priority-Support (48h).</div>
+    <div class="sc" data-p="390" data-l="GoFullService CHF 390/Mt." onclick="selS(this)">
+      <div class="rdot"></div><div class="st">GoFULLSERVICE</div>
+      <div class="spr">390</div><div class="schf">CHF / Monat</div>
+      <div class="sde">Wartung + 5h Inhaltspflege + Programm-Updates + Priority-Support 48h.</div>
     </div>
   </div>
 </div>
 
-<div id="footer-spam" style="border-top:1px solid #f0f0f0;padding:22px 40px;text-align:center;">
-  <p style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;">Alle Preise exkl. MWST 8.1% · Offerte gültig 30 Tage · Realisierungszeit 6–10 Wochen nach Auftragserteilung</p>
-</div>
+<div id="fspam"><p style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;">Alle Preise exkl. MWST 8.1% &middot; Offerte gueltig 30 Tage &middot; Realisierungszeit 6-10 Wochen</p></div>
 <footer>
-  <div class="f-logo">goSNOB.ai</div>
-  <ul class="f-links">
-    <li><a href="#">Datenschutz</a></li>
-    <li><a href="#">AGB</a></li>
-    <li><a href="#">Impressum</a></li>
-  </ul>
-  <div class="f-copy">© 2025 goSNOB.ai · Basel<br><span>Founded by Timothy Jordi & Jan Mironiuk · Swiss Made</span></div>
+  <div class="flogo">goSNOB.ai</div>
+  <ul class="flinks"><li><a href="#">Datenschutz</a></li><li><a href="#">AGB</a></li><li><a href="#">Impressum</a></li></ul>
+  <div class="fcopy">&#169; 2025 goSNOB.ai &middot; Basel<br><span>Founded by Timothy Jordi &amp; Jan Mironiuk &middot; Swiss Made</span></div>
 </footer>
 
-<!-- STICKY -->
-
 <div id="sticky">
-  <div class="s-left">
-    <div class="s-label">Auswahl</div>
-    <div class="s-chips" id="chips"></div>
+  <div class="sl">
+    <div class="slbl">Auswahl</div>
+    <div class="schips" id="chips"></div>
   </div>
-  <div class="s-right">
-    <div class="s-total-wrap">
-      <div class="s-total-lbl">Gesamt exkl. MWST</div>
-      <div class="s-total">CHF <span id="total-n">3'900</span></div>
-      <div class="s-monat" id="monat-n"></div>
+  <div class="sr">
+    <div class="stw">
+      <div class="stlbl">Gesamt exkl. MWST</div>
+      <div class="stnum">CHF <span id="tn">3'900</span></div>
+      <div class="stmo" id="mn"></div>
     </div>
-    <button class="s-btn" onclick="openModal()"><span>Offerte als PDF →</span></button>
+    <button class="sbtn" onclick="openM()"><span>Offerte als PDF &#8594;</span></button>
   </div>
 </div>
 
-<!-- MODAL -->
-
-<div class="modal-ov" id="modal">
+<div class="mov" id="modal">
   <div class="modal">
-    <div class="m-title">Offerte <span>laden.</span></div>
-    <div class="m-sub">Kontaktdaten eingeben — PDF öffnet automatisch.<br>Unterschrieben als Auftrag zurückschicken.</div>
-    <div class="o-rows" id="m-rows"></div>
-    <div class="o-tot">
-      <div class="o-tot-lbl">Gesamt<br>exkl. MWST</div>
-      <div class="o-tot-num" id="m-total">CHF 3'900</div>
-    </div>
-    <div class="f-sep">
-      <div class="f-row2">
-        <div class="f-field"><label>Vorname *</label><input type="text" id="f-vn" placeholder="Mary"></div>
-        <div class="f-field"><label>Nachname *</label><input type="text" id="f-nn" placeholder="Born"></div>
+    <div class="mtit">Offerte <span>laden.</span></div>
+    <div class="msub">Kontaktdaten eingeben &mdash; PDF oeffnet automatisch.<br>Unterschrieben als Auftrag zurueckschicken.</div>
+    <div class="mrows" id="mrows"></div>
+    <div class="mtot"><div class="mtotl">Gesamt exkl. MWST</div><div class="mtotn" id="mtot">CHF 3'900</div></div>
+    <div class="fsep">
+      <div class="fr2">
+        <div class="ff"><label>Vorname *</label><input type="text" id="fvn" placeholder="Mary"></div>
+        <div class="ff"><label>Nachname *</label><input type="text" id="fnn" placeholder="Born"></div>
       </div>
-      <div class="f-field"><label>E-Mail *</label><input type="email" id="f-em" placeholder="mary.born@juarbasel.ch"></div>
-      <div class="f-row2">
-        <div class="f-field"><label>Organisation</label><input type="text" id="f-org" value="Basler Ferienpass"></div>
-        <div class="f-field"><label>Telefon</label><input type="text" id="f-tel" placeholder="+41 61 683 72 10"></div>
+      <div class="ff"><label>E-Mail *</label><input type="email" id="fem" placeholder="mary.born@juarbasel.ch"></div>
+      <div class="fr2">
+        <div class="ff"><label>Organisation</label><input type="text" id="forg" value="Basler Ferienpass"></div>
+        <div class="ff"><label>Telefon</label><input type="text" id="ftel" placeholder="+41 61 683 72 10"></div>
       </div>
-      <div class="f-field"><label>Notizen / Launch-Termin</label><textarea id="f-notes" rows="2" placeholder="z.B. Launch vor Sommer 2026, besondere Anforderungen..."></textarea></div>
+      <div class="ff"><label>Notizen / Launch-Termin</label><textarea id="fnotes" rows="2" placeholder="z.B. Launch vor Sommer 2026..."></textarea></div>
     </div>
-    <div class="m-actions">
-      <button class="m-cancel" onclick="closeModal()">Abbrechen</button>
-      <button class="m-gen" onclick="genPDF()"><span>PDF generieren →</span></button>
+    <div class="mact">
+      <button class="mcanc" onclick="closeM()">Abbrechen</button>
+      <button class="mgen" onclick="genPDF()"><span>PDF generieren &#8594;</span></button>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast">PDF geöffnet — Als PDF speichern oder drucken</div>
+<div class="fab">
+  <div class="chat-w" id="chatW">
+    <div class="cw-h">
+      <div class="cw-av">gS</div>
+      <div><div class="cw-name">SNOB</div><div class="cw-st">Online</div></div>
+    </div>
+    <div class="cw-msgs" id="cMsgs"></div>
+    <div class="cw-qr" id="cQR">
+      <button class="qb" onclick="qr('Was kostet eine neue Website?')">Kosten?</button>
+      <button class="qb" onclick="qr('Was ist SNOB AI?')">SNOB AI?</button>
+      <button class="qb" onclick="qr('Wie lange dauert es?')">Dauer?</button>
+      <button class="qb" onclick="qr('Welches Paket empfehlt ihr?')">Empfehlung?</button>
+    </div>
+    <div class="cw-inp">
+      <input class="ci" id="cIn" type="text" placeholder="Frag SNOB..." onkeydown="if(event.key==='Enter')cSend()">
+      <button class="cs" onclick="cSend()">&#8594;</button>
+    </div>
+  </div>
+  <button class="fab-btn" id="fabBtn" onclick="toggleChat()">
+    <span class="ico-o">&#128172;</span>
+    <span class="ico-c2">&#10005;</span>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-var S={basis:{val:'b-s',price:3900,label:'Starter — Landingpage'},extras:{},supp:{val:'s-0',price:0,label:''}};
+var S={basis:{p:3900,l:'Starter - Landingpage'},extras:{},supp:{p:0,l:''}};
+var chatOpen=false;
 
-function selBasis(el){
-  document.querySelectorAll('#basis-group .r-card').forEach(function(c){c.classList.remove('sel');});
+function selB(el){
+  document.querySelectorAll('#bg .rc').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
-  S.basis={val:el.dataset.val,price:parseInt(el.dataset.price),label:el.dataset.label};
+  S.basis={p:parseInt(el.dataset.p),l:el.dataset.l};
   upd();
 }
-function selSupp(el){
-  document.querySelectorAll('#supp-group .supp-card').forEach(function(c){c.classList.remove('sel');});
+function selS(el){
+  document.querySelectorAll('#sg .sc').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
-  S.supp={val:el.dataset.val,price:parseInt(el.dataset.price),label:el.dataset.label};
+  S.supp={p:parseInt(el.dataset.p),l:el.dataset.l};
   upd();
 }
-function togOpt(el){
-  var id=el.dataset.id,price=parseInt(el.dataset.price),label=el.dataset.label;
+function togO(el){
+  var id=el.dataset.id,p=parseInt(el.dataset.p),l=el.dataset.l;
   if(el.classList.contains('sel')){el.classList.remove('sel');delete S.extras[id];}
-  else{el.classList.add('sel');S.extras[id]={price:price,label:label};}
+  else{el.classList.add('sel');S.extras[id]={p:p,l:l,isSnob:el.classList.contains('snob-opt')};}
   upd();
 }
-function calc(){var t=S.basis.price;Object.values(S.extras).forEach(function(e){t+=e.price;});return t;}
+function calc(){var t=S.basis.p;Object.values(S.extras).forEach(function(e){t+=e.p;});return t;}
 function fmt(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,"'");}
 function upd(){
-  var total=calc();
-  document.getElementById('total-n').textContent=fmt(total);
-  document.getElementById('monat-n').textContent=S.supp.price>0?'+ CHF '+S.supp.price+' / Monat':'';
+  document.getElementById('tn').textContent=fmt(calc());
+  var mo=document.getElementById('mn');
+  var monthly=S.supp.p;
+  Object.values(S.extras).forEach(function(e){if(e.isSnob&&e.p>0)monthly+=e.p;});
+  mo.textContent=monthly>0?'+ CHF '+monthly+' / Monat':'';
   var chips=document.getElementById('chips');chips.innerHTML='';
-  var all=[{label:S.basis.label}];
-  Object.values(S.extras).forEach(function(e){all.push({label:e.label});});
-  if(S.supp.price>0)all.push({label:S.supp.label});
-  all.forEach(function(c){var d=document.createElement('div');d.className='s-chip';d.textContent=c.label;chips.appendChild(d);});
+  var all=[{l:S.basis.l,pink:false}];
+  Object.values(S.extras).forEach(function(e){all.push({l:e.l,pink:e.isSnob});});
+  if(S.supp.p>0)all.push({l:S.supp.l,pink:false});
+  all.forEach(function(c){
+    var d=document.createElement('div');
+    d.className='chip'+(c.pink?' pink':'');
+    d.textContent=c.l;
+    chips.appendChild(d);
+  });
 }
-function openModal(){
+function openM(){
   var rows=[];
-  rows.push({n:S.basis.label,p:'CHF '+fmt(S.basis.price)});
-  Object.values(S.extras).forEach(function(e){rows.push({n:e.label,p:'+ CHF '+fmt(e.price)});});
-  if(S.supp.price>0)rows.push({n:S.supp.label,p:'CHF '+S.supp.price+' /Mt.'});
-  document.getElementById('m-rows').innerHTML=rows.map(function(r){return'<div class="o-row"><span class="o-name">'+r.n+'</span><span class="o-pr">'+r.p+'</span></div>';}).join('');
-  document.getElementById('m-total').textContent='CHF '+fmt(calc());
+  rows.push({n:S.basis.l,p:'CHF '+fmt(S.basis.p),pink:false});
+  Object.values(S.extras).forEach(function(e){
+    var pStr=e.p>0?(e.isSnob?'CHF '+fmt(e.p)+' /Mt.':'+ CHF '+fmt(e.p)):'Inklusive';
+    rows.push({n:e.l,p:pStr,pink:e.isSnob});
+  });
+  if(S.supp.p>0)rows.push({n:S.supp.l,p:'CHF '+S.supp.p+' /Mt.',pink:false});
+  document.getElementById('mrows').innerHTML=rows.map(function(r){
+    return'<div class="mrow'+(r.pink?' pink-row':'')+'"><span class="mname">'+r.n+'</span><span class="mprice">'+r.p+'</span></div>';
+  }).join('');
+  document.getElementById('mtot').textContent='CHF '+fmt(calc());
   document.getElementById('modal').classList.add('open');
 }
-function closeModal(){document.getElementById('modal').classList.remove('open');}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
+function closeM(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeM();});
+function showT(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 
 function genPDF(){
-  var vn=document.getElementById('f-vn').value.trim(),nn=document.getElementById('f-nn').value.trim(),em=document.getElementById('f-em').value.trim();
-  if(!vn||!nn||!em){document.getElementById('f-em').style.borderColor='#d946ef';setTimeout(function(){document.getElementById('f-em').style.borderColor='';},1500);return;}
-  var org=document.getElementById('f-org').value.trim()||'Basler Ferienpass';
-  var tel=document.getElementById('f-tel').value.trim(),notes=document.getElementById('f-notes').value.trim();
+  var vn=document.getElementById('fvn').value.trim(),nn=document.getElementById('fnn').value.trim(),em=document.getElementById('fem').value.trim();
+  if(!vn||!nn||!em){document.getElementById('fem').style.borderColor='#d946ef';setTimeout(function(){document.getElementById('fem').style.borderColor='';},1500);return;}
+  var org=document.getElementById('forg').value.trim()||'Basler Ferienpass';
+  var tel=document.getElementById('ftel').value.trim(),notes=document.getElementById('fnotes').value.trim();
   var today=new Date().toLocaleDateString('de-CH');
   var valid=new Date(Date.now()+30*24*60*60*1000).toLocaleDateString('de-CH');
   var onum=Math.floor(1000+Math.random()*9000);
   var total=calc(),mwst=Math.round(total*0.081),totalMwst=total+mwst;
   var items=[];
-  items.push({n:S.basis.label,p:S.basis.price});
-  Object.values(S.extras).forEach(function(e){items.push({n:e.label,p:e.price});});
-  var w=window.open('','_blank');
-  var css='*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"DM Mono",monospace;background:#fff;color:#0a0a0a;}.page{max-width:760px;margin:0 auto;padding:56px;}.logo{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.5em;}.hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:28px;border-bottom:2px solid #0a0a0a;margin-bottom:36px;}.meta{text-align:right;font-size:9px;letter-spacing:.1em;color:#bbb;line-height:2.1;}.meta strong{font-family:"Bebas Neue",sans-serif;font-size:20px;display:block;color:#0a0a0a;}.cbox{border-left:3px solid #d946ef;padding:14px 18px;margin-bottom:32px;background:#fafafa;}.clabel{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;margin-bottom:5px;}.cname{font-size:13px;line-height:1.9;}.htitle{font-family:"Bebas Neue",sans-serif;font-size:52px;line-height:.9;margin-bottom:5px;}.hsub{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;margin-bottom:36px;}.slabel{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;padding-bottom:8px;border-bottom:1px solid #f0f0f0;margin-bottom:10px;}.irow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f5f5f5;font-size:10px;}.iname{color:#888;}.ipr{font-family:"Bebas Neue",sans-serif;font-size:16px;color:#d946ef;}.tblock{background:#0a0a0a;color:#fff;padding:22px 24px;margin:24px 0;}.trow{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5);padding:3px 0;}.trow.grand{font-family:"Bebas Neue",sans-serif;font-size:22px;color:#fff;padding-top:10px;margin-top:6px;border-top:1px solid rgba(255,255,255,.15);}.trow.grand span:last-child{color:#d946ef;}.sbox{border:1px solid #d946ef;padding:12px 16px;margin-bottom:20px;font-size:9px;line-height:1.8;}.nbox{background:#fafafa;padding:12px 16px;margin-bottom:20px;font-size:9px;line-height:1.8;}.terms{font-size:8px;letter-spacing:.04em;color:#bbb;line-height:2.1;padding:14px;border:1px solid #f0f0f0;margin-bottom:36px;}.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:44px;}.sline{padding-top:44px;border-top:1px solid #ccc;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}.foot{text-align:center;padding-top:20px;border-top:1px solid #f0f0f0;margin-top:36px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#ccc;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}';
-  var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>goSNOB Offerte #'+onum+' — '+org+'</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>'+css+'</style></head><body><div class="page"><div class="hdr"><div><div class="logo">goSNOB.ai</div><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:4px;">Network-Operated Brain</div></div><div class="meta"><strong>Offerte #'+onum+'</strong>Datum: '+today+'<br>Gültig bis: '+valid+'</div></div><div class="cbox"><div class="clabel">Auftraggeber</div><div class="cname"><strong>'+vn+' '+nn+'</strong><br>'+org+(tel?'<br>'+tel:'')+(em?'<br>'+em:'')+'</div></div><div class="htitle">Website-Offerte.</div><div class="hsub">Neue Homepage — Basler Ferienpass · goSNOB.ai Basel · '+today+'</div><div class="slabel">Leistungsumfang</div>'+items.map(function(r){return'<div class="irow"><span class="iname">'+r.n+'</span><span class="ipr">CHF '+fmt(r.p)+'</span></div>';}).join('')+'<div class="tblock"><div class="trow"><span>Subtotal exkl. MWST</span><span>CHF '+fmt(total)+'</span></div><div class="trow"><span>MWST 8.1%</span><span>CHF '+fmt(mwst)+'</span></div><div class="trow grand"><span>Gesamtbetrag inkl. MWST</span><span>CHF '+fmt(totalMwst)+'</span></div></div>'+(S.supp.price>0?'<div class="sbox">Laufende Wartung: <strong>'+S.supp.label+'</strong><br>CHF '+S.supp.price+' / Monat (exkl. MWST) · Monatlich kündbar</div>':'')+(notes?'<div class="nbox"><strong>Notizen:</strong> '+notes+'</div>':'')+'<div class="terms">50% Anzahlung bei Auftragserteilung · 50% bei Launch · Zahlungsziel 14 Tage netto<br>Realisierungszeit 6–10 Wochen nach Auftragserteilung und Anzahlung<br>Offerte gültig bis '+valid+' · Preise exkl. MWST</div><div class="sgrid"><div class="sline">Ort, Datum & Unterschrift Auftraggeber</div><div class="sline">goSNOB.ai — Auftragsbestätigung<br><span style="color:#d946ef;">info@gosnob.ai</span></div></div><div class="foot">goSNOB.ai · Network-Operated Brain · Basel, Schweiz · '+today+'</div></div><script>window.onload=function(){setTimeout(function(){window.print();},600);};<\/script></body></html>';
+  items.push({n:S.basis.l,p:S.basis.p,monthly:false});
+  Object.values(S.extras).forEach(function(e){items.push({n:e.l,p:e.p,monthly:e.isSnob&&e.p>0});});
+  var monthly=S.supp.p;
+  Object.values(S.extras).forEach(function(e){if(e.isSnob&&e.p>0)monthly+=e.p;});
 
-w.document.write(html);w.document.close();
-closeModal();toast(‘PDF geöffnet — Als PDF speichern oder drucken’);
+  var css='*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"DM Mono",monospace;background:#fff;color:#0a0a0a;}.page{max-width:760px;margin:0 auto;padding:52px;}.logo{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.5em;}.hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:24px;border-bottom:2px solid #0a0a0a;margin-bottom:32px;}.meta{text-align:right;font-size:9px;letter-spacing:.1em;color:#bbb;line-height:2.1;}.meta strong{font-family:"Bebas Neue",sans-serif;font-size:20px;display:block;color:#0a0a0a;}.cbox{border-left:3px solid #d946ef;padding:14px 18px;margin-bottom:28px;background:#fafafa;}.clabel{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;margin-bottom:5px;}.cname{font-size:13px;line-height:1.9;}.htitle{font-family:"Bebas Neue",sans-serif;font-size:48px;line-height:.9;margin-bottom:5px;}.hsub{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;margin-bottom:32px;}.slabel{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;padding-bottom:8px;border-bottom:1px solid #f0f0f0;margin-bottom:10px;}.irow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:10px;}.iname{color:#888;}.ipr{font-family:"Bebas Neue",sans-serif;font-size:15px;color:#d946ef;}.irow.snob .iname{color:#d946ef88;}.tblock{background:#0a0a0a;color:#fff;padding:20px 22px;margin:22px 0;}.trow{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5);padding:3px 0;}.trow.grand{font-family:"Bebas Neue",sans-serif;font-size:20px;color:#fff;padding-top:10px;margin-top:6px;border-top:1px solid rgba(255,255,255,.15);}.trow.grand span:last-child{color:#d946ef;}.mobox{border:1px solid #d946ef44;background:#fff9ff;padding:12px 16px;margin-bottom:18px;font-size:9px;line-height:1.8;color:#d946ef;}.sbox{border:1px solid #d946ef;padding:12px 16px;margin-bottom:18px;font-size:9px;line-height:1.8;}.nbox{background:#fafafa;padding:12px 16px;margin-bottom:18px;font-size:9px;line-height:1.8;}.terms{font-size:8px;letter-spacing:.04em;color:#bbb;line-height:2.1;padding:14px;border:1px solid #f0f0f0;margin-bottom:32px;}.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:40px;}.sline{padding-top:40px;border-top:1px solid #ccc;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}.foot{text-align:center;padding-top:18px;border-top:1px solid #f0f0f0;margin-top:32px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#ccc;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}';
+
+  var irows=items.map(function(r){
+    var pStr=r.p>0?(r.monthly?'CHF '+fmt(r.p)+' /Mt.':'CHF '+fmt(r.p)):'Inklusive';
+    return'<div class="irow'+(r.monthly?' snob':'')+'"><span class="iname">'+r.n+'</span><span class="ipr">'+pStr+'</span></div>';
+  }).join('');
+
+  var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>goSNOB Offerte #'+onum+' - '+org+'</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>'+css+'</style></head><body><div class="page"><div class="hdr"><div><div class="logo">goSNOB.ai</div><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:4px;">Network-Operated Brain</div></div><div class="meta"><strong>Offerte #'+onum+'</strong>Datum: '+today+'<br>Gueltig bis: '+valid+'</div></div><div class="cbox"><div class="clabel">Auftraggeber</div><div class="cname"><strong>'+vn+' '+nn+'</strong><br>'+org+(tel?'<br>'+tel:'')+(em?'<br>'+em:'')+'</div></div><div class="htitle">Website-Offerte.</div><div class="hsub">Neue Homepage - Basler Ferienpass - goSNOB.ai Basel - '+today+'</div><div class="slabel">Leistungsumfang (Einmalig)</div>'+irows+'<div class="tblock"><div class="trow"><span>Subtotal exkl. MWST</span><span>CHF '+fmt(total)+'</span></div><div class="trow"><span>MWST 8.1%</span><span>CHF '+fmt(mwst)+'</span></div><div class="trow grand"><span>Gesamtbetrag inkl. MWST</span><span>CHF '+fmt(totalMwst)+'</span></div></div>'+(monthly>0?'<div class="mobox">Laufende monatliche Kosten (exkl. MWST): CHF '+monthly+' / Monat'+(S.supp.p>0?' inkl. Wartung':'')+'</div>':'')+(S.supp.p>0?'<div class="sbox">Wartung: '+S.supp.l+' - Monatlich kuendbar</div>':'')+(notes?'<div class="nbox"><strong>Notizen:</strong> '+notes+'</div>':'')+'<div class="terms">50% Anzahlung bei Auftragserteilung - 50% bei Launch - Zahlungsziel 14 Tage netto<br>Realisierungszeit 6-10 Wochen nach Auftragserteilung - Offerte gueltig bis '+valid+' - Preise exkl. MWST</div><div class="sgrid"><div class="sline">Ort, Datum &amp; Unterschrift Auftraggeber</div><div class="sline">goSNOB.ai - Auftragsbestaetigung<br><span style="color:#d946ef;">info@gosnob.ai</span></div></div><div class="foot">goSNOB.ai - Network-Operated Brain - Basel, Schweiz - '+today+'</div></div><script>window.onload=function(){setTimeout(function(){window.print();},600);};<\/script></body></html>';
+
+var w=window.open(’’,’_blank’);
+if(!w){showT(‘Bitte Popups erlauben!’);return;}
+w.document.write(html);
+w.document.close();
+closeM();
+showT(‘PDF geoeffnet - Drucken oder Als PDF speichern’);
 }
 upd();
+
+// CHAT
+var R={
+‘kosten’:‘GoSTART ab CHF 3'900 einmalig. GoFULL CHF 6'900. Premium CHF 11'900. SNOB AI ab CHF 333/Monat zusaetzlich.’,
+‘snob ai’:‘SNOB ist eine Schweizer AI-Plattform. Inbound & Outbound Calls, Chat-Widget - alles automatisch, multilingual.’,
+‘dauer’:‘Nach Auftragserteilung und Anzahlung 6-10 Wochen bis zum Launch.’,
+‘empfehlung’:‘Fuer den Basler Ferienpass empfehlen wir GoFULL + Programm-Datenbank + SNOB Chat-Widget. Optimal fuer eure 100+ Angebote.’,
+‘default’:‘Gute Frage! Ruf uns direkt an: +41 61 539 13 99 oder schreib an info@gosnob.ai.’
+};
+function gr(t){var l=t.toLowerCase();for(var k in R)if(k!==‘default’&&l.includes(k))return R[k];return R.default;}
+function addM(tx,ty,dl){setTimeout(function(){
+var m=document.getElementById(‘cMsgs’),d=document.createElement(‘div’);
+d.className=‘msg ‘+ty;d.innerHTML=’<div class="mb">’+tx+’</div>’;
+m.appendChild(d);m.scrollTop=m.scrollHeight;
+},dl||0);}
+function showTy(){var m=document.getElementById(‘cMsgs’),d=document.createElement(‘div’);d.className=‘msg bot’;d.id=‘ty’;d.innerHTML=’<div class="ty"><div class="td"></div><div class="td"></div><div class="td"></div></div>’;m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function rmTy(){var t=document.getElementById(‘ty’);if(t)t.remove();}
+function cSend(m){
+var i=document.getElementById(‘cIn’),t=m||i.value.trim();if(!t)return;
+i.value=’’;document.getElementById(‘cQR’).style.display=‘none’;
+addM(t,‘usr’);showTy();setTimeout(function(){rmTy();addM(gr(t),‘bot’);},400+Math.random()*300);
+}
+function qr(t){cSend(t);}
+function toggleChat(){
+chatOpen=!chatOpen;
+document.getElementById(‘chatW’).classList.toggle(‘on’,chatOpen);
+document.getElementById(‘fabBtn’).classList.toggle(‘on’,chatOpen);
+if(chatOpen&&!document.getElementById(‘cMsgs’).children.length){
+showTy();setTimeout(function(){rmTy();addM(‘Hey - ich bin SNOB. Frag mich zur Offerte, zu Preisen oder zu den AI-Services.’,‘bot’);},450);
+}
+}
 
 // INTRO
 (function(){
 document.body.style.overflow=‘hidden’;
 var LINES=[
-{langs:[‘Verbinde mit Basler Ferienpass…’,‘Connecting to Basler Ferienpass…’,‘Connexion Basler Ferienpass…’],c:‘muted’},
-{langs:[‘Offerten-Konfigurator bereit.’,‘Offer configurator ready.’,‘Configurateur prêt.’],c:‘pink’},
+{langs:[‘Verbinde mit Basler Ferienpass…’,‘Connecting Basler Ferienpass…’,‘Connexion Basler Ferienpass…’],c:‘muted’},
+{langs:[‘Offerten-Konfigurator bereit.’,‘Offer configurator ready.’,‘Configurateur pret.’],c:‘pink’},
 {langs:null,c:‘gap’},
-{langs:[‘SNOB’,‘SNOB’,‘SNOB’],c:‘big’},
+{langs:[‘SNOB’,‘SNOB’,‘SNOB’],c:‘big’}
 ];
 var cont=document.getElementById(‘intro-out’),delay=200;
 function typeIt(el,text,speed,done){
