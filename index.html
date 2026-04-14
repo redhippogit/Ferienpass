@@ -44,7 +44,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .sec-su{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
 .rgrid{display:grid;grid-template-columns:repeat(3,1fr);}
 @media(max-width:700px){.rgrid{grid-template-columns:1fr;}}
-.rc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
+.rc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;z-index:1;}
 .rc:last-child{border-right:none;}
 .rc:hover{background:#fafafa;}
 .rc.sel{background:#0a0a0a;}
@@ -65,7 +65,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .ogrid{display:grid;grid-template-columns:repeat(4,1fr);}
 @media(max-width:880px){.ogrid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:460px){.ogrid{grid-template-columns:1fr;}}
-.oc{padding:24px 20px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
+.oc{padding:24px 20px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;z-index:1;}
 .oc:hover{background:#fafafa;}
 .oc.sel{background:#0a0a0a;}
 .oc.sel .oti{color:#fff;}.oc.sel .ode{color:#555;}.oc.sel .opr{color:#d946ef;}
@@ -90,7 +90,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .opr.incl{color:#ccc;}
 .sgrid{display:grid;grid-template-columns:repeat(3,1fr);}
 @media(max-width:700px){.sgrid{grid-template-columns:1fr;}}
-.sc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;}
+.sc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;z-index:1;}
 .sc:last-child{border-right:none;}
 .sc:hover{background:#fafafa;}
 .sc.sel{background:#0a0a0a;}
@@ -103,7 +103,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .spr{font-family:‘Bebas Neue’,sans-serif;font-size:52px;line-height:1;margin-bottom:3px;}
 .schf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:14px;}
 .sde{font-size:9px;color:#555;line-height:1.7;}
-#sticky{position:fixed;bottom:0;left:0;right:0;z-index:300;background:#fff;border-top:2px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;padding:12px 40px;gap:16px;}
+#sticky{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:2px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;padding:12px 40px;gap:16px;}
 .sl{display:flex;align-items:center;gap:20px;flex:1;min-width:0;}
 .slbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#666;white-space:nowrap;}
 .schips{display:flex;gap:5px;flex-wrap:wrap;}
@@ -219,8 +219,11 @@ display: flex;
 align-items: flex-start;
 justify-content: flex-start;
 padding: clamp(32px,6vw,72px);
-animation: introExit 0.5s ease 2.8s forwards;
+animation: introExit 0.6s ease 2.6s forwards;
 pointer-events: none;
+}
+#intro.done {
+display: none !important;
 }
 @keyframes introExit {
 0%   { opacity: 1; visibility: visible; }
@@ -610,21 +613,25 @@ function genPDF(){
 
   var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>goSNOB Offerte #'+onum+' - '+org+'</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>'+css+'</style></head><body><div class="page"><div class="hdr"><div><div class="logo">goSNOB.ai</div><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:4px;">Network-Operated Brain</div></div><div class="meta"><strong>Offerte #'+onum+'</strong>Datum: '+today+'<br>Gueltig bis: '+valid+'</div></div><div class="cbox"><div class="clabel">Auftraggeber</div><div class="cname"><strong>'+vn+' '+nn+'</strong><br>'+org+(tel?'<br>'+tel:'')+(em?'<br>'+em:'')+'</div></div><div class="htitle">Website-Offerte.</div><div class="hsub">Neue Homepage - Basler Ferienpass - goSNOB.ai Basel - '+today+'</div><div class="slabel">Leistungsumfang (Einmalig)</div>'+irows+'<div class="tblock"><div class="trow"><span>Subtotal exkl. MWST</span><span>CHF '+fmt(total)+'</span></div><div class="trow"><span>MWST 8.1%</span><span>CHF '+fmt(mwst)+'</span></div><div class="trow grand"><span>Gesamtbetrag inkl. MWST</span><span>CHF '+fmt(totalMwst)+'</span></div></div>'+(monthly>0?'<div class="mobox">Laufende monatliche Kosten (exkl. MWST): CHF '+monthly+' / Monat'+(S.supp.p>0?' inkl. Wartung':'')+'</div>':'')+(S.supp.p>0?'<div class="sbox">Wartung: '+S.supp.l+' - Monatlich kuendbar</div>':'')+(notes?'<div class="nbox"><strong>Notizen:</strong> '+notes+'</div>':'')+'<div class="terms">50% Anzahlung bei Auftragserteilung - 50% bei Launch - Zahlungsziel 14 Tage netto<br>Realisierungszeit 6-10 Wochen nach Auftragserteilung - Offerte gueltig bis '+valid+' - Preise exkl. MWST</div><div class="sgrid"><div class="sline">Ort, Datum &amp; Unterschrift Auftraggeber</div><div class="sline">goSNOB.ai - Auftragsbestaetigung<br><span style="color:#d946ef;">info@gosnob.ai</span></div></div><div class="foot">goSNOB.ai - Network-Operated Brain - Basel, Schweiz - '+today+'</div></div><script>window.onload=function(){setTimeout(function(){window.print();},600);};<\/script></body></html>';
 
-// Mobile-safe: use blob URL instead of window.open
-var blob = new Blob([html], {type:‘text/html;charset=utf-8’});
-var url = URL.createObjectURL(blob);
+// Data URI - works everywhere including GitHub Pages + iOS Safari
+try {
+var encoded = ‘data:text/html;charset=utf-8,’ + encodeURIComponent(html);
 var a = document.createElement(‘a’);
-a.href = url;
-a.download = ‘SNOB-Offerte-’+onum+’.html’;
-a.target = ‘_blank’;
+a.href = encoded;
+a.download = ‘SNOB-Offerte-’ + onum + ‘.html’;
+a.style.display = ‘none’;
 document.body.appendChild(a);
 a.click();
-setTimeout(function(){
-document.body.removeChild(a);
-URL.revokeObjectURL(url);
-}, 1000);
+setTimeout(function(){ document.body.removeChild(a); }, 500);
 closeM();
-showT(‘Offerte heruntergeladen - Im Browser oeffnen und drucken’);
+showT(‘Datei heruntergeladen - Im Browser oeffnen & drucken als PDF’);
+} catch(e) {
+// Final fallback: open in new tab
+var w = window.open();
+if(w){ w.document.write(html); w.document.close(); }
+closeM();
+showT(‘Im neuen Tab geoeffnet - Drucken als PDF speichern’);
+}
 }
 upd();
 
@@ -658,6 +665,21 @@ if(chatOpen&&!document.getElementById(‘cMsgs’).children.length){
 showTy();setTimeout(function(){rmTy();addM(‘Hey - ich bin SNOB. Frag mich zur Offerte, zu Preisen oder zu den AI-Services.’,‘bot’);},450);
 }
 }
+
+// Kill intro overlay after CSS animation ends
+(function(){
+var intro = document.getElementById(‘intro’);
+if(!intro) return;
+// Multiple fallbacks
+intro.addEventListener(‘animationend’, function(){
+intro.classList.add(‘done’);
+});
+// Hard fallback at 4s
+setTimeout(function(){
+var el = document.getElementById(‘intro’);
+if(el) el.classList.add(‘done’);
+}, 4000);
+})();
 
 </script>
 </body>
