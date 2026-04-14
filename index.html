@@ -22,19 +22,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 40px 80px;border-bottom:1px solid #f0f0f0;position:relative;overflow:hidden;padding-top:120px;}
 .hero-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#bbb;margin-bottom:16px;}
 .hero-label span{color:#d946ef;}
-.hw1{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(64px,14vw,220px);line-height:.88;letter-spacing:-.02em;display:block;}
-.hw2{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(64px,14vw,220px);line-height:.88;letter-spacing:-.02em;color:#e0e0e0;display:block;}
+.hw1{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(52px,11vw,200px);line-height:.88;letter-spacing:-.02em;display:block;word-break:break-word;}
+.hw2{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(52px,11vw,200px);line-height:.88;letter-spacing:-.02em;color:#d0d0d0;display:block;word-break:break-word;}
 .hero-right{position:absolute;top:120px;right:40px;text-align:right;max-width:300px;}
 .hero-right-title{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(18px,2.5vw,32px);line-height:1.1;}
 .hero-right-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:8px;}
-.hero-bottom{display:flex;align-items:flex-end;gap:32px;margin-top:40px;padding-top:28px;border-top:1px solid #f0f0f0;flex-wrap:wrap;}
-.hero-txt{font-size:10px;letter-spacing:.08em;color:#bbb;max-width:260px;line-height:1.9;}
-.hstat{text-align:center;}
-.hstat-n{font-family:‘Bebas Neue’,sans-serif;font-size:64px;line-height:1;color:#ebebeb;}
-.hstat-l{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#ccc;margin-top:2px;}
+.hero-bottom{display:flex;align-items:flex-start;gap:24px;margin-top:40px;padding-top:28px;border-top:1px solid #f0f0f0;flex-wrap:wrap;}
+.hero-txt{font-size:11px;letter-spacing:.06em;color:#555;max-width:100%;line-height:1.9;flex:1 1 200px;}
+.hstat{text-align:center;flex:1 1 60px;}
+.hstat-n{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(40px,8vw,64px);line-height:1;color:#ddd;}
+.hstat-l{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#aaa;margin-top:2px;}
 #stmt{min-height:50vh;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #f0f0f0;padding:80px 40px;}
 .stmt-txt{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(32px,7vw,100px);line-height:.92;text-align:center;}
-.stmt-txt .g{color:#ddd;}
+.stmt-txt .g{color:#bbb;}
 .sec{border-bottom:1px solid #f0f0f0;}
 .sec-head{display:grid;grid-template-columns:64px 1fr;border-bottom:1px solid #f0f0f0;}
 .sec-nc{padding:28px 16px;border-right:1px solid #f0f0f0;display:flex;align-items:center;justify-content:center;}
@@ -60,7 +60,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .rpr.sm{font-size:36px;line-height:1.1;}
 .rchf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:16px;}
 .rli{list-style:none;}
-.rli li{font-size:9px;color:#888;padding:5px 0;border-bottom:1px solid #f5f5f5;line-height:1.6;}
+.rli li{font-size:9px;color:#555;padding:5px 0;border-bottom:1px solid #f5f5f5;line-height:1.6;}
 .rc.sel .rli li{border-color:#1c1c1c;}
 .ogrid{display:grid;grid-template-columns:repeat(4,1fr);}
 @media(max-width:880px){.ogrid{grid-template-columns:repeat(2,1fr);}}
@@ -85,7 +85,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .ochk::after{content:’’;position:absolute;top:1px;left:3px;width:3px;height:6px;border:1px solid #fff;border-top:none;border-left:none;transform:rotate(45deg);opacity:0;transition:opacity .2s;}
 .oic{font-size:18px;margin-bottom:8px;display:block;}
 .oti{font-family:‘Bebas Neue’,sans-serif;font-size:16px;margin-bottom:5px;color:#0a0a0a;line-height:1.1;}
-.ode{font-size:9px;color:#bbb;line-height:1.7;}
+.ode{font-size:9px;color:#666;line-height:1.7;}
 .opr{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#0a0a0a;margin-top:10px;}
 .opr.incl{color:#ccc;}
 .sgrid{display:grid;grid-template-columns:repeat(3,1fr);}
@@ -102,16 +102,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .st{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:8px;}
 .spr{font-family:‘Bebas Neue’,sans-serif;font-size:52px;line-height:1;margin-bottom:3px;}
 .schf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:14px;}
-.sde{font-size:9px;color:#888;line-height:1.7;}
+.sde{font-size:9px;color:#555;line-height:1.7;}
 #sticky{position:fixed;bottom:0;left:0;right:0;z-index:300;background:#fff;border-top:2px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;padding:12px 40px;gap:16px;}
 .sl{display:flex;align-items:center;gap:20px;flex:1;min-width:0;}
-.slbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;white-space:nowrap;}
+.slbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#666;white-space:nowrap;}
 .schips{display:flex;gap:5px;flex-wrap:wrap;}
 .chip{font-size:8px;letter-spacing:.08em;text-transform:uppercase;border:1px solid #e8e8e8;padding:3px 7px;color:#999;white-space:nowrap;}
 .chip.pink{border-color:#d946ef44;color:#d946ef;background:#fff9ff;}
 .sr{display:flex;align-items:center;gap:18px;flex-shrink:0;}
 .stw{text-align:right;}
-.stlbl{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
+.stlbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#888;}
 .stnum{font-family:‘Bebas Neue’,sans-serif;font-size:34px;line-height:1;}
 .stnum span{color:#d946ef;}
 .stmo{font-size:8px;color:#bbb;margin-top:1px;}
@@ -190,14 +190,23 @@ footer{padding:16px 40px;display:flex;justify-content:space-between;align-items:
 .pb{padding-bottom:90px;}
 @media(max-width:620px){
 nav,#hero,.sec-tc,footer,#fspam{padding-left:20px;padding-right:20px;}
-#hero{padding-top:100px;}
+#hero{padding-top:90px;padding-bottom:60px;}
 .hero-right{display:none;}
+.hero-bottom{flex-direction:column;gap:16px;}
+.hstat{text-align:left;}
 #sticky{padding:10px 14px;}
 .sl{display:none;}
 .stnum{font-size:26px;}
 .modal{padding:24px 16px;}
 .fr2{grid-template-columns:1fr;}
 .chat-w{width:calc(100vw - 32px);right:16px;}
+.sec-head{grid-template-columns:48px 1fr;}
+.sec-nc{padding:20px 10px;}
+.sec-nt{font-size:32px;}
+.sec-tc{padding:20px;}
+.ogrid{grid-template-columns:1fr 1fr;}
+.rgrid{grid-template-columns:1fr;}
+.sgrid{grid-template-columns:1fr;}
 }
 </style>
 
@@ -528,12 +537,21 @@ function genPDF(){
 
   var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>goSNOB Offerte #'+onum+' - '+org+'</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>'+css+'</style></head><body><div class="page"><div class="hdr"><div><div class="logo">goSNOB.ai</div><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:4px;">Network-Operated Brain</div></div><div class="meta"><strong>Offerte #'+onum+'</strong>Datum: '+today+'<br>Gueltig bis: '+valid+'</div></div><div class="cbox"><div class="clabel">Auftraggeber</div><div class="cname"><strong>'+vn+' '+nn+'</strong><br>'+org+(tel?'<br>'+tel:'')+(em?'<br>'+em:'')+'</div></div><div class="htitle">Website-Offerte.</div><div class="hsub">Neue Homepage - Basler Ferienpass - goSNOB.ai Basel - '+today+'</div><div class="slabel">Leistungsumfang (Einmalig)</div>'+irows+'<div class="tblock"><div class="trow"><span>Subtotal exkl. MWST</span><span>CHF '+fmt(total)+'</span></div><div class="trow"><span>MWST 8.1%</span><span>CHF '+fmt(mwst)+'</span></div><div class="trow grand"><span>Gesamtbetrag inkl. MWST</span><span>CHF '+fmt(totalMwst)+'</span></div></div>'+(monthly>0?'<div class="mobox">Laufende monatliche Kosten (exkl. MWST): CHF '+monthly+' / Monat'+(S.supp.p>0?' inkl. Wartung':'')+'</div>':'')+(S.supp.p>0?'<div class="sbox">Wartung: '+S.supp.l+' - Monatlich kuendbar</div>':'')+(notes?'<div class="nbox"><strong>Notizen:</strong> '+notes+'</div>':'')+'<div class="terms">50% Anzahlung bei Auftragserteilung - 50% bei Launch - Zahlungsziel 14 Tage netto<br>Realisierungszeit 6-10 Wochen nach Auftragserteilung - Offerte gueltig bis '+valid+' - Preise exkl. MWST</div><div class="sgrid"><div class="sline">Ort, Datum &amp; Unterschrift Auftraggeber</div><div class="sline">goSNOB.ai - Auftragsbestaetigung<br><span style="color:#d946ef;">info@gosnob.ai</span></div></div><div class="foot">goSNOB.ai - Network-Operated Brain - Basel, Schweiz - '+today+'</div></div><script>window.onload=function(){setTimeout(function(){window.print();},600);};<\/script></body></html>';
 
-var w=window.open(’’,’_blank’);
-if(!w){showT(‘Bitte Popups erlauben!’);return;}
-w.document.write(html);
-w.document.close();
+// Mobile-safe: use blob URL instead of window.open
+var blob = new Blob([html], {type:‘text/html;charset=utf-8’});
+var url = URL.createObjectURL(blob);
+var a = document.createElement(‘a’);
+a.href = url;
+a.download = ‘SNOB-Offerte-’+onum+’.html’;
+a.target = ‘_blank’;
+document.body.appendChild(a);
+a.click();
+setTimeout(function(){
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+}, 1000);
 closeM();
-showT(‘PDF geoeffnet - Drucken oder Als PDF speichern’);
+showT(‘Offerte heruntergeladen - Im Browser oeffnen und drucken’);
 }
 upd();
 
