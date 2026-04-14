@@ -11,7 +11,7 @@
 html{scroll-behavior:smooth;}
 body{background:#fff;color:#0a0a0a;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:crosshair;}
 #intro{position:fixed;inset:0;z-index:9000;background:#fff;display:flex;align-items:flex-start;justify-content:flex-start;padding:clamp(32px,6vw,72px);transition:opacity .6s ease;}
-#intro.hide{opacity:0;pointer-events:none;}
+#intro.hide{opacity:0;pointer-events:none;visibility:hidden;}
 #intro-out{display:flex;flex-direction:column;gap:0;}
 .tl{font-family:'DM Mono',monospace;font-size:clamp(12px,1.6vw,15px);letter-spacing:.04em;color:#0a0a0a;line-height:1.9;height:0;overflow:hidden;opacity:0;}
 .tl.muted{color:#bbb;}.tl.pink{color:#d946ef;}.tl.gap{height:1.2em;opacity:1;}
@@ -577,6 +577,11 @@ showTy();setTimeout(function(){rmTy();addM(‘Hey - ich bin SNOB. Frag mich zur 
 // INTRO
 (function(){
 document.body.style.overflow=‘hidden’;
+// Hard fallback: kill intro after 15s no matter what
+setTimeout(function(){
+var intro=document.getElementById(‘intro’);
+if(intro){intro.style.display=‘none’;document.body.style.overflow=’’;}
+},15000);
 var LINES=[
 {langs:[‘Verbinde mit Basler Ferienpass…’,‘Connecting Basler Ferienpass…’,‘Connexion Basler Ferienpass…’],c:‘muted’},
 {langs:[‘Offerten-Konfigurator bereit.’,‘Offer configurator ready.’,‘Configurateur pret.’],c:‘pink’},
@@ -610,8 +615,15 @@ f++;el.style.color=(f%2===1)?’#d946ef’:’#0a0a0a’;
 if(f>=6){clearInterval(iv);el.style.color=’#0a0a0a’;
 setTimeout(function(){
 var intro=document.getElementById(‘intro’);
-intro.classList.add(‘hide’);document.body.style.overflow=’’;
-setTimeout(function(){intro.remove();},700);
+if(!intro)return;
+intro.style.opacity=‘0’;
+intro.style.pointerEvents=‘none’;
+intro.style.visibility=‘hidden’;
+document.body.style.overflow=’’;
+setTimeout(function(){
+var el=document.getElementById(‘intro’);
+if(el)el.style.display=‘none’;
+},650);
 },400);
 }
 },160);
