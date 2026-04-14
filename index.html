@@ -209,41 +209,82 @@ nav,#hero,.sec-tc,footer,#fspam{padding-left:20px;padding-right:20px;}
 .sgrid{grid-template-columns:1fr;}
 }
 
-/* ── INTRO ── */
-#intro{
-position:fixed;inset:0;z-index:9999;
-background:#fff;
-display:flex;align-items:flex-start;justify-content:flex-start;
-padding:clamp(32px,6vw,72px);
+/* ── INTRO: Pure CSS, no JS ── */
+#intro {
+position: fixed;
+inset: 0;
+z-index: 9999;
+background: #fff;
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+padding: clamp(32px,6vw,72px);
+animation: introExit 0.5s ease 2.8s forwards;
+pointer-events: none;
 }
-#intro-out{display:flex;flex-direction:column;gap:0;}
-.tl{
-font-family:‘DM Mono’,monospace;
-font-size:clamp(12px,1.6vw,15px);
-letter-spacing:.04em;color:#0a0a0a;line-height:1.9;
-height:0;overflow:hidden;opacity:0;
+@keyframes introExit {
+0%   { opacity: 1; visibility: visible; }
+100% { opacity: 0; visibility: hidden;  }
 }
-.tl.muted{color:#bbb;}
-.tl.pink{color:#d946ef;}
-.tl.gap{height:1.2em;opacity:1;}
-.tl.big{
-font-family:‘Bebas Neue’,sans-serif;
-font-size:clamp(56px,12vw,180px);
-line-height:.9;letter-spacing:-.01em;
+
+.il1 {
+position: absolute;
+top: clamp(32px,6vw,72px);
+left: clamp(32px,6vw,72px);
+font-family: ‘DM Mono’, monospace;
+font-size: clamp(11px,1.4vw,14px);
+letter-spacing: .04em;
+color: #bbb;
+opacity: 0;
+animation: ilFade 0.4s ease 0.1s forwards;
 }
-.tl.show{opacity:1;height:auto;}
-.cur{
-display:inline-block;width:.55em;height:1.05em;
-background:currentColor;vertical-align:text-bottom;
-margin-left:.1em;animation:cblink .7s step-end infinite;
+.il2 {
+position: absolute;
+top: calc(clamp(32px,6vw,72px) + 2em);
+left: clamp(32px,6vw,72px);
+font-family: ‘DM Mono’, monospace;
+font-size: clamp(11px,1.4vw,14px);
+letter-spacing: .04em;
+color: #d946ef;
+opacity: 0;
+animation: ilFade 0.4s ease 0.6s forwards;
 }
-@keyframes cblink{0%,100%{opacity:1}50%{opacity:0}}
+.il3 {
+position: absolute;
+bottom: clamp(32px,6vw,72px);
+left: clamp(32px,6vw,72px);
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(60px,14vw,180px);
+line-height: .9;
+letter-spacing: -.01em;
+color: #0a0a0a;
+opacity: 0;
+animation:
+ilFade   0.3s ease 1.1s forwards,
+snobPink 0.8s ease 1.8s forwards;
+}
+@keyframes ilFade {
+from { opacity: 0; transform: translateY(6px); }
+to   { opacity: 1; transform: translateY(0);   }
+}
+@keyframes snobPink {
+0%   { color: #0a0a0a; }
+20%  { color: #d946ef; }
+40%  { color: #0a0a0a; }
+60%  { color: #d946ef; }
+80%  { color: #0a0a0a; }
+100% { color: #0a0a0a; }
+}
 </style>
 
 </head>
 <body>
 
-<div id="intro"><div id="intro-out"></div></div>
+<div id="intro" aria-hidden="true">
+  <div class="il1">Offerten-Konfigurator</div>
+  <div class="il2">goSNOB.ai &times; Basler Ferienpass</div>
+  <div class="il3">SNOB</div>
+</div>
 
 <nav>
   <div class="n-logo">goSNOB.ai</div>
@@ -617,102 +658,6 @@ if(chatOpen&&!document.getElementById(‘cMsgs’).children.length){
 showTy();setTimeout(function(){rmTy();addM(‘Hey - ich bin SNOB. Frag mich zur Offerte, zu Preisen oder zu den AI-Services.’,‘bot’);},450);
 }
 }
-
-// ── INTRO ──
-(function(){
-var el = document.getElementById(‘intro’);
-if(!el) return;
-
-// Lock scroll
-document.body.style.overflow = ‘hidden’;
-
-// Safety net: if anything goes wrong, kill intro after 8s
-var killTimer = setTimeout(function(){
-killIntro();
-}, 8000);
-
-function killIntro(){
-clearTimeout(killTimer);
-var intro = document.getElementById(‘intro’);
-if(!intro) return;
-intro.style.transition = ‘opacity .5s ease’;
-intro.style.opacity = ‘0’;
-document.body.style.overflow = ‘’;
-setTimeout(function(){
-var i = document.getElementById(‘intro’);
-if(i) i.parentNode.removeChild(i);
-}, 520);
-}
-
-var LINES = [
-{text:‘Verbinde…’, cls:‘muted’},
-{text:‘Offerten-Konfigurator bereit.’, cls:‘pink’},
-{text:null, cls:‘gap’},
-{text:‘SNOB’, cls:‘big’}
-];
-
-var cont = document.getElementById(‘intro-out’);
-var totalDelay = 0;
-
-function typeText(el, text, speed, onDone){
-el.classList.add(‘show’);
-el.textContent = ‘’;
-var cur = document.createElement(‘span’);
-cur.className = ‘cur’;
-el.appendChild(cur);
-var idx = 0;
-var iv = setInterval(function(){
-if(idx < text.length){
-cur.insertAdjacentText(‘beforebegin’, text[idx]);
-idx++;
-} else {
-clearInterval(iv);
-onDone(cur);
-}
-}, speed);
-}
-
-LINES.forEach(function(line, i){
-var div = document.createElement(‘div’);
-div.className = ’tl ’ + line.cls;
-
-```
-if(line.cls === 'gap'){
-  cont.appendChild(div);
-  return;
-}
-
-cont.appendChild(div);
-var isBig = (line.cls === 'big');
-var isLast = (i === LINES.length - 1);
-var speed = isBig ? 80 : 30;
-var d = totalDelay;
-totalDelay += line.text.length * speed + 300;
-
-setTimeout(function(){
-  typeText(div, line.text, speed, function(cur){
-    if(!isLast){
-      cur.remove();
-      return;
-    }
-    // Last line: flash pink then close
-    cur.remove();
-    var flashes = 0;
-    var flashIv = setInterval(function(){
-      flashes++;
-      div.style.color = (flashes % 2 === 1) ? '#d946ef' : '#0a0a0a';
-      if(flashes >= 6){
-        clearInterval(flashIv);
-        div.style.color = '#0a0a0a';
-        killIntro();
-      }
-    }, 150);
-  });
-}, d);
-```
-
-});
-})();
 
 </script>
 </body>
