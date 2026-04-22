@@ -1,1106 +1,1147 @@
-import { useState, useEffect, useRef } from “react”;
+<!DOCTYPE html>
 
-// ── DATA ──────────────────────────────────────────────────────────────────────
-const COURSES_DATA = [
-{ id: 1, title: “Musik & Klang Camp”, provider: “Fabio Landi”, category: “Musik”, price: 0, priceband: “low”, age: “8-14”, spots: 12, booked: 9, days: [“Mo”, “Di”, “Mi”], week: “14. Juli”, image: “🎵”, color: “#FF6B6B”, desc: “Tauche ein in die Welt der Musik – von Rhythmus über Melodie bis hin zu eigenen Kompositionen.”, rating: 4.8, reviews: 23, location: “Musikschule Basel, Leonhardsgraben 6”, duration: “3 Tage”, time: “09:00–16:00” },
-{ id: 2, title: “Zirkus Akrobatik”, provider: “Zirkus Basilisk”, category: “Sport”, price: 45, priceband: “mid”, age: “6-12”, spots: 15, booked: 15, days: [“Mo”, “Di”, “Mi”, “Do”, “Fr”], week: “21. Juli”, image: “🎪”, color: “#4ECDC4”, desc: “Jonglieren, Balancieren, Akrobatik – eine Woche voller Spass und neuer Fähigkeiten.”, rating: 4.9, reviews: 41, location: “Sportanlage Rankhof”, duration: “5 Tage”, time: “08:30–17:00” },
-{ id: 3, title: “Coding & Robotik”, provider: “TechKids Basel”, category: “Technik”, price: 80, priceband: “market”, age: “10-16”, spots: 10, booked: 6, days: [“Mo”, “Di”, “Mi”, “Do”], week: “28. Juli”, image: “🤖”, color: “#A29BFE”, desc: “Programmieren lernen, eigene Roboter bauen und die Welt von morgen gestalten.”, rating: 4.7, reviews: 18, location: “Digitalhub Basel, Hochbergerstrasse”, duration: “4 Tage”, time: “09:00–17:00” },
-{ id: 4, title: “Naturentdecker Camp”, provider: “NABU Basel”, category: “Natur”, price: 0, priceband: “low”, age: “7-12”, spots: 20, booked: 14, days: [“Di”, “Mi”, “Do”], week: “4. Aug”, image: “🌿”, color: “#55EFC4”, desc: “Käfer, Kräuter, Flussleben – die Natur Basels hautnah entdecken mit echten Biologen.”, rating: 4.6, reviews: 35, location: “Petite Camargue Alsacienne”, duration: “3 Tage”, time: “09:30–15:30” },
-{ id: 5, title: “Theater & Performance”, provider: “Junges Theater Basel”, category: “Kunst”, price: 20, priceband: “low”, age: “9-15”, spots: 16, booked: 10, days: [“Mo”, “Di”, “Mi”, “Do”, “Fr”], week: “11. Aug”, image: “🎭”, color: “#FD79A8”, desc: “Eigene Stücke schreiben, proben und am Ende der Woche vor Eltern aufführen.”, rating: 4.5, reviews: 29, location: “Theater Basel, Probe-Bühne”, duration: “5 Tage”, time: “10:00–17:00” },
-{ id: 6, title: “Kochen & Backen”, provider: “Kochschule Basilicum”, category: “Kulinarik”, price: 55, priceband: “mid”, age: “8-14”, spots: 12, booked: 8, days: [“Mi”, “Do”, “Fr”], week: “18. Aug”, image: “👨‍🍳”, color: “#FDCB6E”, desc: “Teig kneten, Saucen kochen, Kuchen dekorieren – Küchenmagie für Kinder.”, rating: 4.8, reviews: 22, location: “Kochschule am Marktplatz”, duration: “3 Tage”, time: “10:00–15:00” },
-{ id: 7, title: “Streetart & Graffiti”, provider: “Kunsthalle Basel Youth”, category: “Kunst”, price: 35, priceband: “mid”, age: “12-17”, spots: 10, booked: 7, days: [“Mo”, “Di”, “Mi”], week: “25. Aug”, image: “🎨”, color: “#E17055”, desc: “Legales Sprühen unter Anleitung professioneller Streetart-Künstler. Eigene Wand inklusive.”, rating: 4.9, reviews: 15, location: “Gundeldinger Feld”, duration: “3 Tage”, time: “11:00–18:00” },
-{ id: 8, title: “Schwimmen & Wassersport”, provider: “Sportamt Basel”, category: “Sport”, price: 0, priceband: “low”, age: “6-14”, spots: 25, booked: 20, days: [“Mo”, “Di”, “Mi”, “Do”, “Fr”], week: “1. Sept”, image: “🏊”, color: “#74B9FF”, desc: “Kraul lernen, Wasserball spielen und sicher im Wasser sein – für alle Levels.”, rating: 4.4, reviews: 48, location: “Gartenbad Bachgraben”, duration: “5 Tage”, time: “09:00–12:00” },
-];
-
-const CATEGORIES = [“Alle”, “Musik”, “Sport”, “Technik”, “Natur”, “Kunst”, “Kulinarik”];
-const PRICE_BANDS = [“Alle”, “Kostenlos”, “Günstig (CHF 1–50)”, “Marktpreis (CHF 50+)”];
-const WEEKS = [“Alle Wochen”, “14. Juli”, “21. Juli”, “28. Juli”, “4. Aug”, “11. Aug”, “18. Aug”, “25. Aug”, “1. Sept”];
-
-// ── HELPERS ───────────────────────────────────────────────────────────────────
-const spotsLeft = (c) => c.spots - c.booked;
-const isFull = (c) => spotsLeft(c) <= 0;
-const priceBadge = (c) => c.price === 0 ? “Gratis” : `CHF ${c.price}`;
-const bandLabel = (b) => ({ low: “Günstig”, mid: “Standard”, market: “Premium” }[b]);
-
-// ── COMPONENTS ────────────────────────────────────────────────────────────────
-function StarRating({ rating }) {
-return (
-<span style={{ color: “#FDCB6E”, fontSize: 13 }}>
-{“★”.repeat(Math.floor(rating))}{“☆”.repeat(5 - Math.floor(rating))}
-<span style={{ color: “#999”, marginLeft: 4 }}>{rating}</span>
-</span>
-);
-}
-
-function Badge({ label, color = “#333”, bg = “#f0f0f0” }) {
-return (
-<span style={{ background: bg, color, borderRadius: 20, padding: “2px 10px”, fontSize: 11, fontWeight: 700, letterSpacing: 0.5, display: “inline-block” }}>
-{label}
-</span>
-);
-}
-
-function SpotBar({ course }) {
-const pct = (course.booked / course.spots) * 100;
-const clr = pct >= 100 ? “#FF6B6B” : pct >= 75 ? “#FDCB6E” : “#00B894”;
-return (
-<div>
-<div style={{ display: “flex”, justifyContent: “space-between”, fontSize: 11, color: “#888”, marginBottom: 3 }}>
-<span>{isFull(course) ? “⚡ Ausgebucht” : `${spotsLeft(course)} Plätze frei`}</span>
-<span>{course.booked}/{course.spots}</span>
-</div>
-<div style={{ background: “#eee”, borderRadius: 10, height: 6, overflow: “hidden” }}>
-<div style={{ width: `${Math.min(pct, 100)}%`, background: clr, height: “100%”, borderRadius: 10, transition: “width 0.5s” }} />
-</div>
-</div>
-);
-}
-
-function CourseCard({ course, onBook, onDetail, isFav, onToggleFav }) {
-const [hover, setHover] = useState(false);
-const full = isFull(course);
-return (
-<div
-onMouseEnter={() => setHover(true)}
-onMouseLeave={() => setHover(false)}
-style={{
-background: “#fff”,
-borderRadius: 20,
-overflow: “hidden”,
-boxShadow: hover ? “0 20px 60px rgba(0,0,0,0.15)” : “0 4px 20px rgba(0,0,0,0.07)”,
-transition: “all 0.3s cubic-bezier(.34,1.56,.64,1)”,
-transform: hover ? “translateY(-6px) scale(1.01)” : “none”,
-cursor: “pointer”,
-display: “flex”,
-flexDirection: “column”,
-}}
->
-{/* Header */}
-<div style={{
-background: `linear-gradient(135deg, ${course.color}22, ${course.color}44)`,
-padding: “28px 24px 20px”,
-position: “relative”,
-borderBottom: `3px solid ${course.color}`
-}}>
-<div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{course.image}</div>
-<div style={{ display: “flex”, gap: 6, flexWrap: “wrap”, marginBottom: 8 }}>
-<Badge label={course.category} color={course.color} bg={`${course.color}22`} />
-<Badge label={bandLabel(course.priceband)} color="#666" bg="#f5f5f5" />
-<Badge label={`${course.age} J.`} color=”#555” bg=”#f0f0f0” />
-</div>
-<button
-onClick={(e) => { e.stopPropagation(); onToggleFav(course.id); }}
-style={{
-position: “absolute”, top: 16, right: 16,
-background: isFav ? course.color : “white”,
-border: `2px solid ${course.color}`,
-borderRadius: “50%”, width: 36, height: 36,
-fontSize: 16, cursor: “pointer”, display: “flex”, alignItems: “center”, justifyContent: “center”,
-transition: “all 0.2s”
-}}
->
-{isFav ? “♥” : “♡”}
-</button>
-</div>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basler Ferienpass 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', system-ui, sans-serif; background: #f7f8fc; color: #1a1a2e; min-height: 100vh; }
+    button { font-family: inherit; cursor: pointer; }
+    input, select { font-family: inherit; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
 
 ```
-  {/* Body */}
-  <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+/* ── NAV ── */
+nav {
+  background: white; border-bottom: 1px solid #eee;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,.08);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; gap: 16px; height: 68px;
+}
+.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
+.logo-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, #FF6B6B, #FDCB6E);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.logo-text-top { font-weight: 900; font-size: 16px; color: #1a1a2e; line-height: 1; }
+.logo-text-bot { font-weight: 900; font-size: 16px; color: #FF6B6B; line-height: 1; }
+.nav-links { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
+.nav-btn {
+  padding: 8px 14px; border-radius: 12px; border: none;
+  background: transparent; color: #555; font-weight: 600;
+  font-size: 13px; transition: all .2s; white-space: nowrap;
+}
+.nav-btn:hover { background: #f5f5f5; }
+.nav-btn.active { background: #FF6B6B; color: white; font-weight: 700; }
+.pass-badge {
+  background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+  color: white; border-radius: 20px; padding: 6px 14px;
+  font-size: 12px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; animation: fadeUp .35s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 80px 24px 100px; position: relative; overflow: hidden;
+}
+.hero-orb {
+  position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none;
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; position: relative; text-align: center; }
+.hero-pill {
+  display: inline-block; background: rgba(255,107,107,.2);
+  border: 1px solid rgba(255,107,107,.4); border-radius: 30px;
+  padding: 8px 20px; margin-bottom: 24px; font-size: 13px;
+  color: #FF6B6B; font-weight: 700;
+}
+.hero h1 { color: white; font-size: clamp(36px,6vw,56px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+.hero h1 span { background: linear-gradient(135deg,#FF6B6B,#FDCB6E); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero p { color: rgba(255,255,255,.7); font-size: 18px; max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+.hero-stats { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-stat-val { font-size: 30px; font-weight: 900; color: #FDCB6E; }
+.hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,.5); font-weight: 600; margin-top: 2px; }
+.search-wrap { position: relative; max-width: 500px; margin: 0 auto; }
+.search-wrap input {
+  width: 100%; padding: 18px 56px 18px 52px; border-radius: 20px;
+  border: 2px solid rgba(255,255,255,.15); background: rgba(255,255,255,.1);
+  color: white; font-size: 15px; outline: none; font-family: inherit;
+  backdrop-filter: blur(10px);
+}
+.search-wrap input::placeholder { color: rgba(255,255,255,.5); }
+.search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; }
+.search-btn {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  background: #FF6B6B; color: white; border: none; border-radius: 14px;
+  padding: 10px 20px; font-weight: 800; font-size: 14px; font-family: inherit;
+}
+.search-btn:hover { background: #e85d5d; }
+
+/* ── SECTION ── */
+.section { max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
+.section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.section-head h2 { font-size: clamp(22px,4vw,32px); font-weight: 900; color: #1a1a2e; }
+.section-head p { color: #888; font-size: 15px; margin-top: 4px; }
+.btn-outline {
+  border: 2px solid #FF6B6B; border-radius: 14px; padding: 10px 20px;
+  background: white; color: #FF6B6B; font-weight: 700; font-size: 14px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.btn-outline:hover { background: #fff0f0; }
+
+/* ── COURSE GRID ── */
+.course-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 24px; }
+
+/* ── CARD ── */
+.card {
+  background: white; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07);
+  transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  display: flex; flex-direction: column;
+}
+.card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.15); transform: translateY(-6px) scale(1.01); }
+.card-head { padding: 28px 24px 20px; position: relative; }
+.card-emoji { font-size: 48px; line-height: 1; margin-bottom: 10px; display: block; }
+.card-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge { border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; letter-spacing: .4px; display: inline-block; }
+.fav-btn {
+  position: absolute; top: 16px; right: 16px;
+  border-radius: 50%; width: 36px; height: 36px;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; border-width: 2px; border-style: solid;
+}
+.card-body { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.card-title { font-size: 17px; font-weight: 800; color: #1a1a2e; line-height: 1.3; }
+.card-provider { font-size: 12px; color: #888; margin-top: 3px; }
+.card-desc { font-size: 13px; color: #555; line-height: 1.6; }
+.card-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; color: #666; }
+.stars { color: #FDCB6E; font-size: 13px; }
+.stars span { color: #999; margin-left: 4px; }
+.spot-bar-row { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 4px; }
+.spot-bar-bg { background: #eee; border-radius: 10px; height: 6px; overflow: hidden; }
+.spot-bar-fill { height: 100%; border-radius: 10px; transition: width .5s; }
+.card-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; }
+.btn-details {
+  flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #e0e0e0;
+  background: white; color: #333; font-weight: 700; font-size: 13px; transition: all .2s;
+}
+.btn-details:hover { border-color: #ccc; background: #fafafa; }
+.btn-book {
+  flex: 2; padding: 10px; border-radius: 12px; border: none;
+  color: white; font-weight: 800; font-size: 13px; transition: all .2s;
+}
+.btn-book:hover { filter: brightness(1.1); }
+.btn-book.full { background: #e0e0e0 !important; color: #999; cursor: not-allowed; }
+
+/* ── HOW IT WORKS ── */
+.how-section { background: white; padding: 60px 24px; }
+.how-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 32px; margin-top: 48px; }
+.how-icon { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+.how-step { font-weight: 900; color: #FF6B6B; font-size: 11px; letter-spacing: 2px; margin-bottom: 8px; }
+.how-title { font-size: 20px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+.how-desc { font-size: 14px; color: #666; line-height: 1.7; }
+
+/* ── CAT GRID ── */
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 16px; }
+.cat-card {
+  border-radius: 20px; padding: 24px 16px; cursor: pointer; text-align: center;
+  border-width: 2px; border-style: solid; transition: all .2s; background: white;
+}
+.cat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.1); }
+.cat-icon { font-size: 36px; margin-bottom: 8px; }
+.cat-name { font-weight: 800; color: #1a1a2e; font-size: 14px; }
+.cat-count { font-size: 12px; color: #888; margin-top: 4px; }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: white; border-radius: 20px; padding: 20px 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07); margin-bottom: 28px;
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+}
+.filter-bar input, .filter-bar select {
+  border: 2px solid #eee; border-radius: 12px; padding: 10px 16px;
+  font-size: 14px; outline: none; flex: 1 1 150px; background: white;
+}
+.filter-bar input:focus, .filter-bar select:focus { border-color: #FF6B6B; }
+.btn-reset {
+  border: 2px solid #FF6B6B; border-radius: 12px; padding: 10px 16px;
+  background: white; color: #FF6B6B; font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+.pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.pill {
+  border: none; border-radius: 20px; padding: 8px 18px;
+  background: #f0f0f0; color: #555; font-weight: 700; font-size: 13px; transition: all .2s;
+}
+.pill.active { background: #FF6B6B; color: white; }
+.pill:hover:not(.active) { background: #e0e0e0; }
+.empty-state { text-align: center; padding: 80px 20px; color: #888; }
+.empty-state .emoji { font-size: 64px; display: block; margin-bottom: 16px; }
+
+/* ── BOOKINGS ── */
+.booking-card {
+  background: white; border-radius: 20px; padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07);
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.booking-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+.booking-info { flex: 1; min-width: 180px; }
+.booking-title { font-size: 17px; font-weight: 800; color: #1a1a2e; }
+.booking-sub { font-size: 13px; color: #888; margin-top: 4px; }
+.booking-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn-cancel { border: 2px solid #FF6B6B; border-radius: 10px; padding: 6px 14px; background: white; color: #FF6B6B; font-weight: 700; font-size: 13px; }
+.btn-cancel:hover { background: #fff0f0; }
+.waitlist-card { border-left: 4px solid #FDCB6E; }
+
+/* ── PROFILE ── */
+.white-card { background: white; border-radius: 24px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,.07); margin-bottom: 24px; }
+.profile-head { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; flex-wrap: wrap; }
+.profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg,#FF6B6B,#FDCB6E); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; }
+.profile-name { font-size: 24px; font-weight: 900; }
+.profile-email { color: #888; font-size: 14px; margin-top: 4px; }
+.pass-card { background: linear-gradient(135deg,#6C5CE7,#A29BFE); color: white; border-radius: 20px; padding: 10px 20px; font-weight: 800; font-size: 14px; text-align: center; margin-left: auto; }
+.section-divider { border-top: 1px solid #f0f0f0; padding-top: 24px; margin-top: 4px; }
+.kids-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.kid-tag { background: #f7f8fc; border-radius: 16px; padding: 12px 20px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+.btn-add-kid { background: none; border: 2px dashed #ddd; border-radius: 16px; padding: 12px 20px; color: #888; font-weight: 700; font-size: 14px; }
+.btn-add-kid:hover { border-color: #FF6B6B; color: #FF6B6B; }
+.fav-row { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f7f8fc; border-radius: 16px; margin-bottom: 10px; }
+.fav-row-info { flex: 1; }
+.fav-title { font-weight: 700; color: #1a1a2e; }
+.fav-sub { font-size: 12px; color: #888; margin-top: 2px; }
+.btn-book-sm { background: #FF6B6B; color: white; border: none; border-radius: 10px; padding: 8px 16px; font-weight: 700; font-size: 13px; }
+
+/* ── ADMIN ── */
+.admin-lock { max-width: 400px; margin: 60px auto; text-align: center; padding: 0 24px; }
+.admin-emoji { font-size: 64px; display: block; margin-bottom: 16px; }
+.admin-input { width: 100%; border: 2px solid #eee; border-radius: 14px; padding: 14px 20px; font-size: 16px; outline: none; margin-bottom: 10px; font-family: inherit; }
+.admin-input:focus { border-color: #FF6B6B; }
+.btn-primary { background: #FF6B6B; color: white; border: none; border-radius: 14px; padding: 14px 24px; font-weight: 800; font-size: 15px; width: 100%; font-family: inherit; }
+.btn-primary:hover { background: #e85d5d; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 20px; margin-bottom: 36px; }
+.stat-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+.stat-icon { font-size: 28px; margin-bottom: 8px; }
+.stat-val { font-size: 36px; font-weight: 900; }
+.stat-lbl { font-size: 13px; color: #888; font-weight: 600; margin-top: 2px; }
+.table-wrap { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+.table-head { padding: 24px 28px; border-bottom: 1px solid #f0f0f0; font-size: 20px; font-weight: 800; }
+table { width: 100%; border-collapse: collapse; }
+th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 800; color: #888; letter-spacing: .5px; background: #f7f8fc; }
+td { padding: 14px 16px; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
+tr:hover td { background: #fafafa; }
+.btn-edit { border: 2px solid #A29BFE; border-radius: 8px; padding: 5px 10px; background: white; color: #A29BFE; font-weight: 700; font-size: 12px; font-family: inherit; }
+.add-form { background: white; border-radius: 24px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,.07); margin-top: 24px; }
+.add-form-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.add-form input { border: 2px solid #eee; border-radius: 12px; padding: 10px 16px; font-size: 14px; outline: none; flex: 1 1 150px; font-family: inherit; }
+.add-form input:focus { border-color: #FF6B6B; }
+.btn-add { background: #FF6B6B; color: white; border: none; border-radius: 12px; padding: 10px 24px; font-weight: 800; font-size: 14px; font-family: inherit; flex-shrink: 0; }
+.logout-btn { border: 2px solid #FF6B6B; border-radius: 12px; padding: 8px 16px; background: white; color: #FF6B6B; font-weight: 700; font-family: inherit; }
+
+/* ── MODAL ── */
+.overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.overlay.open { display: flex; }
+.modal {
+  background: white; border-radius: 28px; max-width: 560px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 40px 120px rgba(0,0,0,.3);
+  animation: modalIn .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalIn { from { opacity:0; transform:scale(.9) translateY(20px); } to { opacity:1; transform:none; } }
+.modal-header { padding: 32px; }
+.modal-header-emoji { font-size: 48px; display: block; margin-bottom: 12px; }
+.modal-title { font-size: 22px; font-weight: 900; color: #1a1a2e; }
+.modal-sub { font-size: 14px; color: #888; margin-top: 4px; }
+.modal-body { padding: 0 32px 32px; }
+.modal-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.meta-item { background: #f7f8fc; border-radius: 12px; padding: 14px 16px; }
+.meta-label { font-size: 11px; color: #888; font-weight: 700; letter-spacing: .5px; margin-bottom: 4px; }
+.meta-value { font-weight: 700; font-size: 14px; }
+.modal-desc { color: #555; line-height: 1.8; font-size: 15px; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 12px; margin-top: 20px; }
+.btn-secondary { flex: 1; padding: 14px; border-radius: 14px; border: 2px solid #eee; background: white; color: #333; font-weight: 700; font-size: 15px; font-family: inherit; }
+.btn-confirm { flex: 2; padding: 14px; border-radius: 14px; border: none; color: white; font-weight: 800; font-size: 15px; font-family: inherit; }
+.close-btn { float: right; background: rgba(255,255,255,.8); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
+.kids-selector { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.kid-btn {
+  border-width: 2px; border-style: solid; border-radius: 14px;
+  padding: 10px 20px; background: white; color: #333;
+  font-weight: 700; font-size: 14px; transition: all .2s; font-family: inherit;
+}
+.kid-btn.selected { color: white; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; top: 80px; right: 24px; z-index: 2000;
+  color: white; border-radius: 16px; padding: 14px 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.2); max-width: 340px;
+  font-size: 14px; font-weight: 600;
+  animation: toastIn .4s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+}
+.toast.success { background: #00B894; }
+.toast.info { background: #6C5CE7; }
+@keyframes toastIn { from { opacity:0; transform:translateX(100px); } to { opacity:1; transform:none; } }
+
+/* ── FOOTER ── */
+footer { background: #1a1a2e; color: rgba(255,255,255,.5); padding: 40px 24px; text-align: center; margin-top: 60px; font-size: 13px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; font-size: 20px; }
+.footer-logo span { font-weight: 900; color: white; font-size: 16px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .nav-links .nav-btn:not(.active) { display: none; }
+  .hero h1 { font-size: 32px; }
+  .booking-card { flex-direction: column; align-items: flex-start; }
+  .profile-head { flex-direction: column; align-items: flex-start; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="navigate('home')">
+      <div class="logo-icon">☀️</div>
+      <div>
+        <div class="logo-text-top">Basler</div>
+        <div class="logo-text-bot">Ferienpass</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-page="home" onclick="navigate('home')">🏠 Home</button>
+      <button class="nav-btn" data-page="courses" onclick="navigate('courses')">📚 Kurse</button>
+      <button class="nav-btn" data-page="bookings" onclick="navigate('bookings')" id="nav-bookings">📋 Buchungen</button>
+      <button class="nav-btn" data-page="profile" onclick="navigate('profile')">👨‍👩‍👧‍👦 Profil</button>
+      <button class="nav-btn" data-page="admin" onclick="navigate('admin')">⚙️ Admin</button>
+    </div>
+    <div class="pass-badge">✓ Pass aktiv</div>
+  </div>
+</nav>
+
+<!-- TOAST -->
+
+<div id="toast" class="toast" style="display:none"></div>
+
+<!-- ══════════════════════ HOME PAGE ══════════════════════ -->
+
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-orb" style="width:300px;height:300px;background:#FF6B6B18;top:-10%;left:-5%;"></div>
+    <div class="hero-orb" style="width:400px;height:400px;background:#FDCB6E18;top:5%;left:25%;"></div>
+    <div class="hero-orb" style="width:250px;height:250px;background:#4ECDC418;top:-5%;left:55%;"></div>
+    <div class="hero-orb" style="width:350px;height:350px;background:#A29BFE18;top:10%;left:72%;"></div>
+    <div class="hero-inner">
+      <div class="hero-pill">🎉 Sommer 2025 — Anmeldung offen</div>
+      <h1>Ferienzeit ist<br><span>Abenteuerzeit</span></h1>
+      <p>Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren. Günstig, vielfältig, unvergesslich.</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-val">50+</div><div class="hero-stat-lbl">Kurse</div></div>
+        <div><div class="hero-stat-val">200+</div><div class="hero-stat-lbl">Plätze</div></div>
+        <div><div class="hero-stat-val">30+</div><div class="hero-stat-lbl">Anbieter</div></div>
+        <div><div class="hero-stat-val">0–80 CHF</div><div class="hero-stat-lbl">Preise</div></div>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="hero-search" type="text" placeholder="Kurs suchen... (Musik, Sport, Natur...)" oninput="heroSearch(this.value)" />
+        <button class="search-btn" onclick="navigate('courses')">Suchen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured -->
+
+  <div class="section">
+    <div class="section-head">
+      <div><h2>🔥 Beliebt diese Woche</h2><p>Die am stärksten gefragten Kurse</p></div>
+      <button class="btn-outline" onclick="navigate('courses')">Alle Kurse →</button>
+    </div>
+    <div class="course-grid" id="home-featured"></div>
+  </div>
+
+  <!-- How it works -->
+
+  <div class="how-section">
+    <div class="how-inner">
+      <h2 style="font-size:32px;font-weight:900;color:#1a1a2e">So funktioniert's</h2>
+      <p style="color:#888;margin-top:8px">In 3 Schritten zum Ferienabenteuer</p>
+      <div class="how-grid">
+        <div>
+          <div class="how-icon" style="background:linear-gradient(135deg,#FF6B6B22,#FDCB6E22)">🎫</div>
+          <div class="how-step">SCHRITT 1</div>
+          <div class="how-title">Ferienpass kaufen</div>
+          <p class="how-desc">Einmalig kaufen und den ganzen Sommer davon profitieren. Digital oder als PDF.</p>
+        </div>
+        <div>
+          <div class="how-icon" style="background:linear-gradient(135deg,#4ECDC422,#55EFC422)">🔍</div>
+          <div class="how-step">SCHRITT 2</div>
+          <div class="how-title">Kurse entdecken</div>
+          <p class="how-desc">Filter nach Kategorie, Alter, Woche und Budget. Favoriten speichern, vergleichen.</p>
+        </div>
+        <div>
+          <div class="how-icon" style="background:linear-gradient(135deg,#A29BFE22,#FD79A822)">🎉</div>
+          <div class="how-step">SCHRITT 3</div>
+          <div class="how-title">Buchen & loslegen</div>
+          <p class="how-desc">Ein Klick, Bestätigung per E-Mail. Änderungen jederzeit möglich.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories -->
+
+  <div class="section">
+    <h2 style="font-size:32px;font-weight:900;color:#1a1a2e;margin-bottom:32px">Nach Kategorie entdecken</h2>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">☀️ <span>Basler Ferienpass 2025</span></div>
+      <p>Basierend auf basler-ferienpass.ch · Demo-Version</p>
+      <p style="margin-top:6px">Alle Kursdaten sind fiktiv · Admin-Demo-Passwort: <strong style="color:rgba(255,255,255,.7)">admin123</strong></p>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════ COURSES PAGE ══════════════════════ -->
+
+<div id="page-courses" class="page">
+  <div class="section" style="padding-top:40px">
+    <h1 style="font-size:36px;font-weight:900;margin-bottom:8px">Kurse entdecken</h1>
+    <p id="courses-count" style="color:#888;margin-bottom:32px">8 Kurse gefunden</p>
+
+```
+<div class="filter-bar">
+  <input id="search-input" type="text" placeholder="🔍 Suchen..." oninput="applyFilters()" />
+  <select id="filter-cat" onchange="applyFilters()">
+    <option>Alle</option>
+    <option>Musik</option><option>Sport</option><option>Technik</option>
+    <option>Natur</option><option>Kunst</option><option>Kulinarik</option>
+  </select>
+  <select id="filter-week" onchange="applyFilters()">
+    <option>Alle Wochen</option>
+    <option>14. Juli</option><option>21. Juli</option><option>28. Juli</option>
+    <option>4. Aug</option><option>11. Aug</option><option>18. Aug</option>
+    <option>25. Aug</option><option>1. Sept</option>
+  </select>
+  <select id="filter-price" onchange="applyFilters()">
+    <option>Alle Preise</option>
+    <option>Kostenlos</option>
+    <option>Günstig (CHF 1–50)</option>
+    <option>Premium (CHF 50+)</option>
+  </select>
+  <button class="btn-reset" onclick="resetFilters()">Reset</button>
+</div>
+
+<div class="pill-row" id="cat-pills"></div>
+<div class="course-grid" id="courses-grid"></div>
+<div id="no-results" class="empty-state" style="display:none">
+  <span class="emoji">😔</span>
+  <h3>Keine Kurse gefunden</h3>
+  <p style="margin-top:8px">Versuche andere Filter</p>
+</div>
+```
+
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">☀️ <span>Basler Ferienpass 2025</span></div>
+      <p>Admin-Passwort: <strong style="color:rgba(255,255,255,.7)">admin123</strong></p>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════ BOOKINGS PAGE ══════════════════════ -->
+
+<div id="page-bookings" class="page">
+  <div class="section" style="padding-top:40px">
+    <h1 style="font-size:36px;font-weight:900;margin-bottom:8px">Meine Buchungen</h1>
+    <p id="bookings-meta" style="color:#888;margin-bottom:32px">0 aktive Buchungen · 0 Wartelisten</p>
+    <div id="bookings-list"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════ PROFILE PAGE ══════════════════════ -->
+
+<div id="page-profile" class="page">
+  <div class="section" style="padding-top:40px;max-width:800px">
+    <h1 style="font-size:36px;font-weight:900;margin-bottom:32px">Familienprofil</h1>
+
+```
+<div class="white-card">
+  <div class="profile-head">
+    <div class="profile-avatar">👩</div>
     <div>
-      <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: "#1a1a2e", lineHeight: 1.3 }}>{course.title}</h3>
-      <div style={{ fontSize: 12, color: "#888", marginTop: 3 }}>by {course.provider}</div>
+      <div class="profile-name">Claudia Meier</div>
+      <div class="profile-email">claudia.meier@gmail.com</div>
     </div>
-    <p style={{ margin: 0, fontSize: 13, color: "#555", lineHeight: 1.6 }}>{course.desc}</p>
-
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12, color: "#666" }}>
-      <div>📅 {course.week}</div>
-      <div>⏱ {course.duration}</div>
-      <div>🕐 {course.time}</div>
-      <div>📍 {course.location.split(",")[0]}</div>
+    <div class="pass-card">✓ Ferienpass aktiv<br><span style="font-size:11px;opacity:.8;font-weight:600">Sommer 2025</span></div>
+  </div>
+  <div class="section-divider">
+    <strong style="font-size:16px;font-weight:800">Kinder</strong>
+    <div class="kids-row" id="kids-row">
+      <div class="kid-tag">👧 Lena (8)</div>
+      <div class="kid-tag">👦 Tim (14)</div>
+      <button class="btn-add-kid" onclick="addKid()">+ Kind hinzufügen</button>
     </div>
+  </div>
+</div>
 
-    <StarRating rating={course.rating} />
-    <SpotBar course={course} />
+<div class="white-card">
+  <strong style="font-size:18px;font-weight:800">❤️ Gespeicherte Kurse</strong>
+  <div id="fav-list" style="margin-top:16px">
+    <p style="color:#888">Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!</p>
+  </div>
+</div>
+```
 
-    <div style={{ display: "flex", gap: 8, marginTop: "auto", paddingTop: 8 }}>
-      <button
-        onClick={() => onDetail(course)}
-        style={{
-          flex: 1, padding: "10px", borderRadius: 12, border: "2px solid #e0e0e0",
-          background: "white", color: "#333", fontWeight: 700, cursor: "pointer", fontSize: 13,
-          transition: "all 0.2s"
-        }}
-      >
-        Details
-      </button>
-      <button
-        onClick={() => !full && onBook(course)}
-        style={{
-          flex: 2, padding: "10px", borderRadius: 12, border: "none",
-          background: full ? "#e0e0e0" : `linear-gradient(135deg, ${course.color}, ${course.color}cc)`,
-          color: full ? "#999" : "white", fontWeight: 800, cursor: full ? "not-allowed" : "pointer",
-          fontSize: 13, transition: "all 0.2s"
-        }}
-      >
-        {full ? "Warteliste" : `Buchen · ${priceBadge(course)}`}
-      </button>
+  </div>
+</div>
+
+<!-- ══════════════════════ ADMIN PAGE ══════════════════════ -->
+
+<div id="page-admin" class="page">
+  <!-- Lock screen -->
+  <div id="admin-lock">
+    <div class="admin-lock">
+      <span class="admin-emoji">🔐</span>
+      <h2 style="font-size:28px;font-weight:900;margin-bottom:8px">Admin-Zugang</h2>
+      <p style="color:#888;margin-bottom:24px">Bitte Passwort eingeben</p>
+      <input id="admin-pw" class="admin-input" type="password" placeholder="Passwort..." onkeydown="if(event.key==='Enter')adminLogin()" />
+      <p style="font-size:12px;color:#aaa;margin-bottom:16px">Demo: "admin123"</p>
+      <button class="btn-primary" onclick="adminLogin()">Einloggen</button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+
+  <div id="admin-dash" style="display:none">
+    <div class="section" style="padding-top:40px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px">
+        <h1 style="font-size:32px;font-weight:900">⚙️ Admin Dashboard</h1>
+        <button class="logout-btn" onclick="adminLogout()">Logout</button>
+      </div>
+
+```
+  <div class="stats-grid" id="admin-stats"></div>
+
+  <div class="table-wrap">
+    <div class="table-head">Kursübersicht</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr><th>Kurs</th><th>Anbieter</th><th>Kategorie</th><th>Woche</th><th>Preis</th><th>Auslastung</th><th>Status</th><th>Aktionen</th></tr>
+        </thead>
+        <tbody id="admin-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="add-form">
+    <strong style="font-size:18px;font-weight:800">➕ Neuen Kurs hinzufügen</strong>
+    <div class="add-form-row">
+      <input id="new-title" placeholder="Titel" />
+      <input id="new-provider" placeholder="Anbieter" />
+      <input id="new-category" placeholder="Kategorie" />
+      <input id="new-price" placeholder="Preis (CHF)" type="number" />
+      <button class="btn-add" onclick="addCourse()">Hinzufügen</button>
     </div>
   </div>
 </div>
 ```
 
-);
-}
-
-function Modal({ children, onClose }) {
-return (
-<div
-onClick={onClose}
-style={{
-position: “fixed”, inset: 0, background: “rgba(0,0,0,0.6)”, zIndex: 1000,
-display: “flex”, alignItems: “center”, justifyContent: “center”, padding: 20,
-backdropFilter: “blur(4px)”
-}}
->
-<div
-onClick={(e) => e.stopPropagation()}
-style={{
-background: “white”, borderRadius: 28, maxWidth: 580, width: “100%”,
-maxHeight: “90vh”, overflowY: “auto”,
-boxShadow: “0 40px 120px rgba(0,0,0,0.3)”,
-animation: “modalIn 0.3s cubic-bezier(.34,1.56,.64,1)”
-}}
->
-{children}
+  </div>
 </div>
+
+<!-- ══════════════════════ BOOK MODAL ══════════════════════ -->
+
+<div id="book-modal" class="overlay" onclick="closeBookModal(event)">
+  <div class="modal">
+    <div class="modal-header" id="book-modal-header"></div>
+    <div class="modal-body">
+      <div class="modal-meta" id="book-modal-meta"></div>
+      <div>
+        <strong style="font-size:15px;font-weight:800;color:#1a1a2e">Für welches Kind?</strong>
+        <div class="kids-selector" id="kids-selector"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="document.getElementById('book-modal').classList.remove('open')">Abbrechen</button>
+        <button class="btn-confirm" id="btn-confirm-book" onclick="confirmBook()">🎉 Jetzt buchen</button>
+      </div>
+    </div>
+  </div>
 </div>
-);
-}
 
-// ── MAIN APP ──────────────────────────────────────────────────────────────────
-export default function FerienpassApp() {
-const [page, setPage] = useState(“home”);
-const [courses, setCourses] = useState(COURSES_DATA);
-const [filterCat, setFilterCat] = useState(“Alle”);
-const [filterWeek, setFilterWeek] = useState(“Alle Wochen”);
-const [filterBand, setFilterBand] = useState(“Alle”);
-const [searchQ, setSearchQ] = useState(””);
-const [favorites, setFavorites] = useState([]);
-const [bookings, setBookings] = useState([]);
-const [waitlist, setWaitlist] = useState([]);
-const [selectedCourse, setSelectedCourse] = useState(null);
-const [bookModal, setBookModal] = useState(null);
-const [detailModal, setDetailModal] = useState(null);
-const [successMsg, setSuccessMsg] = useState(””);
-const [profile, setProfile] = useState({ name: “Claudia Meier”, kids: [“Lena (8)”, “Tim (14)”], email: “claudia.meier@gmail.com”, pass: true });
-const [adminPw, setAdminPw] = useState(””);
-const [adminAuth, setAdminAuth] = useState(false);
-const [toast, setToast] = useState(null);
+<!-- ══════════════════════ DETAIL MODAL ══════════════════════ -->
 
-const showToast = (msg, type = “success”) => {
-setToast({ msg, type });
-setTimeout(() => setToast(null), 3000);
-};
+<div id="detail-modal" class="overlay" onclick="closeDetailModal(event)">
+  <div class="modal">
+    <div id="detail-modal-content"></div>
+  </div>
+</div>
 
-const toggleFav = (id) => {
-setFavorites((f) => f.includes(id) ? f.filter((x) => x !== id) : […f, id]);
-};
-
-const handleBook = (course) => {
-if (isFull(course)) {
-setWaitlist((w) => […w, { …course, addedAt: new Date().toLocaleDateString(“de-CH”) }]);
-showToast(`Auf Warteliste für "${course.title}" gesetzt!`, “info”);
-} else {
-setBookModal(course);
-}
-};
-
-const confirmBook = (course, child) => {
-setCourses((cs) => cs.map((c) => c.id === course.id ? { …c, booked: c.booked + 1 } : c));
-setBookings((b) => […b, { …course, child, bookedAt: new Date().toLocaleDateString(“de-CH”), status: “Bestätigt” }]);
-setBookModal(null);
-showToast(`🎉 "${course.title}" erfolgreich für ${child} gebucht!`);
-};
-
-const filteredCourses = courses.filter((c) => {
-const catOk = filterCat === “Alle” || c.category === filterCat;
-const weekOk = filterWeek === “Alle Wochen” || c.week === filterWeek;
-const bandOk = filterBand === “Alle” ||
-(filterBand === “Kostenlos” && c.price === 0) ||
-(filterBand === “Günstig (CHF 1–50)” && c.price > 0 && c.price <= 50) ||
-(filterBand === “Marktpreis (CHF 50+)” && c.price > 50);
-const searchOk = !searchQ || c.title.toLowerCase().includes(searchQ.toLowerCase()) || c.category.toLowerCase().includes(searchQ.toLowerCase());
-return catOk && weekOk && bandOk && searchOk;
-});
-
-const navItems = [
-{ id: “home”, label: “🏠 Home” },
-{ id: “courses”, label: “📚 Kurse” },
-{ id: “bookings”, label: `📋 Buchungen${bookings.length ? ` (${bookings.length})` : ""}` },
-{ id: “profile”, label: “👨‍👩‍👧‍👦 Profil” },
-{ id: “admin”, label: “⚙️ Admin” },
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+const COURSES = [
+  { id:1, title:"Musik & Klang Camp", provider:"Fabio Landi", category:"Musik", price:0, priceband:"low", age:"8-14", spots:12, booked:9, week:"14. Juli", emoji:"🎵", color:"#FF6B6B", desc:"Tauche ein in die Welt der Musik – von Rhythmus über Melodie bis hin zu eigenen Kompositionen.", rating:4.8, reviews:23, location:"Musikschule Basel, Leonhardsgraben 6", duration:"3 Tage", time:"09:00–16:00" },
+  { id:2, title:"Zirkus Akrobatik", provider:"Zirkus Basilisk", category:"Sport", price:45, priceband:"mid", age:"6-12", spots:15, booked:15, week:"21. Juli", emoji:"🎪", color:"#4ECDC4", desc:"Jonglieren, Balancieren, Akrobatik – eine Woche voller Spass und neuer Fähigkeiten.", rating:4.9, reviews:41, location:"Sportanlage Rankhof", duration:"5 Tage", time:"08:30–17:00" },
+  { id:3, title:"Coding & Robotik", provider:"TechKids Basel", category:"Technik", price:80, priceband:"market", age:"10-16", spots:10, booked:6, week:"28. Juli", emoji:"🤖", color:"#A29BFE", desc:"Programmieren lernen, eigene Roboter bauen und die Welt von morgen gestalten.", rating:4.7, reviews:18, location:"Digitalhub Basel, Hochbergerstrasse", duration:"4 Tage", time:"09:00–17:00" },
+  { id:4, title:"Naturentdecker Camp", provider:"NABU Basel", category:"Natur", price:0, priceband:"low", age:"7-12", spots:20, booked:14, week:"4. Aug", emoji:"🌿", color:"#00B894", desc:"Käfer, Kräuter, Flussleben – die Natur Basels hautnah entdecken mit echten Biologen.", rating:4.6, reviews:35, location:"Petite Camargue Alsacienne", duration:"3 Tage", time:"09:30–15:30" },
+  { id:5, title:"Theater & Performance", provider:"Junges Theater Basel", category:"Kunst", price:20, priceband:"low", age:"9-15", spots:16, booked:10, week:"11. Aug", emoji:"🎭", color:"#FD79A8", desc:"Eigene Stücke schreiben, proben und am Ende der Woche vor Eltern aufführen.", rating:4.5, reviews:29, location:"Theater Basel, Probe-Bühne", duration:"5 Tage", time:"10:00–17:00" },
+  { id:6, title:"Kochen & Backen", provider:"Kochschule Basilicum", category:"Kulinarik", price:55, priceband:"mid", age:"8-14", spots:12, booked:8, week:"18. Aug", emoji:"👨‍🍳", color:"#FDCB6E", desc:"Teig kneten, Saucen kochen, Kuchen dekorieren – Küchenmagie für Kinder.", rating:4.8, reviews:22, location:"Kochschule am Marktplatz", duration:"3 Tage", time:"10:00–15:00" },
+  { id:7, title:"Streetart & Graffiti", provider:"Kunsthalle Basel Youth", category:"Kunst", price:35, priceband:"mid", age:"12-17", spots:10, booked:7, week:"25. Aug", emoji:"🎨", color:"#E17055", desc:"Legales Sprühen unter Anleitung professioneller Streetart-Künstler. Eigene Wand inklusive.", rating:4.9, reviews:15, location:"Gundeldinger Feld", duration:"3 Tage", time:"11:00–18:00" },
+  { id:8, title:"Schwimmen & Wassersport", provider:"Sportamt Basel", category:"Sport", price:0, priceband:"low", age:"6-14", spots:25, booked:20, week:"1. Sept", emoji:"🏊", color:"#74B9FF", desc:"Kraul lernen, Wasserball spielen und sicher im Wasser sein – für alle Levels.", rating:4.4, reviews:48, location:"Gartenbad Bachgraben", duration:"5 Tage", time:"09:00–12:00" },
 ];
 
-return (
-<div style={{ fontFamily: “‘Segoe UI’, system-ui, sans-serif”, background: “#f7f8fc”, minHeight: “100vh” }}>
-<style>{`@keyframes modalIn { from { opacity:0; transform: scale(0.9) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } } @keyframes toastIn { from { opacity:0; transform: translateX(100px); } to { opacity:1; transform: translateX(0); } } @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } } @keyframes shimmer { 0%,100%{opacity:1} 50%{opacity:0.6} } * { box-sizing: border-box; } ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; } button { font-family: inherit; } input, select { font-family: inherit; }`}</style>
+const CATS = [
+  {name:"Musik",emoji:"🎵",color:"#FF6B6B"},
+  {name:"Sport",emoji:"⚽",color:"#4ECDC4"},
+  {name:"Technik",emoji:"🤖",color:"#A29BFE"},
+  {name:"Natur",emoji:"🌿",color:"#00B894"},
+  {name:"Kunst",emoji:"🎨",color:"#FD79A8"},
+  {name:"Kulinarik",emoji:"👨‍🍳",color:"#FDCB6E"},
+];
 
-```
-  {/* NAV */}
-  <nav style={{
-    background: "white", borderBottom: "1px solid #eee", position: "sticky", top: 0, zIndex: 100,
-    boxShadow: "0 2px 20px rgba(0,0,0,0.08)"
-  }}>
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 24, height: 68 }}>
-      {/* Logo */}
-      <div onClick={() => setPage("home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
-        <div style={{
-          width: 40, height: 40, borderRadius: 12,
-          background: "linear-gradient(135deg, #FF6B6B, #FDCB6E)",
-          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20
-        }}>☀️</div>
+// ── STATE ────────────────────────────────────────────────────────────────────
+let courses = JSON.parse(JSON.stringify(COURSES));
+let favorites = JSON.parse(localStorage.getItem('fp_fav') || '[]');
+let bookings  = JSON.parse(localStorage.getItem('fp_book') || '[]');
+let waitlist  = JSON.parse(localStorage.getItem('fp_wait') || '[]');
+let kids      = JSON.parse(localStorage.getItem('fp_kids') || '["Lena (8)","Tim (14)"]');
+let selectedKid = kids[0];
+let currentBookCourse = null;
+let currentDetailCourse = null;
+let activeCatFilter = 'Alle';
+
+function save() {
+  localStorage.setItem('fp_fav',  JSON.stringify(favorites));
+  localStorage.setItem('fp_book', JSON.stringify(bookings));
+  localStorage.setItem('fp_wait', JSON.stringify(waitlist));
+  localStorage.setItem('fp_kids', JSON.stringify(kids));
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+const spotsLeft = c => c.spots - c.booked;
+const isFull    = c => spotsLeft(c) <= 0;
+const priceTxt  = c => c.price === 0 ? 'Gratis' : `CHF ${c.price}`;
+const bandLabel = b => ({low:'Günstig',mid:'Standard',market:'Premium'}[b]);
+const stars     = r => '★'.repeat(Math.floor(r)) + '☆'.repeat(5-Math.floor(r));
+const hexAlpha  = (h,a) => h + Math.round(a*255).toString(16).padStart(2,'0');
+
+function spotBarColor(c) {
+  const p = c.booked/c.spots;
+  return p>=1?'#FF6B6B':p>=.75?'#FDCB6E':'#00B894';
+}
+
+function spotBarHTML(c) {
+  const p = Math.min(c.booked/c.spots*100,100);
+  const clr = spotBarColor(c);
+  const txt = isFull(c) ? '⚡ Ausgebucht' : `${spotsLeft(c)} Plätze frei`;
+  return `
+    <div class="spot-bar-row"><span>${txt}</span><span>${c.booked}/${c.spots}</span></div>
+    <div class="spot-bar-bg"><div class="spot-bar-fill" style="width:${p}%;background:${clr}"></div></div>`;
+}
+
+function cardHTML(c) {
+  const full = isFull(c);
+  const fav = favorites.includes(c.id);
+  const bookBg = full ? '#e0e0e0' : `linear-gradient(135deg,${c.color},${c.color}cc)`;
+  const bookClr = full ? '#999' : 'white';
+  const bookTxt = full ? 'Warteliste' : `Buchen · ${priceTxt(c)}`;
+  return `
+    <div class="card">
+      <div class="card-head" style="background:linear-gradient(135deg,${hexAlpha(c.color,.13)},${hexAlpha(c.color,.26)});border-bottom:3px solid ${c.color}">
+        <span class="card-emoji">${c.emoji}</span>
+        <div class="card-badges">
+          <span class="badge" style="background:${hexAlpha(c.color,.15)};color:${c.color}">${c.category}</span>
+          <span class="badge" style="background:#f5f5f5;color:#666">${bandLabel(c.priceband)}</span>
+          <span class="badge" style="background:#f0f0f0;color:#555">${c.age} J.</span>
+        </div>
+        <button class="fav-btn" style="background:${fav?c.color:'white'};border-color:${c.color};color:${fav?'white':c.color}" onclick="toggleFav(${c.id})">${fav?'♥':'♡'}</button>
+      </div>
+      <div class="card-body">
         <div>
-          <div style={{ fontWeight: 900, fontSize: 16, color: "#1a1a2e", letterSpacing: -0.5 }}>Basler</div>
-          <div style={{ fontWeight: 900, fontSize: 16, color: "#FF6B6B", letterSpacing: -0.5, marginTop: -4 }}>Ferienpass</div>
+          <div class="card-title">${c.title}</div>
+          <div class="card-provider">by ${c.provider}</div>
+        </div>
+        <p class="card-desc">${c.desc}</p>
+        <div class="card-meta">
+          <div>📅 ${c.week}</div><div>⏱ ${c.duration}</div>
+          <div>🕐 ${c.time}</div><div>📍 ${c.location.split(',')[0]}</div>
+        </div>
+        <div><span class="stars">${stars(c.rating)}</span><span style="color:#999;font-size:13px;margin-left:4px">${c.rating}</span></div>
+        ${spotBarHTML(c)}
+        <div class="card-actions">
+          <button class="btn-details" onclick="openDetail(${c.id})">Details</button>
+          <button class="btn-book${full?' full':''}" style="background:${bookBg};color:${bookClr}" onclick="openBook(${c.id})">${bookTxt}</button>
         </div>
       </div>
+    </div>`;
+}
 
-      {/* Nav items */}
-      <div style={{ display: "flex", gap: 4, flex: 1 }}>
-        {navItems.map((n) => (
-          <button
-            key={n.id}
-            onClick={() => setPage(n.id)}
-            style={{
-              padding: "8px 16px", borderRadius: 12, border: "none",
-              background: page === n.id ? "#FF6B6B" : "transparent",
-              color: page === n.id ? "white" : "#555",
-              fontWeight: page === n.id ? 700 : 500,
-              cursor: "pointer", fontSize: 13, transition: "all 0.2s",
-              whiteSpace: "nowrap"
-            }}
-          >
-            {n.label}
-          </button>
-        ))}
+// ── NAVIGATION ───────────────────────────────────────────────────────────────
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const btn = document.querySelector(`.nav-btn[data-page="${page}"]`);
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='courses') renderCourses();
+  if(page==='bookings') renderBookings();
+  if(page==='profile') renderProfile();
+  if(page==='admin') renderAdmin();
+}
+
+// ── TOAST ────────────────────────────────────────────────────────────────────
+let toastTimeout;
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type}`;
+  t.style.display = 'block';
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.style.display='none', 3000);
+}
+
+// ── HOME ─────────────────────────────────────────────────────────────────────
+function renderHome() {
+  // Featured
+  const sorted = [...courses].sort((a,b) => b.booked-a.booked).slice(0,3);
+  document.getElementById('home-featured').innerHTML = sorted.map(cardHTML).join('');
+
+  // Category grid
+  document.getElementById('cat-grid').innerHTML = CATS.map(cat => {
+    const count = courses.filter(c => c.category===cat.name).length;
+    return `<button class="cat-card" style="border-color:${cat.color}44;background:linear-gradient(135deg,${hexAlpha(cat.color,.08)},${hexAlpha(cat.color,.15)})" onclick="filterByCat('${cat.name}')">
+      <div class="cat-icon">${cat.emoji}</div>
+      <div class="cat-name">${cat.name}</div>
+      <div class="cat-count">${count} Kurse</div>
+    </button>`;
+  }).join('');
+
+  // Category pills
+  const pills = ['Alle',...CATS.map(c=>c.name)];
+  document.getElementById('cat-pills').innerHTML = pills.map(p =>
+    `<button class="pill${activeCatFilter===p?' active':''}" onclick="setCatPill('${p}')">${p}</button>`
+  ).join('');
+}
+
+function heroSearch(val) {
+  document.getElementById('search-input').value = val;
+  navigate('courses');
+}
+
+function filterByCat(cat) {
+  activeCatFilter = cat;
+  document.getElementById('filter-cat').value = cat;
+  navigate('courses');
+}
+
+// ── COURSES ──────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const q    = document.getElementById('search-input').value.toLowerCase();
+  const cat  = document.getElementById('filter-cat').value;
+  const week = document.getElementById('filter-week').value;
+  const price= document.getElementById('filter-price').value;
+
+  activeCatFilter = cat;
+  document.querySelectorAll('#cat-pills .pill').forEach(p => {
+    p.classList.toggle('active', p.textContent.trim()===cat);
+  });
+
+  const filtered = courses.filter(c => {
+    if(cat!=='Alle' && c.category!==cat) return false;
+    if(week!=='Alle Wochen' && c.week!==week) return false;
+    if(price==='Kostenlos' && c.price!==0) return false;
+    if(price==='Günstig (CHF 1–50)' && (c.price===0||c.price>50)) return false;
+    if(price==='Premium (CHF 50+)' && c.price<=50) return false;
+    if(q && !c.title.toLowerCase().includes(q) && !c.category.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  document.getElementById('courses-count').textContent = `${filtered.length} Kurse gefunden`;
+  const grid = document.getElementById('courses-grid');
+  const empty = document.getElementById('no-results');
+  if(filtered.length===0) { grid.innerHTML=''; empty.style.display='block'; }
+  else { grid.innerHTML=filtered.map(cardHTML).join(''); empty.style.display='none'; }
+}
+
+function renderCourses() {
+  const pills = ['Alle',...CATS.map(c=>c.name)];
+  document.getElementById('cat-pills').innerHTML = pills.map(p =>
+    `<button class="pill${activeCatFilter===p?' active':''}" onclick="setCatPill('${p}')">${p}</button>`
+  ).join('');
+  applyFilters();
+}
+
+function setCatPill(cat) {
+  activeCatFilter = cat;
+  document.getElementById('filter-cat').value = cat;
+  applyFilters();
+  renderHome();
+}
+
+function resetFilters() {
+  activeCatFilter = 'Alle';
+  document.getElementById('search-input').value = '';
+  document.getElementById('filter-cat').value = 'Alle';
+  document.getElementById('filter-week').value = 'Alle Wochen';
+  document.getElementById('filter-price').value = 'Alle Preise';
+  applyFilters();
+}
+
+// ── FAVORITES ────────────────────────────────────────────────────────────────
+function toggleFav(id) {
+  if(favorites.includes(id)) {
+    favorites = favorites.filter(x=>x!==id);
+    showToast('Aus Favoriten entfernt','info');
+  } else {
+    favorites.push(id);
+    showToast('❤️ Zu Favoriten hinzugefügt');
+  }
+  save(); renderHome(); if(document.getElementById('page-courses').classList.contains('active')) renderCourses();
+  if(document.getElementById('page-profile').classList.contains('active')) renderProfile();
+}
+
+// ── BOOK MODAL ───────────────────────────────────────────────────────────────
+function openBook(id) {
+  const c = courses.find(x=>x.id===id);
+  if(!c) return;
+  if(isFull(c)) {
+    waitlist.push({...c, addedAt: new Date().toLocaleDateString('de-CH')});
+    save(); renderBookings();
+    showToast(`⏳ Auf Warteliste für "${c.title}" gesetzt!`,'info');
+    updateBookingsNav(); return;
+  }
+  currentBookCourse = c;
+  document.getElementById('book-modal-header').innerHTML = `
+    <div style="background:linear-gradient(135deg,${hexAlpha(c.color,.13)},${hexAlpha(c.color,.26)});border-radius:16px;padding:20px;text-align:center;margin-bottom:20px">
+      <div style="font-size:48px">${c.emoji}</div>
+      <h2 class="modal-title" style="margin-top:8px">${c.title}</h2>
+      <p class="modal-sub">📅 ${c.week} · ⏱ ${c.duration}</p>
+    </div>`;
+  document.getElementById('book-modal-meta').innerHTML = `
+    <div class="meta-item"><div class="meta-label">📍 ORT</div><div class="meta-value">${c.location.split(',')[0]}</div></div>
+    <div class="meta-item"><div class="meta-label">🕐 ZEITEN</div><div class="meta-value">${c.time}</div></div>
+    <div class="meta-item"><div class="meta-label">👶 ALTER</div><div class="meta-value">${c.age} Jahre</div></div>
+    <div class="meta-item"><div class="meta-label">💰 PREIS</div><div class="meta-value">${priceTxt(c)}</div></div>`;
+  selectedKid = kids[0];
+  document.getElementById('kids-selector').innerHTML = kids.map(k =>
+    `<button class="kid-btn${k===selectedKid?' selected':''}" style="border-color:${c.color};${k===selectedKid?'background:'+c.color+';color:white':''}" onclick="selectKid('${k}',this)">${k}</button>`
+  ).join('');
+  const confirmBtn = document.getElementById('btn-confirm-book');
+  confirmBtn.style.background = `linear-gradient(135deg,${c.color},${c.color}cc)`;
+  confirmBtn.textContent = `🎉 Jetzt buchen · ${priceTxt(c)}`;
+  document.getElementById('book-modal').classList.add('open');
+}
+
+function selectKid(kid, btn) {
+  selectedKid = kid;
+  const c = currentBookCourse;
+  document.querySelectorAll('.kid-btn').forEach(b => {
+    b.classList.remove('selected');
+    b.style.background = 'white'; b.style.color = '#333';
+  });
+  btn.classList.add('selected');
+  btn.style.background = c.color; btn.style.color = 'white';
+}
+
+function confirmBook() {
+  const c = currentBookCourse;
+  if(!c) return;
+  const idx = courses.findIndex(x=>x.id===c.id);
+  if(idx>=0) courses[idx].booked++;
+  bookings.push({...c, booked: courses[idx].booked, child: selectedKid, bookedAt: new Date().toLocaleDateString('de-CH'), status:'Bestätigt'});
+  save(); updateBookingsNav();
+  document.getElementById('book-modal').classList.remove('open');
+  showToast(`🎉 "${c.title}" für ${selectedKid} gebucht!`);
+  renderHome();
+  if(document.getElementById('page-courses').classList.contains('active')) renderCourses();
+}
+
+function closeBookModal(e) {
+  if(e.target===document.getElementById('book-modal')) document.getElementById('book-modal').classList.remove('open');
+}
+
+// ── DETAIL MODAL ─────────────────────────────────────────────────────────────
+function openDetail(id) {
+  const c = courses.find(x=>x.id===id);
+  if(!c) return;
+  currentDetailCourse = c;
+  const fav = favorites.includes(c.id);
+  const full = isFull(c);
+  const favBg = fav ? hexAlpha(c.color,.13) : 'white';
+  document.getElementById('detail-modal-content').innerHTML = `
+    <div style="background:linear-gradient(135deg,${hexAlpha(c.color,.2)},${hexAlpha(c.color,.33)});padding:32px;border-bottom:3px solid ${c.color}">
+      <button class="close-btn" onclick="document.getElementById('detail-modal').classList.remove('open')">✕</button>
+      <div style="font-size:56px;margin-bottom:12px">${c.emoji}</div>
+      <div class="card-badges" style="margin-bottom:12px">
+        <span class="badge" style="background:${hexAlpha(c.color,.2)};color:${c.color}">${c.category}</span>
+        <span class="badge" style="background:#f0f0f0;color:#555">${c.age} Jahre</span>
+        <span class="badge" style="background:#f0f0f0;color:#555">${bandLabel(c.priceband)}</span>
       </div>
-
-      {/* Pass badge */}
-      {profile.pass && (
-        <div style={{
-          background: "linear-gradient(135deg, #6C5CE7, #A29BFE)",
-          color: "white", borderRadius: 20, padding: "6px 14px",
-          fontSize: 12, fontWeight: 700, flex: "0 0 auto"
-        }}>
-          ✓ Pass aktiv
-        </div>
-      )}
+      <h2 style="font-size:26px;font-weight:900;color:#1a1a2e;margin-bottom:4px">${c.title}</h2>
+      <div style="color:#666;font-size:14px">von ${c.provider}</div>
     </div>
-  </nav>
-
-  {/* TOAST */}
-  {toast && (
-    <div style={{
-      position: "fixed", top: 80, right: 24, zIndex: 2000,
-      background: toast.type === "info" ? "#6C5CE7" : "#00B894",
-      color: "white", borderRadius: 16, padding: "14px 20px",
-      boxShadow: "0 8px 30px rgba(0,0,0,0.2)", maxWidth: 340,
-      animation: "toastIn 0.4s cubic-bezier(.34,1.56,.64,1)",
-      fontSize: 14, fontWeight: 600
-    }}>
-      {toast.msg}
-    </div>
-  )}
-
-  {/* ── HOME PAGE ── */}
-  {page === "home" && (
-    <div>
-      {/* Hero */}
-      <div style={{
-        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-        padding: "80px 24px 100px", position: "relative", overflow: "hidden"
-      }}>
-        {/* BG decorations */}
-        {["#FF6B6B", "#FDCB6E", "#4ECDC4", "#A29BFE", "#FD79A8"].map((c, i) => (
-          <div key={i} style={{
-            position: "absolute",
-            width: 200 + i * 80, height: 200 + i * 80,
-            borderRadius: "50%",
-            background: `${c}18`,
-            top: `${-20 + i * 15}%`, left: `${-10 + i * 22}%`,
-            filter: "blur(40px)"
-          }} />
-        ))}
-
-        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", textAlign: "center" }}>
-          <div style={{
-            display: "inline-block", background: "rgba(255,107,107,0.2)",
-            border: "1px solid rgba(255,107,107,0.4)",
-            borderRadius: 30, padding: "8px 20px", marginBottom: 24, fontSize: 13, color: "#FF6B6B", fontWeight: 700
-          }}>
-            🎉 Sommer 2025 — Anmeldung offen
-          </div>
-          <h1 style={{
-            color: "white", fontSize: 56, fontWeight: 900, margin: "0 0 20px",
-            lineHeight: 1.1, letterSpacing: -2
-          }}>
-            Ferienzeit ist<br />
-            <span style={{ background: "linear-gradient(135deg, #FF6B6B, #FDCB6E)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Abenteuerzeit
-            </span>
-          </h1>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 20, margin: "0 0 40px", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-            Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren. Günstig, vielfältig, unvergesslich.
-          </p>
-
-          {/* Stats */}
-          <div style={{ display: "flex", gap: 32, justifyContent: "center", flexWrap: "wrap", marginBottom: 48 }}>
-            {[["50+", "Kurse"], ["200+", "Plätze"], ["30+", "Anbieter"], ["0–80 CHF", "Preise"]].map(([v, l]) => (
-              <div key={l} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 32, fontWeight: 900, color: "#FDCB6E" }}>{v}</div>
-                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>{l}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Search */}
-          <div style={{ position: "relative", maxWidth: 500, margin: "0 auto" }}>
-            <input
-              value={searchQ}
-              onChange={(e) => { setSearchQ(e.target.value); setPage("courses"); }}
-              placeholder="Kurs suchen... (Musik, Sport, Natur...)"
-              style={{
-                width: "100%", padding: "18px 24px 18px 56px", borderRadius: 20,
-                border: "2px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.1)",
-                color: "white", fontSize: 16, outline: "none",
-                backdropFilter: "blur(10px)"
-              }}
-            />
-            <span style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", fontSize: 20 }}>🔍</span>
-            <button
-              onClick={() => setPage("courses")}
-              style={{
-                position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)",
-                background: "#FF6B6B", color: "white", border: "none", borderRadius: 14,
-                padding: "10px 20px", fontWeight: 800, cursor: "pointer", fontSize: 14
-              }}
-            >
-              Suchen
-            </button>
-          </div>
-        </div>
+    <div class="modal-body" style="padding-top:24px">
+      <p class="modal-desc">${c.desc}</p>
+      <div class="modal-meta">
+        <div class="meta-item"><div class="meta-label">📅 WOCHE</div><div class="meta-value">${c.week}</div></div>
+        <div class="meta-item"><div class="meta-label">⏱ DAUER</div><div class="meta-value">${c.duration}</div></div>
+        <div class="meta-item"><div class="meta-label">🕐 ZEITEN</div><div class="meta-value">${c.time}</div></div>
+        <div class="meta-item"><div class="meta-label">📍 ORT</div><div class="meta-value">${c.location.split(',')[0]}</div></div>
+        <div class="meta-item"><div class="meta-label">👶 ALTER</div><div class="meta-value">${c.age} Jahre</div></div>
+        <div class="meta-item"><div class="meta-label">💰 PREIS</div><div class="meta-value">${priceTxt(c)}</div></div>
       </div>
-
-      {/* Featured courses */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 24px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
-          <div>
-            <h2 style={{ margin: 0, fontSize: 32, fontWeight: 900, color: "#1a1a2e" }}>🔥 Beliebt diese Woche</h2>
-            <p style={{ margin: "4px 0 0", color: "#888", fontSize: 15 }}>Die am stärksten gefragten Kurse</p>
-          </div>
-          <button onClick={() => setPage("courses")} style={{
-            background: "none", border: "2px solid #FF6B6B", color: "#FF6B6B",
-            borderRadius: 14, padding: "10px 20px", fontWeight: 700, cursor: "pointer", fontSize: 14
-          }}>
-            Alle Kurse →
-          </button>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
-          {courses.sort((a, b) => b.booked - a.booked).slice(0, 3).map((c) => (
-            <CourseCard key={c.id} course={c} onBook={handleBook} onDetail={setDetailModal} isFav={favorites.includes(c.id)} onToggleFav={toggleFav} />
-          ))}
-        </div>
-      </div>
-
-      {/* How it works */}
-      <div style={{ background: "white", padding: "60px 24px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", fontSize: 32, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>So funktioniert's</h2>
-          <p style={{ textAlign: "center", color: "#888", marginBottom: 48 }}>In 3 Schritten zum Ferienabenteuer</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 32 }}>
-            {[
-              { icon: "🎫", step: "1", title: "Ferienpass kaufen", desc: "Einmalig kaufen und den ganzen Sommer davon profitieren. Digital oder als PDF." },
-              { icon: "🔍", step: "2", title: "Kurse entdecken", desc: "Filter nach Kategorie, Alter, Woche und Budget. Favoriten speichern, vergleichen." },
-              { icon: "🎉", step: "3", title: "Buchen & loslegen", desc: "Ein Klick, Bestätigung per E-Mail. Änderungen jederzeit möglich." },
-            ].map((s) => (
-              <div key={s.step} style={{ textAlign: "center", padding: 32 }}>
-                <div style={{
-                  width: 72, height: 72, borderRadius: "50%",
-                  background: "linear-gradient(135deg, #FF6B6B22, #FDCB6E22)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 32, margin: "0 auto 16px"
-                }}>
-                  {s.icon}
-                </div>
-                <div style={{ fontWeight: 900, color: "#FF6B6B", fontSize: 12, letterSpacing: 2, marginBottom: 8 }}>SCHRITT {s.step}</div>
-                <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 800, color: "#1a1a2e" }}>{s.title}</h3>
-                <p style={{ margin: 0, color: "#666", fontSize: 14, lineHeight: 1.7 }}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Category blocks */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 24px" }}>
-        <h2 style={{ fontSize: 32, fontWeight: 900, color: "#1a1a2e", marginBottom: 32 }}>Nach Kategorie entdecken</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 16 }}>
-          {[
-            { cat: "Musik", icon: "🎵", color: "#FF6B6B" },
-            { cat: "Sport", icon: "⚽", color: "#4ECDC4" },
-            { cat: "Technik", icon: "🤖", color: "#A29BFE" },
-            { cat: "Natur", icon: "🌿", color: "#55EFC4" },
-            { cat: "Kunst", icon: "🎨", color: "#FD79A8" },
-            { cat: "Kulinarik", icon: "👨‍🍳", color: "#FDCB6E" },
-          ].map(({ cat, icon, color }) => (
-            <button
-              key={cat}
-              onClick={() => { setFilterCat(cat); setPage("courses"); }}
-              style={{
-                background: `linear-gradient(135deg, ${color}22, ${color}44)`,
-                border: `2px solid ${color}44`,
-                borderRadius: 20, padding: "24px 16px", cursor: "pointer",
-                textAlign: "center", transition: "all 0.2s"
-              }}
-            >
-              <div style={{ fontSize: 36, marginBottom: 8 }}>{icon}</div>
-              <div style={{ fontWeight: 800, color: "#1a1a2e", fontSize: 14 }}>{cat}</div>
-              <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>
-                {courses.filter((c) => c.category === cat).length} Kurse
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  )}
-
-  {/* ── COURSES PAGE ── */}
-  {page === "courses" && (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px" }}>
-      <h1 style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>Kurse entdecken</h1>
-      <p style={{ color: "#888", marginBottom: 32 }}>{filteredCourses.length} Kurse gefunden</p>
-
-      {/* Filters */}
-      <div style={{
-        background: "white", borderRadius: 20, padding: 24,
-        boxShadow: "0 4px 20px rgba(0,0,0,0.07)", marginBottom: 32,
-        display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center"
-      }}>
-        <input
-          value={searchQ}
-          onChange={(e) => setSearchQ(e.target.value)}
-          placeholder="🔍 Suchen..."
-          style={{
-            border: "2px solid #eee", borderRadius: 12, padding: "10px 16px",
-            fontSize: 14, outline: "none", flex: "1 1 180px"
-          }}
-        />
-        {[
-          { label: "Kategorie", value: filterCat, setter: setFilterCat, opts: CATEGORIES },
-          { label: "Woche", value: filterWeek, setter: setFilterWeek, opts: WEEKS },
-          { label: "Preis", value: filterBand, setter: setFilterBand, opts: PRICE_BANDS },
-        ].map(({ label, value, setter, opts }) => (
-          <select
-            key={label}
-            value={value}
-            onChange={(e) => setter(e.target.value)}
-            style={{
-              border: "2px solid #eee", borderRadius: 12, padding: "10px 16px",
-              fontSize: 14, outline: "none", flex: "1 1 160px", cursor: "pointer",
-              background: "white"
-            }}
-          >
-            {opts.map((o) => <option key={o}>{o}</option>)}
-          </select>
-        ))}
-        <button
-          onClick={() => { setFilterCat("Alle"); setFilterWeek("Alle Wochen"); setFilterBand("Alle"); setSearchQ(""); }}
-          style={{
-            border: "2px solid #FF6B6B", borderRadius: 12, padding: "10px 16px",
-            background: "white", color: "#FF6B6B", fontWeight: 700, cursor: "pointer", fontSize: 14
-          }}
-        >
-          Reset
+      <div style="margin-bottom:16px"><span class="stars">${stars(c.rating)}</span><span style="color:#999;font-size:13px;margin-left:8px">(${c.reviews} Bewertungen)</span></div>
+      ${spotBarHTML(c)}
+      <div class="modal-actions" style="margin-top:20px">
+        <button class="btn-secondary" style="border-color:${c.color};color:${c.color};background:${favBg};flex:1" onclick="detailToggleFav(${c.id})">
+          ${fav?'♥ Gespeichert':'♡ Speichern'}
+        </button>
+        <button class="btn-confirm" style="flex:2;background:${full?'#e0e0e0':`linear-gradient(135deg,${c.color},${c.color}cc)`};color:${full?'#999':'white'};cursor:${full?'not-allowed':'pointer'}" onclick="detailBook(${c.id})">
+          ${full?'⏳ Warteliste':'🎉 Buchen · '+priceTxt(c)}
         </button>
       </div>
-
-      {/* Cat pills */}
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilterCat(cat)}
-            style={{
-              border: "none", borderRadius: 20, padding: "8px 18px",
-              background: filterCat === cat ? "#FF6B6B" : "#f0f0f0",
-              color: filterCat === cat ? "white" : "#555",
-              fontWeight: 700, cursor: "pointer", fontSize: 13, transition: "all 0.2s"
-            }}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {filteredCourses.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "80px 0", color: "#888" }}>
-          <div style={{ fontSize: 64 }}>😔</div>
-          <h3>Keine Kurse gefunden</h3>
-          <p>Versuche andere Filter</p>
-        </div>
-      ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 24 }}>
-          {filteredCourses.map((c) => (
-            <CourseCard key={c.id} course={c} onBook={handleBook} onDetail={setDetailModal} isFav={favorites.includes(c.id)} onToggleFav={toggleFav} />
-          ))}
-        </div>
-      )}
-    </div>
-  )}
-
-  {/* ── BOOKINGS PAGE ── */}
-  {page === "bookings" && (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
-      <h1 style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>Meine Buchungen</h1>
-      <p style={{ color: "#888", marginBottom: 32 }}>{bookings.length} aktive Buchungen · {waitlist.length} Wartelisten</p>
-
-      {bookings.length === 0 && waitlist.length === 0 ? (
-        <div style={{
-          background: "white", borderRadius: 24, padding: "60px", textAlign: "center",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.07)"
-        }}>
-          <div style={{ fontSize: 64, marginBottom: 16 }}>📋</div>
-          <h3 style={{ color: "#1a1a2e", marginBottom: 8 }}>Noch keine Buchungen</h3>
-          <p style={{ color: "#888" }}>Stöbere in den Kursen und buche dein erstes Abenteuer!</p>
-          <button onClick={() => setPage("courses")} style={{
-            marginTop: 16, background: "#FF6B6B", color: "white", border: "none",
-            borderRadius: 14, padding: "12px 24px", fontWeight: 700, cursor: "pointer", fontSize: 15
-          }}>
-            Kurse entdecken
-          </button>
-        </div>
-      ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {bookings.map((b, i) => (
-            <div key={i} style={{
-              background: "white", borderRadius: 20, padding: 24,
-              boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
-              display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap"
-            }}>
-              <div style={{
-                width: 60, height: 60, borderRadius: 16,
-                background: `linear-gradient(135deg, ${b.color}33, ${b.color}55)`,
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28
-              }}>
-                {b.image}
-              </div>
-              <div style={{ flex: 1, minWidth: 200 }}>
-                <h3 style={{ margin: "0 0 4px", fontSize: 17, fontWeight: 800, color: "#1a1a2e" }}>{b.title}</h3>
-                <div style={{ fontSize: 13, color: "#888" }}>👤 {b.child} · 📅 {b.week} · ✅ gebucht am {b.bookedAt}</div>
-              </div>
-              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                <Badge label={b.status} color="#00B894" bg="#00B89422" />
-                <Badge label={priceBadge(b)} color="#666" bg="#f5f5f5" />
-                <button
-                  onClick={() => {
-                    setBookings((bk) => bk.filter((_, j) => j !== i));
-                    setCourses((cs) => cs.map((c) => c.id === b.id ? { ...c, booked: c.booked - 1 } : c));
-                    showToast(`"${b.title}" storniert.`, "info");
-                  }}
-                  style={{
-                    border: "2px solid #FF6B6B", borderRadius: 10, padding: "6px 14px",
-                    background: "white", color: "#FF6B6B", fontWeight: 700, cursor: "pointer", fontSize: 13
-                  }}
-                >
-                  Stornieren
-                </button>
-              </div>
-            </div>
-          ))}
-
-          {waitlist.length > 0 && (
-            <>
-              <h2 style={{ margin: "24px 0 8px", fontSize: 22, fontWeight: 800, color: "#1a1a2e" }}>⏳ Warteliste</h2>
-              {waitlist.map((b, i) => (
-                <div key={i} style={{
-                  background: "white", borderRadius: 20, padding: 24,
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
-                  display: "flex", alignItems: "center", gap: 20, borderLeft: "4px solid #FDCB6E"
-                }}>
-                  <div style={{ fontSize: 28 }}>{b.image}</div>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: "#1a1a2e" }}>{b.title}</h3>
-                    <div style={{ fontSize: 13, color: "#888" }}>📅 {b.week} · eingetragen am {b.addedAt}</div>
-                  </div>
-                  <Badge label="Warteliste" color="#FDCB6E" bg="#FDCB6E22" />
-                </div>
-              ))}
-            </>
-          )}
-        </div>
-      )}
-    </div>
-  )}
-
-  {/* ── PROFILE PAGE ── */}
-  {page === "profile" && (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 24px" }}>
-      <h1 style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e", marginBottom: 32 }}>Familienprofil</h1>
-
-      {/* Profile card */}
-      <div style={{
-        background: "white", borderRadius: 24, padding: 32,
-        boxShadow: "0 4px 20px rgba(0,0,0,0.07)", marginBottom: 24
-      }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 28 }}>
-          <div style={{
-            width: 80, height: 80, borderRadius: "50%",
-            background: "linear-gradient(135deg, #FF6B6B, #FDCB6E)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 32
-          }}>👩</div>
-          <div>
-            <h2 style={{ margin: 0, fontSize: 24, fontWeight: 900, color: "#1a1a2e" }}>{profile.name}</h2>
-            <div style={{ color: "#888", fontSize: 14, marginTop: 4 }}>{profile.email}</div>
-          </div>
-          <div style={{ marginLeft: "auto" }}>
-            {profile.pass ? (
-              <div style={{
-                background: "linear-gradient(135deg, #6C5CE7, #A29BFE)",
-                color: "white", borderRadius: 20, padding: "10px 20px",
-                fontWeight: 800, fontSize: 14, textAlign: "center"
-              }}>
-                ✓ Ferienpass aktiv<br />
-                <span style={{ fontSize: 11, fontWeight: 600, opacity: 0.8 }}>Sommer 2025</span>
-              </div>
-            ) : (
-              <button style={{
-                background: "#FF6B6B", color: "white", border: "none",
-                borderRadius: 14, padding: "12px 20px", fontWeight: 700, cursor: "pointer"
-              }}>
-                Pass kaufen · CHF 0
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 24 }}>
-          <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 800, color: "#1a1a2e" }}>Kinder</h3>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            {profile.kids.map((k, i) => (
-              <div key={i} style={{
-                background: "#f7f8fc", borderRadius: 16, padding: "12px 20px",
-                display: "flex", alignItems: "center", gap: 10
-              }}>
-                <span style={{ fontSize: 24 }}>{i === 0 ? "👧" : "👦"}</span>
-                <span style={{ fontWeight: 700, color: "#1a1a2e" }}>{k}</span>
-              </div>
-            ))}
-            <button
-              onClick={() => {
-                const name = prompt("Kind hinzufügen (Name & Alter, z.B. 'Anna (10)'):");
-                if (name) setProfile((p) => ({ ...p, kids: [...p.kids, name] }));
-              }}
-              style={{
-                background: "none", border: "2px dashed #ddd", borderRadius: 16,
-                padding: "12px 20px", color: "#888", cursor: "pointer", fontWeight: 700
-              }}
-            >
-              + Kind hinzufügen
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Favorites */}
-      <div style={{
-        background: "white", borderRadius: 24, padding: 32,
-        boxShadow: "0 4px 20px rgba(0,0,0,0.07)"
-      }}>
-        <h3 style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 800, color: "#1a1a2e" }}>❤️ Gespeicherte Kurse ({favorites.length})</h3>
-        {favorites.length === 0 ? (
-          <p style={{ color: "#888" }}>Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!</p>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {courses.filter((c) => favorites.includes(c.id)).map((c) => (
-              <div key={c.id} style={{
-                display: "flex", alignItems: "center", gap: 16, padding: 16,
-                background: "#f7f8fc", borderRadius: 16
-              }}>
-                <span style={{ fontSize: 24 }}>{c.image}</span>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: "#1a1a2e" }}>{c.title}</div>
-                  <div style={{ fontSize: 12, color: "#888" }}>📅 {c.week} · {priceBadge(c)}</div>
-                </div>
-                <button
-                  onClick={() => handleBook(c)}
-                  style={{
-                    background: "#FF6B6B", color: "white", border: "none",
-                    borderRadius: 10, padding: "8px 16px", fontWeight: 700, cursor: "pointer", fontSize: 13
-                  }}
-                >
-                  Buchen
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  )}
-
-  {/* ── ADMIN PAGE ── */}
-  {page === "admin" && (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px" }}>
-      {!adminAuth ? (
-        <div style={{ maxWidth: 400, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ fontSize: 64, marginBottom: 16 }}>🔐</div>
-          <h2 style={{ fontSize: 28, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>Admin-Zugang</h2>
-          <p style={{ color: "#888", marginBottom: 24 }}>Bitte Passwort eingeben</p>
-          <input
-            type="password"
-            value={adminPw}
-            onChange={(e) => setAdminPw(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && (adminPw === "admin123" ? setAdminAuth(true) : showToast("Falsches Passwort", "info"))}
-            placeholder="Passwort..."
-            style={{
-              width: "100%", border: "2px solid #eee", borderRadius: 14,
-              padding: "14px 20px", fontSize: 16, outline: "none", marginBottom: 12
-            }}
-          />
-          <p style={{ fontSize: 12, color: "#aaa", marginBottom: 16 }}>Demo: "admin123"</p>
-          <button
-            onClick={() => adminPw === "admin123" ? setAdminAuth(true) : showToast("Falsches Passwort", "info")}
-            style={{
-              width: "100%", background: "#FF6B6B", color: "white", border: "none",
-              borderRadius: 14, padding: "14px", fontWeight: 800, cursor: "pointer", fontSize: 16
-            }}
-          >
-            Einloggen
-          </button>
-        </div>
-      ) : (
-        <div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
-            <h1 style={{ fontSize: 32, fontWeight: 900, color: "#1a1a2e", margin: 0 }}>⚙️ Admin Dashboard</h1>
-            <button onClick={() => setAdminAuth(false)} style={{
-              border: "2px solid #FF6B6B", borderRadius: 12, padding: "8px 16px",
-              background: "white", color: "#FF6B6B", fontWeight: 700, cursor: "pointer"
-            }}>
-              Logout
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 36 }}>
-            {[
-              { label: "Kurse total", value: courses.length, icon: "📚", color: "#A29BFE" },
-              { label: "Buchungen", value: bookings.length, icon: "✅", color: "#00B894" },
-              { label: "Warteliste", value: waitlist.length, icon: "⏳", color: "#FDCB6E" },
-              { label: "Belegte Plätze", value: courses.reduce((s, c) => s + c.booked, 0), icon: "👥", color: "#FF6B6B" },
-            ].map((s) => (
-              <div key={s.label} style={{
-                background: "white", borderRadius: 20, padding: 24,
-                boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
-                borderLeft: `4px solid ${s.color}`
-              }}>
-                <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
-                <div style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e" }}>{s.value}</div>
-                <div style={{ fontSize: 13, color: "#888", fontWeight: 600 }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Course management table */}
-          <div style={{ background: "white", borderRadius: 24, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}>
-            <div style={{ padding: "24px 28px", borderBottom: "1px solid #f0f0f0" }}>
-              <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: "#1a1a2e" }}>Kursübersicht</h2>
-            </div>
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr style={{ background: "#f7f8fc" }}>
-                    {["Kurs", "Anbieter", "Kategorie", "Woche", "Preis", "Auslastung", "Status", "Aktionen"].map((h) => (
-                      <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontSize: 12, fontWeight: 800, color: "#888", letterSpacing: 0.5 }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {courses.map((c, i) => (
-                    <tr key={c.id} style={{ borderBottom: "1px solid #f5f5f5", transition: "background 0.2s" }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = "#fafafa"}
-                      onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
-                    >
-                      <td style={{ padding: "14px 16px" }}>
-                        <span style={{ marginRight: 8 }}>{c.image}</span>
-                        <span style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>{c.title}</span>
-                      </td>
-                      <td style={{ padding: "14px 16px", fontSize: 13, color: "#666" }}>{c.provider}</td>
-                      <td style={{ padding: "14px 16px" }}><Badge label={c.category} color={c.color} bg={`${c.color}22`} /></td>
-                      <td style={{ padding: "14px 16px", fontSize: 13, color: "#666" }}>{c.week}</td>
-                      <td style={{ padding: "14px 16px", fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>{priceBadge(c)}</td>
-                      <td style={{ padding: "14px 16px" }}>
-                        <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>{c.booked}/{c.spots}</div>
-                        <div style={{ background: "#eee", borderRadius: 10, height: 6, width: 80 }}>
-                          <div style={{
-                            width: `${Math.min((c.booked / c.spots) * 100, 100)}%`,
-                            background: isFull(c) ? "#FF6B6B" : "#00B894",
-                            height: "100%", borderRadius: 10
-                          }} />
-                        </div>
-                      </td>
-                      <td style={{ padding: "14px 16px" }}>
-                        <Badge
-                          label={isFull(c) ? "Ausgebucht" : "Verfügbar"}
-                          color={isFull(c) ? "#FF6B6B" : "#00B894"}
-                          bg={isFull(c) ? "#FF6B6B22" : "#00B89422"}
-                        />
-                      </td>
-                      <td style={{ padding: "14px 16px" }}>
-                        <button
-                          onClick={() => {
-                            const newSpots = prompt(`Plätze für "${c.title}" (aktuell: ${c.spots}):`, c.spots);
-                            if (newSpots && !isNaN(newSpots)) {
-                              setCourses((cs) => cs.map((x) => x.id === c.id ? { ...x, spots: parseInt(newSpots) } : x));
-                              showToast(`Plätze für "${c.title}" auf ${newSpots} gesetzt.`);
-                            }
-                          }}
-                          style={{
-                            border: "2px solid #A29BFE", borderRadius: 8, padding: "5px 10px",
-                            background: "white", color: "#A29BFE", fontWeight: 700,
-                            cursor: "pointer", fontSize: 12
-                          }}
-                        >
-                          Bearbeiten
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Add course */}
-          <div style={{ background: "white", borderRadius: 24, padding: 28, boxShadow: "0 4px 20px rgba(0,0,0,0.07)", marginTop: 24 }}>
-            <h3 style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 800, color: "#1a1a2e" }}>➕ Neuen Kurs hinzufügen</h3>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              {["Titel", "Anbieter", "Kategorie"].map((f) => (
-                <input key={f} placeholder={f} id={`new-${f}`} style={{
-                  border: "2px solid #eee", borderRadius: 12, padding: "10px 16px",
-                  fontSize: 14, outline: "none", flex: "1 1 150px"
-                }} />
-              ))}
-              <button
-                onClick={() => {
-                  const title = document.getElementById("new-Titel").value;
-                  if (!title) { showToast("Bitte Titel eingeben", "info"); return; }
-                  const newCourse = {
-                    id: Date.now(), title,
-                    provider: document.getElementById("new-Anbieter").value || "Unbekannt",
-                    category: document.getElementById("new-Kategorie").value || "Diverses",
-                    price: 0, priceband: "low", age: "8-14", spots: 15, booked: 0,
-                    days: ["Mo", "Di"], week: "1. Sept", image: "⭐", color: "#A29BFE",
-                    desc: "Neuer Kurs", rating: 0, reviews: 0,
-                    location: "Basel", duration: "2 Tage", time: "09:00–17:00"
-                  };
-                  setCourses((cs) => [...cs, newCourse]);
-                  showToast(`"${title}" wurde hinzugefügt!`);
-                  ["Titel", "Anbieter", "Kategorie"].forEach((f) => { document.getElementById(`new-${f}`).value = ""; });
-                }}
-                style={{
-                  background: "#FF6B6B", color: "white", border: "none",
-                  borderRadius: 12, padding: "10px 24px", fontWeight: 800,
-                  cursor: "pointer", fontSize: 14, flex: "0 0 auto"
-                }}
-              >
-                Hinzufügen
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )}
-
-  {/* ── BOOK MODAL ── */}
-  {bookModal && (
-    <Modal onClose={() => setBookModal(null)}>
-      <div style={{ padding: 32 }}>
-        <div style={{
-          background: `linear-gradient(135deg, ${bookModal.color}22, ${bookModal.color}44)`,
-          borderRadius: 16, padding: "20px", marginBottom: 24, textAlign: "center"
-        }}>
-          <div style={{ fontSize: 48 }}>{bookModal.image}</div>
-          <h2 style={{ margin: "8px 0 4px", fontSize: 22, fontWeight: 900, color: "#1a1a2e" }}>{bookModal.title}</h2>
-          <div style={{ color: "#888", fontSize: 14 }}>📅 {bookModal.week} · ⏱ {bookModal.duration}</div>
-        </div>
-
-        <div style={{ marginBottom: 24, padding: "16px", background: "#f7f8fc", borderRadius: 16 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, fontSize: 14, color: "#555" }}>
-            <div>📍 {bookModal.location}</div>
-            <div>🕐 {bookModal.time}</div>
-            <div>👶 Alter: {bookModal.age} J.</div>
-            <div>💰 {priceBadge(bookModal)}</div>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: 24 }}>
-          <label style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 15, display: "block", marginBottom: 10 }}>
-            Für welches Kind?
-          </label>
-          <div style={{ display: "flex", gap: 10 }}>
-            {profile.kids.map((k) => (
-              <button
-                key={k}
-                id={`kid-${k}`}
-                onClick={() => {
-                  profile.kids.forEach((kk) => {
-                    const el = document.getElementById(`kid-${kk}`);
-                    if (el) el.style.background = kk === k ? bookModal.color : "white";
-                    if (el) el.style.color = kk === k ? "white" : "#333";
-                  });
-                }}
-                style={{
-                  border: `2px solid ${bookModal.color}`, borderRadius: 14,
-                  padding: "10px 20px", background: "white", color: "#333",
-                  fontWeight: 700, cursor: "pointer", fontSize: 14, transition: "all 0.2s"
-                }}
-              >
-                {k}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ display: "flex", gap: 12 }}>
-          <button
-            onClick={() => setBookModal(null)}
-            style={{
-              flex: 1, padding: "14px", borderRadius: 14, border: "2px solid #eee",
-              background: "white", color: "#333", fontWeight: 700, cursor: "pointer", fontSize: 15
-            }}
-          >
-            Abbrechen
-          </button>
-          <button
-            onClick={() => {
-              const activeKid = profile.kids.find((k) => {
-                const el = document.getElementById(`kid-${k}`);
-                return el && el.style.color === "white";
-              }) || profile.kids[0];
-              confirmBook(bookModal, activeKid);
-            }}
-            style={{
-              flex: 2, padding: "14px", borderRadius: 14, border: "none",
-              background: `linear-gradient(135deg, ${bookModal.color}, ${bookModal.color}cc)`,
-              color: "white", fontWeight: 800, cursor: "pointer", fontSize: 15
-            }}
-          >
-            🎉 Jetzt buchen · {priceBadge(bookModal)}
-          </button>
-        </div>
-      </div>
-    </Modal>
-  )}
-
-  {/* ── DETAIL MODAL ── */}
-  {detailModal && (
-    <Modal onClose={() => setDetailModal(null)}>
-      <div>
-        <div style={{
-          background: `linear-gradient(135deg, ${detailModal.color}33, ${detailModal.color}55)`,
-          padding: "32px", borderBottom: `3px solid ${detailModal.color}`
-        }}>
-          <button
-            onClick={() => setDetailModal(null)}
-            style={{
-              float: "right", background: "rgba(255,255,255,0.8)", border: "none",
-              borderRadius: "50%", width: 36, height: 36, cursor: "pointer", fontSize: 16
-            }}
-          >✕</button>
-          <div style={{ fontSize: 56, marginBottom: 12 }}>{detailModal.image}</div>
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-            <Badge label={detailModal.category} color={detailModal.color} bg={`${detailModal.color}33`} />
-            <Badge label={`${detailModal.age} Jahre`} color="#555" bg="#f0f0f0" />
-            <Badge label={bandLabel(detailModal.priceband)} color="#555" bg="#f0f0f0" />
-          </div>
-          <h2 style={{ margin: "0 0 4px", fontSize: 26, fontWeight: 900, color: "#1a1a2e" }}>{detailModal.title}</h2>
-          <div style={{ color: "#666", fontSize: 14 }}>von {detailModal.provider}</div>
-        </div>
-
-        <div style={{ padding: 32 }}>
-          <p style={{ color: "#555", lineHeight: 1.8, fontSize: 15, marginBottom: 24 }}>{detailModal.desc}</p>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
-            {[
-              ["📅 Woche", detailModal.week],
-              ["⏱ Dauer", detailModal.duration],
-              ["🕐 Zeiten", detailModal.time],
-              ["📍 Ort", detailModal.location],
-              ["👶 Alter", `${detailModal.age} Jahre`],
-              ["💰 Preis", priceBadge(detailModal)],
-            ].map(([l, v]) => (
-              <div key={l} style={{ background: "#f7f8fc", borderRadius: 12, padding: "14px 16px" }}>
-                <div style={{ fontSize: 11, color: "#888", fontWeight: 700, letterSpacing: 0.5, marginBottom: 4 }}>{l}</div>
-                <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>{v}</div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginBottom: 24 }}>
-            <StarRating rating={detailModal.rating} />
-            <span style={{ color: "#888", fontSize: 13, marginLeft: 8 }}>({detailModal.reviews} Bewertungen)</span>
-          </div>
-
-          <SpotBar course={detailModal} />
-
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-            <button
-              onClick={() => { toggleFav(detailModal.id); showToast(favorites.includes(detailModal.id) ? "Aus Favoriten entfernt" : "Zu Favoriten hinzugefügt", "info"); }}
-              style={{
-                flex: 1, padding: "14px", borderRadius: 14,
-                border: `2px solid ${detailModal.color}`,
-                background: favorites.includes(detailModal.id) ? `${detailModal.color}22` : "white",
-                color: detailModal.color, fontWeight: 800, cursor: "pointer", fontSize: 15
-              }}
-            >
-              {favorites.includes(detailModal.id) ? "♥ Gespeichert" : "♡ Speichern"}
-            </button>
-            <button
-              onClick={() => { setDetailModal(null); handleBook(detailModal); }}
-              style={{
-                flex: 2, padding: "14px", borderRadius: 14, border: "none",
-                background: isFull(detailModal) ? "#e0e0e0" : `linear-gradient(135deg, ${detailModal.color}, ${detailModal.color}cc)`,
-                color: isFull(detailModal) ? "#999" : "white",
-                fontWeight: 800, cursor: isFull(detailModal) ? "not-allowed" : "pointer", fontSize: 15
-              }}
-            >
-              {isFull(detailModal) ? "⏳ Warteliste beitreten" : `🎉 Buchen · ${priceBadge(detailModal)}`}
-            </button>
-          </div>
-        </div>
-      </div>
-    </Modal>
-  )}
-
-  {/* Footer */}
-  <footer style={{
-    background: "#1a1a2e", color: "rgba(255,255,255,0.5)",
-    padding: "40px 24px", textAlign: "center", marginTop: 60, fontSize: 13
-  }}>
-    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 16 }}>
-        <div style={{ fontSize: 20 }}>☀️</div>
-        <span style={{ fontWeight: 900, color: "white", fontSize: 16 }}>Basler Ferienpass 2025</span>
-      </div>
-      <p style={{ margin: "0 0 8px" }}>Basierend auf basler-ferienpass.ch · Demo-Version</p>
-      <p style={{ margin: 0 }}>Alle Kursdaten sind fiktiv · Admin-Demo-Passwort: admin123</p>
-    </div>
-  </footer>
-</div>
-```
-
-);
+    </div>`;
+  document.getElementById('detail-modal').classList.add('open');
 }
+
+function detailToggleFav(id) {
+  toggleFav(id);
+  openDetail(id);
+}
+
+function detailBook(id) {
+  document.getElementById('detail-modal').classList.remove('open');
+  openBook(id);
+}
+
+function closeDetailModal(e) {
+  if(e.target===document.getElementById('detail-modal')) document.getElementById('detail-modal').classList.remove('open');
+}
+
+// ── BOOKINGS ─────────────────────────────────────────────────────────────────
+function updateBookingsNav() {
+  const n = document.getElementById('nav-bookings');
+  if(n) n.textContent = `📋 Buchungen${bookings.length?` (${bookings.length})`:''}`;
+}
+
+function cancelBooking(idx) {
+  const b = bookings[idx];
+  const ci = courses.findIndex(x=>x.id===b.id);
+  if(ci>=0 && courses[ci].booked>0) courses[ci].booked--;
+  bookings.splice(idx,1);
+  save(); renderBookings(); updateBookingsNav();
+  renderHome();
+  showToast(`"${b.title}" storniert.`,'info');
+}
+
+function removeWaitlist(idx) {
+  waitlist.splice(idx,1);
+  save(); renderBookings(); updateBookingsNav();
+  showToast('Von Warteliste entfernt','info');
+}
+
+function renderBookings() {
+  updateBookingsNav();
+  document.getElementById('bookings-meta').textContent = `${bookings.length} aktive Buchungen · ${waitlist.length} Wartelisten`;
+  let html = '';
+  if(bookings.length===0 && waitlist.length===0) {
+    html = `<div class="white-card" style="text-align:center;padding:60px">
+      <div style="font-size:64px;margin-bottom:16px">📋</div>
+      <h3 style="font-size:22px;font-weight:800;margin-bottom:8px">Noch keine Buchungen</h3>
+      <p style="color:#888">Stöbere in den Kursen und buche dein erstes Abenteuer!</p>
+      <button class="btn-primary" style="margin-top:20px;width:auto;padding:12px 24px" onclick="navigate('courses')">Kurse entdecken</button>
+    </div>`;
+  } else {
+    bookings.forEach((b,i) => {
+      html += `<div class="booking-card">
+        <div class="booking-icon" style="background:linear-gradient(135deg,${hexAlpha(b.color,.2)},${hexAlpha(b.color,.35)})">${b.emoji}</div>
+        <div class="booking-info">
+          <div class="booking-title">${b.title}</div>
+          <div class="booking-sub">👤 ${b.child} · 📅 ${b.week} · ✅ gebucht am ${b.bookedAt}</div>
+        </div>
+        <div class="booking-actions">
+          <span class="badge" style="background:#00B89422;color:#00B894">${b.status}</span>
+          <span class="badge" style="background:#f5f5f5;color:#666">${priceTxt(b)}</span>
+          <button class="btn-cancel" onclick="cancelBooking(${i})">Stornieren</button>
+        </div>
+      </div>`;
+    });
+    if(waitlist.length>0) {
+      html += `<h2 style="font-size:22px;font-weight:800;color:#1a1a2e;margin:24px 0 12px">⏳ Warteliste</h2>`;
+      waitlist.forEach((b,i) => {
+        html += `<div class="booking-card waitlist-card">
+          <div style="font-size:28px;flex-shrink:0">${b.emoji}</div>
+          <div class="booking-info">
+            <div class="booking-title">${b.title}</div>
+            <div class="booking-sub">📅 ${b.week} · eingetragen am ${b.addedAt}</div>
+          </div>
+          <div class="booking-actions">
+            <span class="badge" style="background:#FDCB6E22;color:#FDCB6E">Warteliste</span>
+            <button class="btn-cancel" onclick="removeWaitlist(${i})">Entfernen</button>
+          </div>
+        </div>`;
+      });
+    }
+  }
+  document.getElementById('bookings-list').innerHTML = html;
+}
+
+// ── PROFILE ──────────────────────────────────────────────────────────────────
+function addKid() {
+  const name = prompt('Kind hinzufügen (Name & Alter, z.B. "Anna (10)"):');
+  if(name && name.trim()) {
+    kids.push(name.trim()); save();
+    const row = document.getElementById('kids-row');
+    const addBtn = row.querySelector('.btn-add-kid');
+    const tag = document.createElement('div');
+    tag.className = 'kid-tag';
+    tag.textContent = `🧒 ${name.trim()}`;
+    row.insertBefore(tag, addBtn);
+    showToast(`${name.trim()} hinzugefügt!`);
+  }
+}
+
+function renderProfile() {
+  const favs = courses.filter(c => favorites.includes(c.id));
+  const favList = document.getElementById('fav-list');
+  if(favs.length===0) {
+    favList.innerHTML = '<p style="color:#888">Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!</p>';
+  } else {
+    favList.innerHTML = favs.map(c => `
+      <div class="fav-row">
+        <span style="font-size:24px">${c.emoji}</span>
+        <div class="fav-row-info">
+          <div class="fav-title">${c.title}</div>
+          <div class="fav-sub">📅 ${c.week} · ${priceTxt(c)}</div>
+        </div>
+        <button class="btn-book-sm" onclick="openBook(${c.id})">Buchen</button>
+      </div>`).join('');
+  }
+}
+
+// ── ADMIN ────────────────────────────────────────────────────────────────────
+let adminAuthed = false;
+
+function adminLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  if(pw==='admin123') {
+    adminAuthed = true;
+    document.getElementById('admin-lock').style.display = 'none';
+    document.getElementById('admin-dash').style.display = 'block';
+    renderAdmin();
+  } else {
+    showToast('Falsches Passwort','info');
+  }
+}
+
+function adminLogout() {
+  adminAuthed = false;
+  document.getElementById('admin-lock').style.display = 'block';
+  document.getElementById('admin-dash').style.display = 'none';
+  document.getElementById('admin-pw').value = '';
+}
+
+function renderAdmin() {
+  if(!adminAuthed) return;
+  const totalBooked = courses.reduce((s,c) => s+c.booked, 0);
+  document.getElementById('admin-stats').innerHTML = [
+    {label:'Kurse total', val:courses.length, icon:'📚', clr:'#A29BFE'},
+    {label:'Buchungen', val:bookings.length, icon:'✅', clr:'#00B894'},
+    {label:'Warteliste', val:waitlist.length, icon:'⏳', clr:'#FDCB6E'},
+    {label:'Belegte Plätze', val:totalBooked, icon:'👥', clr:'#FF6B6B'},
+  ].map(s => `
+    <div class="stat-card" style="border-left:4px solid ${s.clr}">
+      <div class="stat-icon">${s.icon}</div>
+      <div class="stat-val" style="color:${s.clr}">${s.val}</div>
+      <div class="stat-lbl">${s.label}</div>
+    </div>`).join('');
+
+  document.getElementById('admin-table').innerHTML = courses.map((c,i) => {
+    const p = Math.min(c.booked/c.spots*100,100);
+    const full = isFull(c);
+    return `<tr>
+      <td><span style="margin-right:8px">${c.emoji}</span><strong>${c.title}</strong></td>
+      <td style="color:#666">${c.provider}</td>
+      <td><span class="badge" style="background:${hexAlpha(c.color,.15)};color:${c.color}">${c.category}</span></td>
+      <td style="color:#666">${c.week}</td>
+      <td style="font-weight:700">${priceTxt(c)}</td>
+      <td>
+        <div style="font-size:11px;color:#888;margin-bottom:4px">${c.booked}/${c.spots}</div>
+        <div style="background:#eee;border-radius:10px;height:6px;width:80px">
+          <div style="width:${p}%;background:${full?'#FF6B6B':'#00B894'};height:100%;border-radius:10px"></div>
+        </div>
+      </td>
+      <td><span class="badge" style="background:${full?'#FF6B6B22':'#00B89422'};color:${full?'#FF6B6B':'#00B894'}">${full?'Ausgebucht':'Verfügbar'}</span></td>
+      <td><button class="btn-edit" onclick="editSpots(${i})">Bearbeiten</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function editSpots(idx) {
+  const c = courses[idx];
+  const newVal = prompt(`Plätze für "${c.title}" (aktuell: ${c.spots}):`, c.spots);
+  if(newVal && !isNaN(newVal) && parseInt(newVal)>0) {
+    courses[idx].spots = parseInt(newVal);
+    renderAdmin(); renderHome();
+    showToast(`Plätze auf ${newVal} gesetzt.`);
+  }
+}
+
+function addCourse() {
+  const title    = document.getElementById('new-title').value.trim();
+  const provider = document.getElementById('new-provider').value.trim() || 'Unbekannt';
+  const category = document.getElementById('new-category').value.trim() || 'Diverses';
+  const price    = parseInt(document.getElementById('new-price').value) || 0;
+  if(!title) { showToast('Bitte Titel eingeben','info'); return; }
+  const colors = ['#FF6B6B','#4ECDC4','#A29BFE','#00B894','#FD79A8','#FDCB6E'];
+  const emojis = ['⭐','🎯','🌟','💡','🔥','✨'];
+  const newC = {
+    id: Date.now(), title, provider, category, price,
+    priceband: price===0?'low':price<=50?'mid':'market',
+    age:'8-14', spots:15, booked:0, week:'1. Sept',
+    emoji: emojis[Math.floor(Math.random()*emojis.length)],
+    color: colors[Math.floor(Math.random()*colors.length)],
+    desc:`Neuer Kurs: ${title}`, rating:0, reviews:0,
+    location:'Basel', duration:'3 Tage', time:'09:00–17:00'
+  };
+  courses.push(newC);
+  ['new-title','new-provider','new-category','new-price'].forEach(id => document.getElementById(id).value='');
+  renderAdmin(); renderHome();
+  showToast(`"${title}" wurde hinzugefügt!`);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderHome();
+updateBookingsNav();
+</script>
+
+</body>
+</html>
