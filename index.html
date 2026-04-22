@@ -1,686 +1,1106 @@
-<!DOCTYPE html>
+import { useState, useEffect, useRef } from “react”;
 
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>goSNOB.ai x Basler Ferienpass</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-body{animation:fadeIn .4s ease;}
-body{background:#fff;color:#0a0a0a;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:crosshair;}
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const COURSES_DATA = [
+{ id: 1, title: “Musik & Klang Camp”, provider: “Fabio Landi”, category: “Musik”, price: 0, priceband: “low”, age: “8-14”, spots: 12, booked: 9, days: [“Mo”, “Di”, “Mi”], week: “14. Juli”, image: “🎵”, color: “#FF6B6B”, desc: “Tauche ein in die Welt der Musik – von Rhythmus über Melodie bis hin zu eigenen Kompositionen.”, rating: 4.8, reviews: 23, location: “Musikschule Basel, Leonhardsgraben 6”, duration: “3 Tage”, time: “09:00–16:00” },
+{ id: 2, title: “Zirkus Akrobatik”, provider: “Zirkus Basilisk”, category: “Sport”, price: 45, priceband: “mid”, age: “6-12”, spots: 15, booked: 15, days: [“Mo”, “Di”, “Mi”, “Do”, “Fr”], week: “21. Juli”, image: “🎪”, color: “#4ECDC4”, desc: “Jonglieren, Balancieren, Akrobatik – eine Woche voller Spass und neuer Fähigkeiten.”, rating: 4.9, reviews: 41, location: “Sportanlage Rankhof”, duration: “5 Tage”, time: “08:30–17:00” },
+{ id: 3, title: “Coding & Robotik”, provider: “TechKids Basel”, category: “Technik”, price: 80, priceband: “market”, age: “10-16”, spots: 10, booked: 6, days: [“Mo”, “Di”, “Mi”, “Do”], week: “28. Juli”, image: “🤖”, color: “#A29BFE”, desc: “Programmieren lernen, eigene Roboter bauen und die Welt von morgen gestalten.”, rating: 4.7, reviews: 18, location: “Digitalhub Basel, Hochbergerstrasse”, duration: “4 Tage”, time: “09:00–17:00” },
+{ id: 4, title: “Naturentdecker Camp”, provider: “NABU Basel”, category: “Natur”, price: 0, priceband: “low”, age: “7-12”, spots: 20, booked: 14, days: [“Di”, “Mi”, “Do”], week: “4. Aug”, image: “🌿”, color: “#55EFC4”, desc: “Käfer, Kräuter, Flussleben – die Natur Basels hautnah entdecken mit echten Biologen.”, rating: 4.6, reviews: 35, location: “Petite Camargue Alsacienne”, duration: “3 Tage”, time: “09:30–15:30” },
+{ id: 5, title: “Theater & Performance”, provider: “Junges Theater Basel”, category: “Kunst”, price: 20, priceband: “low”, age: “9-15”, spots: 16, booked: 10, days: [“Mo”, “Di”, “Mi”, “Do”, “Fr”], week: “11. Aug”, image: “🎭”, color: “#FD79A8”, desc: “Eigene Stücke schreiben, proben und am Ende der Woche vor Eltern aufführen.”, rating: 4.5, reviews: 29, location: “Theater Basel, Probe-Bühne”, duration: “5 Tage”, time: “10:00–17:00” },
+{ id: 6, title: “Kochen & Backen”, provider: “Kochschule Basilicum”, category: “Kulinarik”, price: 55, priceband: “mid”, age: “8-14”, spots: 12, booked: 8, days: [“Mi”, “Do”, “Fr”], week: “18. Aug”, image: “👨‍🍳”, color: “#FDCB6E”, desc: “Teig kneten, Saucen kochen, Kuchen dekorieren – Küchenmagie für Kinder.”, rating: 4.8, reviews: 22, location: “Kochschule am Marktplatz”, duration: “3 Tage”, time: “10:00–15:00” },
+{ id: 7, title: “Streetart & Graffiti”, provider: “Kunsthalle Basel Youth”, category: “Kunst”, price: 35, priceband: “mid”, age: “12-17”, spots: 10, booked: 7, days: [“Mo”, “Di”, “Mi”], week: “25. Aug”, image: “🎨”, color: “#E17055”, desc: “Legales Sprühen unter Anleitung professioneller Streetart-Künstler. Eigene Wand inklusive.”, rating: 4.9, reviews: 15, location: “Gundeldinger Feld”, duration: “3 Tage”, time: “11:00–18:00” },
+{ id: 8, title: “Schwimmen & Wassersport”, provider: “Sportamt Basel”, category: “Sport”, price: 0, priceband: “low”, age: “6-14”, spots: 25, booked: 20, days: [“Mo”, “Di”, “Mi”, “Do”, “Fr”], week: “1. Sept”, image: “🏊”, color: “#74B9FF”, desc: “Kraul lernen, Wasserball spielen und sicher im Wasser sein – für alle Levels.”, rating: 4.4, reviews: 48, location: “Gartenbad Bachgraben”, duration: “5 Tage”, time: “09:00–12:00” },
+];
 
-50%{opacity:0}}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0f0f0;background:#fff;}
-.n-logo{font-family:‘Bebas Neue’,sans-serif;font-size:16px;letter-spacing:.5em;}
-.n-r{display:flex;align-items:center;gap:16px;}
-.n-badge{font-size:8px;letter-spacing:.2em;text-transform:uppercase;border:1px solid #0a0a0a;padding:4px 10px;}
-.n-client{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 40px 80px;border-bottom:1px solid #f0f0f0;position:relative;overflow:hidden;padding-top:120px;}
-.hero-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#bbb;margin-bottom:16px;}
-.hero-label span{color:#d946ef;}
-.hw1{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(52px,11vw,200px);line-height:.88;letter-spacing:-.02em;display:block;word-break:break-word;}
-.hw2{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(52px,11vw,200px);line-height:.88;letter-spacing:-.02em;color:#d0d0d0;display:block;word-break:break-word;}
-.hero-right{position:absolute;top:120px;right:40px;text-align:right;max-width:300px;}
-.hero-right-title{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(18px,2.5vw,32px);line-height:1.1;}
-.hero-right-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:8px;}
-.hero-bottom{display:flex;align-items:flex-start;gap:24px;margin-top:40px;padding-top:28px;border-top:1px solid #f0f0f0;flex-wrap:wrap;}
-.hero-txt{font-size:11px;letter-spacing:.06em;color:#555;max-width:100%;line-height:1.9;flex:1 1 200px;}
-.hstat{text-align:center;flex:1 1 60px;}
-.hstat-n{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(40px,8vw,64px);line-height:1;color:#ddd;}
-.hstat-l{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#aaa;margin-top:2px;}
-#stmt{min-height:50vh;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #f0f0f0;padding:80px 40px;}
-.stmt-txt{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(32px,7vw,100px);line-height:.92;text-align:center;}
-.stmt-txt .g{color:#bbb;}
-.sec{border-bottom:1px solid #f0f0f0;}
-.sec-head{display:grid;grid-template-columns:64px 1fr;border-bottom:1px solid #f0f0f0;}
-.sec-nc{padding:28px 16px;border-right:1px solid #f0f0f0;display:flex;align-items:center;justify-content:center;}
-.sec-nt{font-family:‘Bebas Neue’,sans-serif;font-size:44px;color:#ececec;line-height:1;}
-.sec-tc{padding:28px 40px;}
-.sec-ti{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(26px,4vw,56px);line-height:.92;margin-bottom:4px;}
-.sec-su{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
-.rgrid{display:grid;grid-template-columns:repeat(3,1fr);}
-@media(max-width:700px){.rgrid{grid-template-columns:1fr;}}
-.rc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;z-index:1;}
-.rc:last-child{border-right:none;}
-.rc:hover{background:#fafafa;}
-.rc.sel{background:#0a0a0a;}
-.rc.sel .rdot{border-color:#d946ef;background:#d946ef;}
-.rc.sel .rdot::after{opacity:1;}
-.rc.sel .rt,.rc.sel .rchf,.rc.sel .rli li{color:#555;}
-.rc.sel .rpr{color:#fff;}
-@media(max-width:700px){.rc{border-right:none;border-bottom:1px solid #f0f0f0;}}
-.rdot{width:11px;height:11px;border-radius:50%;border:1px solid #ccc;margin-bottom:16px;position:relative;transition:all .2s;}
-.rdot::after{content:’’;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:#fff;opacity:0;transition:opacity .2s;}
-.rt{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:8px;}
-.rpr{font-family:‘Bebas Neue’,sans-serif;font-size:56px;line-height:1;margin-bottom:3px;}
-.rpr.sm{font-size:36px;line-height:1.1;}
-.rchf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:16px;}
-.rli{list-style:none;}
-.rli li{font-size:9px;color:#555;padding:5px 0;border-bottom:1px solid #f5f5f5;line-height:1.6;}
-.rc.sel .rli li{border-color:#1c1c1c;}
-.ogrid{display:grid;grid-template-columns:repeat(4,1fr);}
-@media(max-width:880px){.ogrid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:460px){.ogrid{grid-template-columns:1fr;}}
-.oc{padding:24px 20px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;z-index:1;}
-.oc:hover{background:#fafafa;}
-.oc.sel{background:#0a0a0a;}
-.oc.sel .oti{color:#fff;}.oc.sel .ode{color:#555;}.oc.sel .opr{color:#d946ef;}
-.oc.sel .ochk{background:#d946ef;border-color:#d946ef;}
-.oc.sel .ochk::after{opacity:1;}
-.oc.req{background:#fafafa;cursor:default;}
-.oc.req .ochk{background:#0a0a0a;border-color:#0a0a0a;}
-.oc.req .ochk::after{opacity:1;}
-.oc.snob-opt{border:1px solid transparent;}
-.oc.snob-opt:hover{border-color:#d946ef22;background:#fff9ff;}
-.oc.snob-opt.sel{background:#1a0020;border-color:#d946ef44;}
-.oc.snob-opt.sel .oti{color:#fff;}.oc.snob-opt.sel .ode{color:#d946ef88;}.oc.snob-opt.sel .opr{color:#d946ef;}
-.oc.snob-opt.sel .ochk{background:#d946ef;border-color:#d946ef;}
-.oc.snob-opt.sel .ochk::after{opacity:1;}
-.snob-pill{display:inline-block;font-size:7px;letter-spacing:.2em;text-transform:uppercase;background:#d946ef;color:#fff;padding:2px 6px;margin-bottom:8px;}
-.ochk{width:11px;height:11px;border:1px solid #ccc;margin-bottom:12px;position:relative;transition:all .2s;}
-.ochk::after{content:’’;position:absolute;top:1px;left:3px;width:3px;height:6px;border:1px solid #fff;border-top:none;border-left:none;transform:rotate(45deg);opacity:0;transition:opacity .2s;}
-.oic{font-size:18px;margin-bottom:8px;display:block;}
-.oti{font-family:‘Bebas Neue’,sans-serif;font-size:16px;margin-bottom:5px;color:#0a0a0a;line-height:1.1;}
-.ode{font-size:9px;color:#666;line-height:1.7;}
-.opr{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#0a0a0a;margin-top:10px;}
-.opr.incl{color:#ccc;}
-.sgrid{display:grid;grid-template-columns:repeat(3,1fr);}
-@media(max-width:700px){.sgrid{grid-template-columns:1fr;}}
-.sc{padding:32px 28px;border-right:1px solid #f0f0f0;cursor:pointer;transition:background .2s;position:relative;z-index:1;}
-.sc:last-child{border-right:none;}
-.sc:hover{background:#fafafa;}
-.sc.sel{background:#0a0a0a;}
-.sc.sel .rdot{border-color:#d946ef;background:#d946ef;}
-.sc.sel .rdot::after{opacity:1;}
-.sc.sel .st,.sc.sel .schf,.sc.sel .sde{color:#555;}
-.sc.sel .spr{color:#d946ef;}
-@media(max-width:700px){.sc{border-right:none;border-bottom:1px solid #f0f0f0;}}
-.st{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:8px;}
-.spr{font-family:‘Bebas Neue’,sans-serif;font-size:52px;line-height:1;margin-bottom:3px;}
-.schf{font-size:9px;letter-spacing:.12em;color:#bbb;margin-bottom:14px;}
-.sde{font-size:9px;color:#555;line-height:1.7;}
-#sticky{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:2px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;padding:12px 40px;gap:16px;}
-.sl{display:flex;align-items:center;gap:20px;flex:1;min-width:0;}
-.slbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#666;white-space:nowrap;}
-.schips{display:flex;gap:5px;flex-wrap:wrap;}
-.chip{font-size:8px;letter-spacing:.08em;text-transform:uppercase;border:1px solid #e8e8e8;padding:3px 7px;color:#999;white-space:nowrap;}
-.chip.pink{border-color:#d946ef44;color:#d946ef;background:#fff9ff;}
-.sr{display:flex;align-items:center;gap:18px;flex-shrink:0;}
-.stw{text-align:right;}
-.stlbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#888;}
-.stnum{font-family:‘Bebas Neue’,sans-serif;font-size:34px;line-height:1;}
-.stnum span{color:#d946ef;}
-.stmo{font-size:8px;color:#bbb;margin-top:1px;}
-.sbtn{background:#0a0a0a;color:#fff;font-family:‘Bebas Neue’,sans-serif;font-size:15px;letter-spacing:.08em;padding:12px 24px;border:none;cursor:pointer;position:relative;overflow:hidden;white-space:nowrap;}
-.sbtn::before{content:’’;position:absolute;inset:0;background:#d946ef;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
-.sbtn:hover::before{transform:scaleX(1);}
-.sbtn span{position:relative;z-index:1;}
-.mov{position:fixed;inset:0;z-index:500;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
-.mov.open{opacity:1;pointer-events:all;}
-.modal{background:#fff;border:1px solid #0a0a0a;padding:44px;max-width:540px;width:calc(100% - 32px);max-height:90vh;overflow-y:auto;transform:translateY(12px);transition:transform .3s;}
-.mov.open .modal{transform:translateY(0);}
-.mtit{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(40px,6vw,72px);line-height:.9;margin-bottom:5px;}
-.mtit span{color:#d946ef;}
-.msub{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bbb;margin-bottom:24px;line-height:1.9;}
-.mrows{border-top:1px solid #f0f0f0;margin-bottom:16px;}
-.mrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:10px;}
-.mrow.pink-row .mprice{color:#d946ef;}
-.mname{color:#888;}.mprice{font-family:‘Bebas Neue’,sans-serif;font-size:15px;color:#d946ef;}
-.mtot{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0 0;}
-.mtotl{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;}
-.mtotn{font-family:‘Bebas Neue’,sans-serif;font-size:40px;line-height:1;}
-.fsep{border-top:1px solid #f0f0f0;padding-top:22px;margin-top:16px;}
-.fr2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.ff{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
-.ff label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;}
-.ff input,.ff textarea{background:transparent;border:none;border-bottom:1px solid #e8e8e8;color:#0a0a0a;font-family:‘DM Mono’,monospace;font-size:13px;padding:7px 0;outline:none;transition:border-color .2s;resize:none;}
-.ff input:focus,.ff textarea:focus{border-color:#0a0a0a;}
-.ff input::placeholder,.ff textarea::placeholder{color:#ccc;}
-.mact{display:flex;gap:10px;margin-top:20px;}
-.mcanc{background:none;border:1px solid #e8e8e8;color:#bbb;font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:.1em;padding:12px 16px;cursor:pointer;transition:all .2s;flex:1;}
-.mcanc:hover{border-color:#0a0a0a;color:#0a0a0a;}
-.mgen{background:#0a0a0a;color:#fff;border:none;font-family:‘Bebas Neue’,sans-serif;font-size:17px;letter-spacing:.06em;padding:12px 24px;cursor:pointer;flex:2;position:relative;overflow:hidden;}
-.mgen::before{content:’’;position:absolute;inset:0;background:#d946ef;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
-.mgen:hover::before{transform:scaleX(1);}
-.mgen span{position:relative;z-index:1;}
-.fab{position:fixed;bottom:80px;right:24px;z-index:200;}
-.fab-btn{width:40px;height:40px;background:#0a0a0a;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background .2s;}
-.fab-btn:hover,.fab-btn.on{background:#d946ef;}
-.ico-o{display:block;}.ico-c2{display:none;font-size:10px;color:#fff;font-family:‘DM Mono’,monospace;}
-.fab-btn.on .ico-o{display:none;}.fab-btn.on .ico-c2{display:block;}
-.chat-w{position:fixed;bottom:130px;right:24px;width:300px;background:#fff;border:1px solid #e8e8e8;z-index:199;display:flex;flex-direction:column;max-height:420px;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;}
-.chat-w.on{opacity:1;transform:translateY(0);pointer-events:all;}
-@media(max-width:480px){.chat-w{width:calc(100vw - 32px);right:16px;}}
-.cw-h{padding:14px 18px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px;}
-.cw-av{width:28px;height:28px;background:#0a0a0a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:‘Bebas Neue’,sans-serif;font-size:11px;color:#fff;flex-shrink:0;}
-.cw-name{font-family:‘Bebas Neue’,sans-serif;font-size:15px;}
-.cw-st{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}
-.cw-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:180px;max-height:220px;scrollbar-width:thin;}
-.msg{max-width:88%;}.msg.bot{align-self:flex-start;}.msg.usr{align-self:flex-end;}
-.mb{padding:9px 12px;font-size:11px;line-height:1.6;animation:mi .2s ease;}
-@keyframes mi{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
-.msg.bot .mb{background:#f7f7f7;color:#555;}
-.msg.usr .mb{background:#0a0a0a;color:#fff;}
-.cw-qr{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 10px;}
-.qb{background:none;border:1px solid #e8e8e8;color:#bbb;font-family:‘DM Mono’,monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;cursor:pointer;transition:all .15s;}
-.qb:hover{border-color:#0a0a0a;color:#0a0a0a;}
-.cw-inp{padding:10px 14px;border-top:1px solid #f0f0f0;display:flex;gap:8px;}
-.ci{flex:1;background:transparent;border:none;border-bottom:1px solid #e8e8e8;color:#0a0a0a;font-family:‘DM Mono’,monospace;font-size:11px;padding:5px 0;outline:none;transition:border-color .2s;}
-.ci:focus{border-color:#0a0a0a;}
-.ci::placeholder{color:#ccc;}
-.cs{background:#0a0a0a;border:none;color:#fff;width:30px;height:30px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
-.cs:hover{background:#d946ef;}
-.ty{display:flex;gap:3px;padding:9px 12px;background:#f7f7f7;width:fit-content;}
-.td{width:4px;height:4px;background:#ccc;border-radius:50%;animation:tb .7s infinite;}
-.td:nth-child(2){animation-delay:.12s}.td:nth-child(3){animation-delay:.24s}
-@keyframes tb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px);background:#d946ef;}}
-#fspam{border-top:1px solid #f0f0f0;padding:20px 40px;text-align:center;}
-footer{padding:16px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.flogo{font-family:‘Bebas Neue’,sans-serif;font-size:14px;letter-spacing:.5em;color:#ccc;}
-.flinks{display:flex;gap:24px;list-style:none;}
-.flinks a{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#ddd;text-decoration:none;transition:color .2s;}
-.flinks a:hover{color:#0a0a0a;}
-.fcopy{font-size:9px;color:#ddd;text-align:right;line-height:1.8;}
-.toast{position:fixed;top:72px;right:24px;z-index:999;background:#0a0a0a;color:#fff;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:10px 16px;transform:translateX(130%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
-.toast.show{transform:translateX(0);}
-.pb{padding-bottom:90px;}
-@media(max-width:620px){
-nav,#hero,.sec-tc,footer,#fspam{padding-left:20px;padding-right:20px;}
-#hero{padding-top:90px;padding-bottom:60px;}
-.hero-right{display:none;}
-.hero-bottom{flex-direction:column;gap:16px;}
-.hstat{text-align:left;}
-#sticky{padding:10px 14px;}
-.sl{display:none;}
-.stnum{font-size:26px;}
-.modal{padding:24px 16px;}
-.fr2{grid-template-columns:1fr;}
-.chat-w{width:calc(100vw - 32px);right:16px;}
-.sec-head{grid-template-columns:48px 1fr;}
-.sec-nc{padding:20px 10px;}
-.sec-nt{font-size:32px;}
-.sec-tc{padding:20px;}
-.ogrid{grid-template-columns:1fr 1fr;}
-.rgrid{grid-template-columns:1fr;}
-.sgrid{grid-template-columns:1fr;}
+const CATEGORIES = [“Alle”, “Musik”, “Sport”, “Technik”, “Natur”, “Kunst”, “Kulinarik”];
+const PRICE_BANDS = [“Alle”, “Kostenlos”, “Günstig (CHF 1–50)”, “Marktpreis (CHF 50+)”];
+const WEEKS = [“Alle Wochen”, “14. Juli”, “21. Juli”, “28. Juli”, “4. Aug”, “11. Aug”, “18. Aug”, “25. Aug”, “1. Sept”];
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const spotsLeft = (c) => c.spots - c.booked;
+const isFull = (c) => spotsLeft(c) <= 0;
+const priceBadge = (c) => c.price === 0 ? “Gratis” : `CHF ${c.price}`;
+const bandLabel = (b) => ({ low: “Günstig”, mid: “Standard”, market: “Premium” }[b]);
+
+// ── COMPONENTS ────────────────────────────────────────────────────────────────
+function StarRating({ rating }) {
+return (
+<span style={{ color: “#FDCB6E”, fontSize: 13 }}>
+{“★”.repeat(Math.floor(rating))}{“☆”.repeat(5 - Math.floor(rating))}
+<span style={{ color: “#999”, marginLeft: 4 }}>{rating}</span>
+</span>
+);
 }
 
-/* ── INTRO: Pure CSS, no JS ── */
-#intro {
-position: fixed;
-inset: 0;
-z-index: 9999;
-background: #fff;
-display: flex;
-align-items: flex-start;
-justify-content: flex-start;
-padding: clamp(32px,6vw,72px);
-animation: introExit 0.6s ease 2.6s forwards;
-pointer-events: none;
-}
-#intro.done {
-display: none !important;
-}
-@keyframes introExit {
-0%   { opacity: 1; visibility: visible; }
-100% { opacity: 0; visibility: hidden;  }
+function Badge({ label, color = “#333”, bg = “#f0f0f0” }) {
+return (
+<span style={{ background: bg, color, borderRadius: 20, padding: “2px 10px”, fontSize: 11, fontWeight: 700, letterSpacing: 0.5, display: “inline-block” }}>
+{label}
+</span>
+);
 }
 
-.il1 {
-position: absolute;
-top: clamp(32px,6vw,72px);
-left: clamp(32px,6vw,72px);
-font-family: ‘DM Mono’, monospace;
-font-size: clamp(11px,1.4vw,14px);
-letter-spacing: .04em;
-color: #bbb;
-opacity: 0;
-animation: ilFade 0.4s ease 0.1s forwards;
+function SpotBar({ course }) {
+const pct = (course.booked / course.spots) * 100;
+const clr = pct >= 100 ? “#FF6B6B” : pct >= 75 ? “#FDCB6E” : “#00B894”;
+return (
+<div>
+<div style={{ display: “flex”, justifyContent: “space-between”, fontSize: 11, color: “#888”, marginBottom: 3 }}>
+<span>{isFull(course) ? “⚡ Ausgebucht” : `${spotsLeft(course)} Plätze frei`}</span>
+<span>{course.booked}/{course.spots}</span>
+</div>
+<div style={{ background: “#eee”, borderRadius: 10, height: 6, overflow: “hidden” }}>
+<div style={{ width: `${Math.min(pct, 100)}%`, background: clr, height: “100%”, borderRadius: 10, transition: “width 0.5s” }} />
+</div>
+</div>
+);
 }
-.il2 {
-position: absolute;
-top: calc(clamp(32px,6vw,72px) + 2em);
-left: clamp(32px,6vw,72px);
-font-family: ‘DM Mono’, monospace;
-font-size: clamp(11px,1.4vw,14px);
-letter-spacing: .04em;
-color: #d946ef;
-opacity: 0;
-animation: ilFade 0.4s ease 0.6s forwards;
-}
-.il3 {
-position: absolute;
-bottom: clamp(32px,6vw,72px);
-left: clamp(32px,6vw,72px);
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(60px,14vw,180px);
-line-height: .9;
-letter-spacing: -.01em;
-color: #0a0a0a;
-opacity: 0;
-animation:
-ilFade   0.3s ease 1.1s forwards,
-snobPink 0.8s ease 1.8s forwards;
-}
-@keyframes ilFade {
-from { opacity: 0; transform: translateY(6px); }
-to   { opacity: 1; transform: translateY(0);   }
-}
-@keyframes snobPink {
-0%   { color: #0a0a0a; }
-20%  { color: #d946ef; }
-40%  { color: #0a0a0a; }
-60%  { color: #d946ef; }
-80%  { color: #0a0a0a; }
-100% { color: #0a0a0a; }
-}
-</style>
 
-</head>
-<body>
-
-<div id="intro" aria-hidden="true">
-  <div class="il1">Offerten-Konfigurator</div>
-  <div class="il2">goSNOB.ai &times; Basler Ferienpass</div>
-  <div class="il3">SNOB</div>
+function CourseCard({ course, onBook, onDetail, isFav, onToggleFav }) {
+const [hover, setHover] = useState(false);
+const full = isFull(course);
+return (
+<div
+onMouseEnter={() => setHover(true)}
+onMouseLeave={() => setHover(false)}
+style={{
+background: “#fff”,
+borderRadius: 20,
+overflow: “hidden”,
+boxShadow: hover ? “0 20px 60px rgba(0,0,0,0.15)” : “0 4px 20px rgba(0,0,0,0.07)”,
+transition: “all 0.3s cubic-bezier(.34,1.56,.64,1)”,
+transform: hover ? “translateY(-6px) scale(1.01)” : “none”,
+cursor: “pointer”,
+display: “flex”,
+flexDirection: “column”,
+}}
+>
+{/* Header */}
+<div style={{
+background: `linear-gradient(135deg, ${course.color}22, ${course.color}44)`,
+padding: “28px 24px 20px”,
+position: “relative”,
+borderBottom: `3px solid ${course.color}`
+}}>
+<div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{course.image}</div>
+<div style={{ display: “flex”, gap: 6, flexWrap: “wrap”, marginBottom: 8 }}>
+<Badge label={course.category} color={course.color} bg={`${course.color}22`} />
+<Badge label={bandLabel(course.priceband)} color="#666" bg="#f5f5f5" />
+<Badge label={`${course.age} J.`} color=”#555” bg=”#f0f0f0” />
+</div>
+<button
+onClick={(e) => { e.stopPropagation(); onToggleFav(course.id); }}
+style={{
+position: “absolute”, top: 16, right: 16,
+background: isFav ? course.color : “white”,
+border: `2px solid ${course.color}`,
+borderRadius: “50%”, width: 36, height: 36,
+fontSize: 16, cursor: “pointer”, display: “flex”, alignItems: “center”, justifyContent: “center”,
+transition: “all 0.2s”
+}}
+>
+{isFav ? “♥” : “♡”}
+</button>
 </div>
 
-<nav>
-  <div class="n-logo">goSNOB.ai</div>
-  <div class="n-r">
-    <span class="n-client">Basler Ferienpass</span>
-    <span class="n-badge">Offerte 2025</span>
-  </div>
-</nav>
-
-<div id="hero">
-  <div class="hero-label">Website-Offerte &middot; <span>goSNOB.ai &times; Basler Ferienpass</span></div>
-  <span class="hw1">BASLER</span>
-  <span class="hw2">FERIENPASS.</span>
-  <div class="hero-right">
-    <div class="hero-right-title">Neue Homepage<br>fuer 50 Jahre<br>Erfahrung.</div>
-    <div class="hero-right-sub">Module waehlen &mdash; Preis live</div>
-  </div>
-  <div class="hero-bottom">
-    <div class="hero-txt">Module auswaehlen. Preis berechnet sich automatisch. Als PDF herunterladen und als Auftrag zurueckschicken.</div>
-    <div class="hstat"><div class="hstat-n">50</div><div class="hstat-l">Jahre</div></div>
-    <div class="hstat"><div class="hstat-n">100+</div><div class="hstat-l">Angebote</div></div>
-    <div class="hstat"><div class="hstat-n">6-16</div><div class="hstat-l">Jahre Alt</div></div>
-  </div>
-</div>
-
-<div id="stmt">
-  <div class="stmt-txt"><span class="g">Alte</span> Website.<br><span class="g">Neues</span> Brain.<br>SNOB macht's.</div>
-</div>
-
-<!-- 01 BASIS -->
-
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-nc"><div class="sec-nt">01</div></div>
-    <div class="sec-tc"><div class="sec-ti">Basis-Paket</div><div class="sec-su">Umfang der neuen Website &mdash; eines waehlen</div></div>
-  </div>
-  <div class="rgrid" id="bg">
-    <div class="rc sel" data-p="3900" data-l="Starter &mdash; Landingpage" onclick="selB(this)">
-      <div class="rdot"></div><div class="rt">GoSTART</div>
-      <div class="rpr">3'900</div><div class="rchf">CHF &middot; Einmalig</div>
-      <ul class="rli"><li>1-seitige moderne Landingpage</li><li>Willkommen, Programm, Kontakt</li><li>Responsive fuer alle Geraete</li><li>Basis-CMS zur Inhaltspflege</li><li>SSL &amp; DSGVO inklusive</li></ul>
+```
+  {/* Body */}
+  <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+    <div>
+      <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: "#1a1a2e", lineHeight: 1.3 }}>{course.title}</h3>
+      <div style={{ fontSize: 12, color: "#888", marginTop: 3 }}>by {course.provider}</div>
     </div>
-    <div class="rc" data-p="6900" data-l="Standard &mdash; Vollstaendige Website" onclick="selB(this)">
-      <div class="rdot"></div><div class="rt">GoFULL</div>
-      <div class="rpr">6'900</div><div class="rchf">CHF &middot; Einmalig</div>
-      <ul class="rli"><li>Alle aktuellen Seiten modernisiert</li><li>Programm-Uebersicht, News, Partner</li><li>Online-Anmeldung Kreativangebote</li><li>Vollstaendiges CMS mit Schulung</li><li>SSL &amp; DSGVO inklusive</li></ul>
+    <p style={{ margin: 0, fontSize: 13, color: "#555", lineHeight: 1.6 }}>{course.desc}</p>
+
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12, color: "#666" }}>
+      <div>📅 {course.week}</div>
+      <div>⏱ {course.duration}</div>
+      <div>🕐 {course.time}</div>
+      <div>📍 {course.location.split(",")[0]}</div>
     </div>
-    <div class="rc" data-p="11900" data-l="Premium &mdash; Full Redesign + Plattform" onclick="selB(this)">
-      <div class="rdot"></div><div class="rt">GoCORPORATE</div>
-      <div class="rpr sm">11'900</div><div class="rchf">CHF &middot; Einmalig</div>
-      <ul class="rli"><li>Komplettes Redesign + Plattform</li><li>Veranstalter-Portal selbst einpflegen</li><li>TWINT &amp; Zahlungsintegration</li><li>Kinder-Login &amp; Eltern-Dashboard</li><li>SSL &amp; DSGVO inklusive</li></ul>
+
+    <StarRating rating={course.rating} />
+    <SpotBar course={course} />
+
+    <div style={{ display: "flex", gap: 8, marginTop: "auto", paddingTop: 8 }}>
+      <button
+        onClick={() => onDetail(course)}
+        style={{
+          flex: 1, padding: "10px", borderRadius: 12, border: "2px solid #e0e0e0",
+          background: "white", color: "#333", fontWeight: 700, cursor: "pointer", fontSize: 13,
+          transition: "all 0.2s"
+        }}
+      >
+        Details
+      </button>
+      <button
+        onClick={() => !full && onBook(course)}
+        style={{
+          flex: 2, padding: "10px", borderRadius: 12, border: "none",
+          background: full ? "#e0e0e0" : `linear-gradient(135deg, ${course.color}, ${course.color}cc)`,
+          color: full ? "#999" : "white", fontWeight: 800, cursor: full ? "not-allowed" : "pointer",
+          fontSize: 13, transition: "all 0.2s"
+        }}
+      >
+        {full ? "Warteliste" : `Buchen · ${priceBadge(course)}`}
+      </button>
     </div>
   </div>
 </div>
+```
 
-<!-- 02 DESIGN -->
-
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-nc"><div class="sec-nt">02</div></div>
-    <div class="sec-tc"><div class="sec-ti">Design &amp; Branding</div><div class="sec-su">Mehrere waehlbar</div></div>
-  </div>
-  <div class="ogrid">
-    <div class="oc req"><div class="ochk"></div><span class="oic">&#127912;</span><div class="oti">Modernes UI-Design</div><div class="ode">Zeitgemaesses Design passend zu Basel und Kindern. Farben, Typo, Layout neu.</div><div class="opr incl">Im Paket inklusive</div></div>
-    <div class="oc" data-id="branding" data-p="1200" data-l="Logo-Refresh / Branding" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#9999;&#65039;</span><div class="oti">Logo-Refresh</div><div class="ode">Modernisierung des Logos und Brand-Guide. Farben, Schriften, Icons.</div><div class="opr">+ CHF 1'200</div></div>
-    <div class="oc" data-id="illustra" data-p="900" data-l="Illustrationen &amp; Grafiken" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128444;&#65039;</span><div class="oti">Illustrationen</div><div class="ode">5-8 custom Motive die den Ferienpass-Charakter staerken.</div><div class="opr">+ CHF 900</div></div>
-    <div class="oc" data-id="animation" data-p="800" data-l="Animationen" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#10024;</span><div class="oti">Animationen</div><div class="ode">Scroll-Animationen, Hover-Effekte, Seitenubergaenge.</div><div class="opr">+ CHF 800</div></div>
-  </div>
-</div>
-
-<!-- 03 FEATURES -->
-
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-nc"><div class="sec-nt">03</div></div>
-    <div class="sec-tc"><div class="sec-ti">Features &amp; Funktionen</div><div class="sec-su">Mehrere waehlbar</div></div>
-  </div>
-  <div class="ogrid">
-    <div class="oc req"><div class="ochk"></div><span class="oic">&#128241;</span><div class="oti">Responsive Design</div><div class="ode">Mobile, Tablet und Desktop. Immer perfekt.</div><div class="opr incl">Im Paket inklusive</div></div>
-    <div class="oc" data-id="cms" data-p="600" data-l="CMS Inhaltspflege" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128194;</span><div class="oti">CMS Inhaltspflege</div><div class="ode">Texte und Bilder selbst bearbeiten. Inkl. Schulung fuer das Team.</div><div class="opr">+ CHF 600</div></div>
-    <div class="oc" data-id="anmeldung" data-p="2200" data-l="Online-Anmeldung Kreativangebote" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128203;</span><div class="oti">Online-Anmeldung</div><div class="ode">Kreativangebote buchen. Warteliste, E-Mail, Eltern-Dashboard.</div><div class="opr">+ CHF 2'200</div></div>
-    <div class="oc" data-id="programm" data-p="1400" data-l="Programm-Datenbank &amp; Filter" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128197;</span><div class="oti">Programm-Datenbank</div><div class="ode">Filter nach Datum, Alter, Kategorie. 100+ Angebote Sommer und Herbst.</div><div class="opr">+ CHF 1'400</div></div>
-    <div class="oc" data-id="twint" data-p="900" data-l="TWINT / Online-Zahlung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128179;</span><div class="oti">TWINT &amp; Zahlung</div><div class="ode">Ferienpass kaufen via TWINT, Kreditkarte oder Rechnung.</div><div class="opr">+ CHF 900</div></div>
-    <div class="oc" data-id="mehrsprachig" data-p="1100" data-l="Mehrsprachigkeit DE/FR/EN" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#127758;</span><div class="oti">Mehrsprachigkeit</div><div class="ode">Deutsch, Franzoesisch und Englisch fuer das Dreiland.</div><div class="opr">+ CHF 1'100</div></div>
-    <div class="oc" data-id="karte" data-p="700" data-l="Interaktive Karte" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128506;&#65039;</span><div class="oti">Interaktive Karte</div><div class="ode">Verkaufsstellen und Veranstaltungsorte auf einer Karte.</div><div class="opr">+ CHF 700</div></div>
-    <div class="oc" data-id="newsletter" data-p="400" data-l="Newsletter-Anbindung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128236;</span><div class="oti">Newsletter</div><div class="ode">Mailchimp / Mailjet Integration mit automatischer Bestaetigung.</div><div class="opr">+ CHF 400</div></div>
-  </div>
-</div>
-
-<!-- 04 TECH -->
-
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-nc"><div class="sec-nt">04</div></div>
-    <div class="sec-tc"><div class="sec-ti">Technisches &amp; SEO</div><div class="sec-su">Performance, Sicherheit, Sichtbarkeit</div></div>
-  </div>
-  <div class="ogrid">
-    <div class="oc req"><div class="ochk"></div><span class="oic">&#128274;</span><div class="oti">SSL &amp; DSGVO</div><div class="ode">HTTPS, Cookie-Banner, Datenschutz. Alles DSGVO-konform.</div><div class="opr incl">Im Paket inklusive</div></div>
-    <div class="oc" data-id="seo" data-p="800" data-l="SEO-Optimierung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128200;</span><div class="oti">SEO-Optimierung</div><div class="ode">Meta-Tags, strukturierte Daten, Google Search Console Setup.</div><div class="opr">+ CHF 800</div></div>
-    <div class="oc" data-id="analytics" data-p="300" data-l="Analytics Setup" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#128202;</span><div class="oti">Analytics Setup</div><div class="ode">Google Analytics 4 oder Matomo. DSGVO-konform.</div><div class="opr">+ CHF 300</div></div>
-    <div class="oc" data-id="perf" data-p="500" data-l="Performance-Optimierung" onclick="togO(this)"><div class="ochk"></div><span class="oic">&#9889;</span><div class="oti">Performance</div><div class="ode">PageSpeed 90+, Bildoptimierung, CDN, Core Web Vitals.</div><div class="opr">+ CHF 500</div></div>
-  </div>
-</div>
-
-<!-- 05 SNOB AI SERVICES -->
-
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-nc"><div class="sec-nt">05</div></div>
-    <div class="sec-tc"><div class="sec-ti">SNOB AI Services</div><div class="sec-su">Telefon-AI und Automatisierung direkt integriert &mdash; mehrere waehlbar</div></div>
-  </div>
-  <div class="ogrid">
-    <div class="oc snob-opt" data-id="snob-inbound" data-p="333" data-l="SNOB AI Inbound (333 CHF/Mt.)" onclick="togO(this)">
-      <div class="snob-pill">SNOB AI</div>
-      <div class="ochk"></div><span class="oic">&#128222;</span>
-      <div class="oti">AI Inbound Calls</div>
-      <div class="ode">SNOB beantwortet eingehende Anrufe automatisch. FAQ, Infos zu Angeboten, Anmeldung per Telefon.</div>
-      <div class="opr">+ CHF 333 / Mt.</div>
-    </div>
-    <div class="oc snob-opt" data-id="snob-outbound" data-p="333" data-l="SNOB AI Outbound (333 CHF/Mt.)" onclick="togO(this)">
-      <div class="snob-pill">SNOB AI</div>
-      <div class="ochk"></div><span class="oic">&#128225;</span>
-      <div class="oti">AI Outbound Calls</div>
-      <div class="ode">Automatische Erinnerungsanrufe vor Kreativangeboten. Anmeldebestaetigung per Telefon.</div>
-      <div class="opr">+ CHF 333 / Mt.</div>
-    </div>
-    <div class="oc snob-opt" data-id="snob-chat" data-p="0" data-l="SNOB Chat-Widget (inklusive)" onclick="togO(this)">
-      <div class="snob-pill">SNOB AI</div>
-      <div class="ochk"></div><span class="oic">&#128172;</span>
-      <div class="oti">AI Chat-Widget</div>
-      <div class="ode">SNOB beantwortet Fragen direkt auf der Website. Programm, Anmeldung, Preise rund um die Uhr.</div>
-      <div class="opr">CHF 0 / Mt. inklusive</div>
-    </div>
-    <div class="oc snob-opt" data-id="snob-full" data-p="777" data-l="SNOB GoFULL Paket (777 CHF/Mt.)" onclick="togO(this)">
-      <div class="snob-pill">SNOB AI</div>
-      <div class="ochk"></div><span class="oic">&#129504;</span>
-      <div class="oti">GoFULL Paket</div>
-      <div class="ode">Alles: Inbound + Outbound + Chat + CRM-Anbindung + Priority Support. Das komplette AI-Gehirn.</div>
-      <div class="opr">+ CHF 777 / Mt.</div>
-    </div>
-  </div>
-</div>
-
-<!-- 06 SUPPORT -->
-
-<div class="sec pb">
-  <div class="sec-head">
-    <div class="sec-nc"><div class="sec-nt">06</div></div>
-    <div class="sec-tc"><div class="sec-ti">Wartung &amp; Support</div><div class="sec-su">Laufend nach dem Launch &mdash; eines waehlen</div></div>
-  </div>
-  <div class="sgrid" id="sg">
-    <div class="sc sel" data-p="0" data-l="" onclick="selS(this)">
-      <div class="rdot"></div><div class="st">Kein Support</div>
-      <div class="spr">0</div><div class="schf">CHF / Monat</div>
-      <div class="sde">Uebergabe nach Launch. Eigenstaendiger Betrieb. Keine laufenden Kosten.</div>
-    </div>
-    <div class="sc" data-p="190" data-l="GoWartung CHF 190/Mt." onclick="selS(this)">
-      <div class="rdot"></div><div class="st">GoWARTUNG</div>
-      <div class="spr">190</div><div class="schf">CHF / Monat</div>
-      <div class="sde">Updates, Backups, Sicherheits-Monitoring. 2h Support pro Monat. Monatlich kuendbar.</div>
-    </div>
-    <div class="sc" data-p="390" data-l="GoFullService CHF 390/Mt." onclick="selS(this)">
-      <div class="rdot"></div><div class="st">GoFULLSERVICE</div>
-      <div class="spr">390</div><div class="schf">CHF / Monat</div>
-      <div class="sde">Wartung + 5h Inhaltspflege + Programm-Updates + Priority-Support 48h.</div>
-    </div>
-  </div>
-</div>
-
-<div id="fspam"><p style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;">Alle Preise exkl. MWST 8.1% &middot; Offerte gueltig 30 Tage &middot; Realisierungszeit 6-10 Wochen</p></div>
-<footer>
-  <div class="flogo">goSNOB.ai</div>
-  <ul class="flinks"><li><a href="#">Datenschutz</a></li><li><a href="#">AGB</a></li><li><a href="#">Impressum</a></li></ul>
-  <div class="fcopy">&#169; 2025 goSNOB.ai &middot; Basel<br><span>Founded by Timothy Jordi &amp; Jan Mironiuk &middot; Swiss Made</span></div>
-</footer>
-
-<div id="sticky">
-  <div class="sl">
-    <div class="slbl">Auswahl</div>
-    <div class="schips" id="chips"></div>
-  </div>
-  <div class="sr">
-    <div class="stw">
-      <div class="stlbl">Gesamt exkl. MWST</div>
-      <div class="stnum">CHF <span id="tn">3'900</span></div>
-      <div class="stmo" id="mn"></div>
-    </div>
-    <button class="sbtn" onclick="openM()"><span>Offerte als PDF &#8594;</span></button>
-  </div>
-</div>
-
-<div class="mov" id="modal">
-  <div class="modal">
-    <div class="mtit">Offerte <span>laden.</span></div>
-    <div class="msub">Kontaktdaten eingeben &mdash; PDF oeffnet automatisch.<br>Unterschrieben als Auftrag zurueckschicken.</div>
-    <div class="mrows" id="mrows"></div>
-    <div class="mtot"><div class="mtotl">Gesamt exkl. MWST</div><div class="mtotn" id="mtot">CHF 3'900</div></div>
-    <div class="fsep">
-      <div class="fr2">
-        <div class="ff"><label>Vorname *</label><input type="text" id="fvn" placeholder="Mary"></div>
-        <div class="ff"><label>Nachname *</label><input type="text" id="fnn" placeholder="Born"></div>
-      </div>
-      <div class="ff"><label>E-Mail *</label><input type="email" id="fem" placeholder="mary.born@juarbasel.ch"></div>
-      <div class="fr2">
-        <div class="ff"><label>Organisation</label><input type="text" id="forg" value="Basler Ferienpass"></div>
-        <div class="ff"><label>Telefon</label><input type="text" id="ftel" placeholder="+41 61 683 72 10"></div>
-      </div>
-      <div class="ff"><label>Notizen / Launch-Termin</label><textarea id="fnotes" rows="2" placeholder="z.B. Launch vor Sommer 2026..."></textarea></div>
-    </div>
-    <div class="mact">
-      <button class="mcanc" onclick="closeM()">Abbrechen</button>
-      <button class="mgen" onclick="genPDF()"><span>PDF generieren &#8594;</span></button>
-    </div>
-  </div>
-</div>
-
-<div class="fab">
-  <div class="chat-w" id="chatW">
-    <div class="cw-h">
-      <div class="cw-av">gS</div>
-      <div><div class="cw-name">SNOB</div><div class="cw-st">Online</div></div>
-    </div>
-    <div class="cw-msgs" id="cMsgs"></div>
-    <div class="cw-qr" id="cQR">
-      <button class="qb" onclick="qr('Was kostet eine neue Website?')">Kosten?</button>
-      <button class="qb" onclick="qr('Was ist SNOB AI?')">SNOB AI?</button>
-      <button class="qb" onclick="qr('Wie lange dauert es?')">Dauer?</button>
-      <button class="qb" onclick="qr('Welches Paket empfehlt ihr?')">Empfehlung?</button>
-    </div>
-    <div class="cw-inp">
-      <input class="ci" id="cIn" type="text" placeholder="Frag SNOB..." onkeydown="if(event.key==='Enter')cSend()">
-      <button class="cs" onclick="cSend()">&#8594;</button>
-    </div>
-  </div>
-  <button class="fab-btn" id="fabBtn" onclick="toggleChat()">
-    <span class="ico-o">&#128172;</span>
-    <span class="ico-c2">&#10005;</span>
-  </button>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-var S={basis:{p:3900,l:'Starter - Landingpage'},extras:{},supp:{p:0,l:''}};
-var chatOpen=false;
-
-function selB(el){
-  document.querySelectorAll('#bg .rc').forEach(function(c){c.classList.remove('sel');});
-  el.classList.add('sel');
-  S.basis={p:parseInt(el.dataset.p),l:el.dataset.l};
-  upd();
+);
 }
-function selS(el){
-  document.querySelectorAll('#sg .sc').forEach(function(c){c.classList.remove('sel');});
-  el.classList.add('sel');
-  S.supp={p:parseInt(el.dataset.p),l:el.dataset.l};
-  upd();
-}
-function togO(el){
-  var id=el.dataset.id,p=parseInt(el.dataset.p),l=el.dataset.l;
-  if(el.classList.contains('sel')){el.classList.remove('sel');delete S.extras[id];}
-  else{el.classList.add('sel');S.extras[id]={p:p,l:l,isSnob:el.classList.contains('snob-opt')};}
-  upd();
-}
-function calc(){var t=S.basis.p;Object.values(S.extras).forEach(function(e){t+=e.p;});return t;}
-function fmt(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,"'");}
-function upd(){
-  document.getElementById('tn').textContent=fmt(calc());
-  var mo=document.getElementById('mn');
-  var monthly=S.supp.p;
-  Object.values(S.extras).forEach(function(e){if(e.isSnob&&e.p>0)monthly+=e.p;});
-  mo.textContent=monthly>0?'+ CHF '+monthly+' / Monat':'';
-  var chips=document.getElementById('chips');chips.innerHTML='';
-  var all=[{l:S.basis.l,pink:false}];
-  Object.values(S.extras).forEach(function(e){all.push({l:e.l,pink:e.isSnob});});
-  if(S.supp.p>0)all.push({l:S.supp.l,pink:false});
-  all.forEach(function(c){
-    var d=document.createElement('div');
-    d.className='chip'+(c.pink?' pink':'');
-    d.textContent=c.l;
-    chips.appendChild(d);
-  });
-}
-function openM(){
-  var rows=[];
-  rows.push({n:S.basis.l,p:'CHF '+fmt(S.basis.p),pink:false});
-  Object.values(S.extras).forEach(function(e){
-    var pStr=e.p>0?(e.isSnob?'CHF '+fmt(e.p)+' /Mt.':'+ CHF '+fmt(e.p)):'Inklusive';
-    rows.push({n:e.l,p:pStr,pink:e.isSnob});
-  });
-  if(S.supp.p>0)rows.push({n:S.supp.l,p:'CHF '+S.supp.p+' /Mt.',pink:false});
-  document.getElementById('mrows').innerHTML=rows.map(function(r){
-    return'<div class="mrow'+(r.pink?' pink-row':'')+'"><span class="mname">'+r.n+'</span><span class="mprice">'+r.p+'</span></div>';
-  }).join('');
-  document.getElementById('mtot').textContent='CHF '+fmt(calc());
-  document.getElementById('modal').classList.add('open');
-}
-function closeM(){document.getElementById('modal').classList.remove('open');}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeM();});
-function showT(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 
-function genPDF(){
-  var vn=document.getElementById('fvn').value.trim(),nn=document.getElementById('fnn').value.trim(),em=document.getElementById('fem').value.trim();
-  if(!vn||!nn||!em){document.getElementById('fem').style.borderColor='#d946ef';setTimeout(function(){document.getElementById('fem').style.borderColor='';},1500);return;}
-  var org=document.getElementById('forg').value.trim()||'Basler Ferienpass';
-  var tel=document.getElementById('ftel').value.trim(),notes=document.getElementById('fnotes').value.trim();
-  var today=new Date().toLocaleDateString('de-CH');
-  var valid=new Date(Date.now()+30*24*60*60*1000).toLocaleDateString('de-CH');
-  var onum=Math.floor(1000+Math.random()*9000);
-  var total=calc(),mwst=Math.round(total*0.081),totalMwst=total+mwst;
-  var items=[];
-  items.push({n:S.basis.l,p:S.basis.p,monthly:false});
-  Object.values(S.extras).forEach(function(e){items.push({n:e.l,p:e.p,monthly:e.isSnob&&e.p>0});});
-  var monthly=S.supp.p;
-  Object.values(S.extras).forEach(function(e){if(e.isSnob&&e.p>0)monthly+=e.p;});
-
-  var css='*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"DM Mono",monospace;background:#fff;color:#0a0a0a;}.page{max-width:760px;margin:0 auto;padding:52px;}.logo{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.5em;}.hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:24px;border-bottom:2px solid #0a0a0a;margin-bottom:32px;}.meta{text-align:right;font-size:9px;letter-spacing:.1em;color:#bbb;line-height:2.1;}.meta strong{font-family:"Bebas Neue",sans-serif;font-size:20px;display:block;color:#0a0a0a;}.cbox{border-left:3px solid #d946ef;padding:14px 18px;margin-bottom:28px;background:#fafafa;}.clabel{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;margin-bottom:5px;}.cname{font-size:13px;line-height:1.9;}.htitle{font-family:"Bebas Neue",sans-serif;font-size:48px;line-height:.9;margin-bottom:5px;}.hsub{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;margin-bottom:32px;}.slabel{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#bbb;padding-bottom:8px;border-bottom:1px solid #f0f0f0;margin-bottom:10px;}.irow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:10px;}.iname{color:#888;}.ipr{font-family:"Bebas Neue",sans-serif;font-size:15px;color:#d946ef;}.irow.snob .iname{color:#d946ef88;}.tblock{background:#0a0a0a;color:#fff;padding:20px 22px;margin:22px 0;}.trow{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5);padding:3px 0;}.trow.grand{font-family:"Bebas Neue",sans-serif;font-size:20px;color:#fff;padding-top:10px;margin-top:6px;border-top:1px solid rgba(255,255,255,.15);}.trow.grand span:last-child{color:#d946ef;}.mobox{border:1px solid #d946ef44;background:#fff9ff;padding:12px 16px;margin-bottom:18px;font-size:9px;line-height:1.8;color:#d946ef;}.sbox{border:1px solid #d946ef;padding:12px 16px;margin-bottom:18px;font-size:9px;line-height:1.8;}.nbox{background:#fafafa;padding:12px 16px;margin-bottom:18px;font-size:9px;line-height:1.8;}.terms{font-size:8px;letter-spacing:.04em;color:#bbb;line-height:2.1;padding:14px;border:1px solid #f0f0f0;margin-bottom:32px;}.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:40px;}.sline{padding-top:40px;border-top:1px solid #ccc;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;}.foot{text-align:center;padding-top:18px;border-top:1px solid #f0f0f0;margin-top:32px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#ccc;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}';
-
-  var irows=items.map(function(r){
-    var pStr=r.p>0?(r.monthly?'CHF '+fmt(r.p)+' /Mt.':'CHF '+fmt(r.p)):'Inklusive';
-    return'<div class="irow'+(r.monthly?' snob':'')+'"><span class="iname">'+r.n+'</span><span class="ipr">'+pStr+'</span></div>';
-  }).join('');
-
-  var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>goSNOB Offerte #'+onum+' - '+org+'</title><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>'+css+'</style></head><body><div class="page"><div class="hdr"><div><div class="logo">goSNOB.ai</div><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;margin-top:4px;">Network-Operated Brain</div></div><div class="meta"><strong>Offerte #'+onum+'</strong>Datum: '+today+'<br>Gueltig bis: '+valid+'</div></div><div class="cbox"><div class="clabel">Auftraggeber</div><div class="cname"><strong>'+vn+' '+nn+'</strong><br>'+org+(tel?'<br>'+tel:'')+(em?'<br>'+em:'')+'</div></div><div class="htitle">Website-Offerte.</div><div class="hsub">Neue Homepage - Basler Ferienpass - goSNOB.ai Basel - '+today+'</div><div class="slabel">Leistungsumfang (Einmalig)</div>'+irows+'<div class="tblock"><div class="trow"><span>Subtotal exkl. MWST</span><span>CHF '+fmt(total)+'</span></div><div class="trow"><span>MWST 8.1%</span><span>CHF '+fmt(mwst)+'</span></div><div class="trow grand"><span>Gesamtbetrag inkl. MWST</span><span>CHF '+fmt(totalMwst)+'</span></div></div>'+(monthly>0?'<div class="mobox">Laufende monatliche Kosten (exkl. MWST): CHF '+monthly+' / Monat'+(S.supp.p>0?' inkl. Wartung':'')+'</div>':'')+(S.supp.p>0?'<div class="sbox">Wartung: '+S.supp.l+' - Monatlich kuendbar</div>':'')+(notes?'<div class="nbox"><strong>Notizen:</strong> '+notes+'</div>':'')+'<div class="terms">50% Anzahlung bei Auftragserteilung - 50% bei Launch - Zahlungsziel 14 Tage netto<br>Realisierungszeit 6-10 Wochen nach Auftragserteilung - Offerte gueltig bis '+valid+' - Preise exkl. MWST</div><div class="sgrid"><div class="sline">Ort, Datum &amp; Unterschrift Auftraggeber</div><div class="sline">goSNOB.ai - Auftragsbestaetigung<br><span style="color:#d946ef;">info@gosnob.ai</span></div></div><div class="foot">goSNOB.ai - Network-Operated Brain - Basel, Schweiz - '+today+'</div></div><script>window.onload=function(){setTimeout(function(){window.print();},600);};<\/script></body></html>';
-
-// Data URI - works everywhere including GitHub Pages + iOS Safari
-try {
-var encoded = ‘data:text/html;charset=utf-8,’ + encodeURIComponent(html);
-var a = document.createElement(‘a’);
-a.href = encoded;
-a.download = ‘SNOB-Offerte-’ + onum + ‘.html’;
-a.style.display = ‘none’;
-document.body.appendChild(a);
-a.click();
-setTimeout(function(){ document.body.removeChild(a); }, 500);
-closeM();
-showT(‘Datei heruntergeladen - Im Browser oeffnen & drucken als PDF’);
-} catch(e) {
-// Final fallback: open in new tab
-var w = window.open();
-if(w){ w.document.write(html); w.document.close(); }
-closeM();
-showT(‘Im neuen Tab geoeffnet - Drucken als PDF speichern’);
+function Modal({ children, onClose }) {
+return (
+<div
+onClick={onClose}
+style={{
+position: “fixed”, inset: 0, background: “rgba(0,0,0,0.6)”, zIndex: 1000,
+display: “flex”, alignItems: “center”, justifyContent: “center”, padding: 20,
+backdropFilter: “blur(4px)”
+}}
+>
+<div
+onClick={(e) => e.stopPropagation()}
+style={{
+background: “white”, borderRadius: 28, maxWidth: 580, width: “100%”,
+maxHeight: “90vh”, overflowY: “auto”,
+boxShadow: “0 40px 120px rgba(0,0,0,0.3)”,
+animation: “modalIn 0.3s cubic-bezier(.34,1.56,.64,1)”
+}}
+>
+{children}
+</div>
+</div>
+);
 }
-}
-upd();
 
-// CHAT
-var R={
-‘kosten’:‘GoSTART ab CHF 3'900 einmalig. GoFULL CHF 6'900. Premium CHF 11'900. SNOB AI ab CHF 333/Monat zusaetzlich.’,
-‘snob ai’:‘SNOB ist eine Schweizer AI-Plattform. Inbound & Outbound Calls, Chat-Widget - alles automatisch, multilingual.’,
-‘dauer’:‘Nach Auftragserteilung und Anzahlung 6-10 Wochen bis zum Launch.’,
-‘empfehlung’:‘Fuer den Basler Ferienpass empfehlen wir GoFULL + Programm-Datenbank + SNOB Chat-Widget. Optimal fuer eure 100+ Angebote.’,
-‘default’:‘Gute Frage! Ruf uns direkt an: +41 61 539 13 99 oder schreib an info@gosnob.ai.’
+// ── MAIN APP ──────────────────────────────────────────────────────────────────
+export default function FerienpassApp() {
+const [page, setPage] = useState(“home”);
+const [courses, setCourses] = useState(COURSES_DATA);
+const [filterCat, setFilterCat] = useState(“Alle”);
+const [filterWeek, setFilterWeek] = useState(“Alle Wochen”);
+const [filterBand, setFilterBand] = useState(“Alle”);
+const [searchQ, setSearchQ] = useState(””);
+const [favorites, setFavorites] = useState([]);
+const [bookings, setBookings] = useState([]);
+const [waitlist, setWaitlist] = useState([]);
+const [selectedCourse, setSelectedCourse] = useState(null);
+const [bookModal, setBookModal] = useState(null);
+const [detailModal, setDetailModal] = useState(null);
+const [successMsg, setSuccessMsg] = useState(””);
+const [profile, setProfile] = useState({ name: “Claudia Meier”, kids: [“Lena (8)”, “Tim (14)”], email: “claudia.meier@gmail.com”, pass: true });
+const [adminPw, setAdminPw] = useState(””);
+const [adminAuth, setAdminAuth] = useState(false);
+const [toast, setToast] = useState(null);
+
+const showToast = (msg, type = “success”) => {
+setToast({ msg, type });
+setTimeout(() => setToast(null), 3000);
 };
-function gr(t){var l=t.toLowerCase();for(var k in R)if(k!==‘default’&&l.includes(k))return R[k];return R.default;}
-function addM(tx,ty,dl){setTimeout(function(){
-var m=document.getElementById(‘cMsgs’),d=document.createElement(‘div’);
-d.className=‘msg ‘+ty;d.innerHTML=’<div class="mb">’+tx+’</div>’;
-m.appendChild(d);m.scrollTop=m.scrollHeight;
-},dl||0);}
-function showTy(){var m=document.getElementById(‘cMsgs’),d=document.createElement(‘div’);d.className=‘msg bot’;d.id=‘ty’;d.innerHTML=’<div class="ty"><div class="td"></div><div class="td"></div><div class="td"></div></div>’;m.appendChild(d);m.scrollTop=m.scrollHeight;}
-function rmTy(){var t=document.getElementById(‘ty’);if(t)t.remove();}
-function cSend(m){
-var i=document.getElementById(‘cIn’),t=m||i.value.trim();if(!t)return;
-i.value=’’;document.getElementById(‘cQR’).style.display=‘none’;
-addM(t,‘usr’);showTy();setTimeout(function(){rmTy();addM(gr(t),‘bot’);},400+Math.random()*300);
-}
-function qr(t){cSend(t);}
-function toggleChat(){
-chatOpen=!chatOpen;
-document.getElementById(‘chatW’).classList.toggle(‘on’,chatOpen);
-document.getElementById(‘fabBtn’).classList.toggle(‘on’,chatOpen);
-if(chatOpen&&!document.getElementById(‘cMsgs’).children.length){
-showTy();setTimeout(function(){rmTy();addM(‘Hey - ich bin SNOB. Frag mich zur Offerte, zu Preisen oder zu den AI-Services.’,‘bot’);},450);
-}
-}
 
-// Kill intro overlay after CSS animation ends
-(function(){
-var intro = document.getElementById(‘intro’);
-if(!intro) return;
-// Multiple fallbacks
-intro.addEventListener(‘animationend’, function(){
-intro.classList.add(‘done’);
+const toggleFav = (id) => {
+setFavorites((f) => f.includes(id) ? f.filter((x) => x !== id) : […f, id]);
+};
+
+const handleBook = (course) => {
+if (isFull(course)) {
+setWaitlist((w) => […w, { …course, addedAt: new Date().toLocaleDateString(“de-CH”) }]);
+showToast(`Auf Warteliste für "${course.title}" gesetzt!`, “info”);
+} else {
+setBookModal(course);
+}
+};
+
+const confirmBook = (course, child) => {
+setCourses((cs) => cs.map((c) => c.id === course.id ? { …c, booked: c.booked + 1 } : c));
+setBookings((b) => […b, { …course, child, bookedAt: new Date().toLocaleDateString(“de-CH”), status: “Bestätigt” }]);
+setBookModal(null);
+showToast(`🎉 "${course.title}" erfolgreich für ${child} gebucht!`);
+};
+
+const filteredCourses = courses.filter((c) => {
+const catOk = filterCat === “Alle” || c.category === filterCat;
+const weekOk = filterWeek === “Alle Wochen” || c.week === filterWeek;
+const bandOk = filterBand === “Alle” ||
+(filterBand === “Kostenlos” && c.price === 0) ||
+(filterBand === “Günstig (CHF 1–50)” && c.price > 0 && c.price <= 50) ||
+(filterBand === “Marktpreis (CHF 50+)” && c.price > 50);
+const searchOk = !searchQ || c.title.toLowerCase().includes(searchQ.toLowerCase()) || c.category.toLowerCase().includes(searchQ.toLowerCase());
+return catOk && weekOk && bandOk && searchOk;
 });
-// Hard fallback at 4s
-setTimeout(function(){
-var el = document.getElementById(‘intro’);
-if(el) el.classList.add(‘done’);
-}, 4000);
-})();
 
-</script>
-</body>
-</html>
+const navItems = [
+{ id: “home”, label: “🏠 Home” },
+{ id: “courses”, label: “📚 Kurse” },
+{ id: “bookings”, label: `📋 Buchungen${bookings.length ? ` (${bookings.length})` : ""}` },
+{ id: “profile”, label: “👨‍👩‍👧‍👦 Profil” },
+{ id: “admin”, label: “⚙️ Admin” },
+];
+
+return (
+<div style={{ fontFamily: “‘Segoe UI’, system-ui, sans-serif”, background: “#f7f8fc”, minHeight: “100vh” }}>
+<style>{`@keyframes modalIn { from { opacity:0; transform: scale(0.9) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } } @keyframes toastIn { from { opacity:0; transform: translateX(100px); } to { opacity:1; transform: translateX(0); } } @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } } @keyframes shimmer { 0%,100%{opacity:1} 50%{opacity:0.6} } * { box-sizing: border-box; } ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; } button { font-family: inherit; } input, select { font-family: inherit; }`}</style>
+
+```
+  {/* NAV */}
+  <nav style={{
+    background: "white", borderBottom: "1px solid #eee", position: "sticky", top: 0, zIndex: 100,
+    boxShadow: "0 2px 20px rgba(0,0,0,0.08)"
+  }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 24, height: 68 }}>
+      {/* Logo */}
+      <div onClick={() => setPage("home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
+        <div style={{
+          width: 40, height: 40, borderRadius: 12,
+          background: "linear-gradient(135deg, #FF6B6B, #FDCB6E)",
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20
+        }}>☀️</div>
+        <div>
+          <div style={{ fontWeight: 900, fontSize: 16, color: "#1a1a2e", letterSpacing: -0.5 }}>Basler</div>
+          <div style={{ fontWeight: 900, fontSize: 16, color: "#FF6B6B", letterSpacing: -0.5, marginTop: -4 }}>Ferienpass</div>
+        </div>
+      </div>
+
+      {/* Nav items */}
+      <div style={{ display: "flex", gap: 4, flex: 1 }}>
+        {navItems.map((n) => (
+          <button
+            key={n.id}
+            onClick={() => setPage(n.id)}
+            style={{
+              padding: "8px 16px", borderRadius: 12, border: "none",
+              background: page === n.id ? "#FF6B6B" : "transparent",
+              color: page === n.id ? "white" : "#555",
+              fontWeight: page === n.id ? 700 : 500,
+              cursor: "pointer", fontSize: 13, transition: "all 0.2s",
+              whiteSpace: "nowrap"
+            }}
+          >
+            {n.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Pass badge */}
+      {profile.pass && (
+        <div style={{
+          background: "linear-gradient(135deg, #6C5CE7, #A29BFE)",
+          color: "white", borderRadius: 20, padding: "6px 14px",
+          fontSize: 12, fontWeight: 700, flex: "0 0 auto"
+        }}>
+          ✓ Pass aktiv
+        </div>
+      )}
+    </div>
+  </nav>
+
+  {/* TOAST */}
+  {toast && (
+    <div style={{
+      position: "fixed", top: 80, right: 24, zIndex: 2000,
+      background: toast.type === "info" ? "#6C5CE7" : "#00B894",
+      color: "white", borderRadius: 16, padding: "14px 20px",
+      boxShadow: "0 8px 30px rgba(0,0,0,0.2)", maxWidth: 340,
+      animation: "toastIn 0.4s cubic-bezier(.34,1.56,.64,1)",
+      fontSize: 14, fontWeight: 600
+    }}>
+      {toast.msg}
+    </div>
+  )}
+
+  {/* ── HOME PAGE ── */}
+  {page === "home" && (
+    <div>
+      {/* Hero */}
+      <div style={{
+        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+        padding: "80px 24px 100px", position: "relative", overflow: "hidden"
+      }}>
+        {/* BG decorations */}
+        {["#FF6B6B", "#FDCB6E", "#4ECDC4", "#A29BFE", "#FD79A8"].map((c, i) => (
+          <div key={i} style={{
+            position: "absolute",
+            width: 200 + i * 80, height: 200 + i * 80,
+            borderRadius: "50%",
+            background: `${c}18`,
+            top: `${-20 + i * 15}%`, left: `${-10 + i * 22}%`,
+            filter: "blur(40px)"
+          }} />
+        ))}
+
+        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", textAlign: "center" }}>
+          <div style={{
+            display: "inline-block", background: "rgba(255,107,107,0.2)",
+            border: "1px solid rgba(255,107,107,0.4)",
+            borderRadius: 30, padding: "8px 20px", marginBottom: 24, fontSize: 13, color: "#FF6B6B", fontWeight: 700
+          }}>
+            🎉 Sommer 2025 — Anmeldung offen
+          </div>
+          <h1 style={{
+            color: "white", fontSize: 56, fontWeight: 900, margin: "0 0 20px",
+            lineHeight: 1.1, letterSpacing: -2
+          }}>
+            Ferienzeit ist<br />
+            <span style={{ background: "linear-gradient(135deg, #FF6B6B, #FDCB6E)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              Abenteuerzeit
+            </span>
+          </h1>
+          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 20, margin: "0 0 40px", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
+            Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren. Günstig, vielfältig, unvergesslich.
+          </p>
+
+          {/* Stats */}
+          <div style={{ display: "flex", gap: 32, justifyContent: "center", flexWrap: "wrap", marginBottom: 48 }}>
+            {[["50+", "Kurse"], ["200+", "Plätze"], ["30+", "Anbieter"], ["0–80 CHF", "Preise"]].map(([v, l]) => (
+              <div key={l} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 32, fontWeight: 900, color: "#FDCB6E" }}>{v}</div>
+                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Search */}
+          <div style={{ position: "relative", maxWidth: 500, margin: "0 auto" }}>
+            <input
+              value={searchQ}
+              onChange={(e) => { setSearchQ(e.target.value); setPage("courses"); }}
+              placeholder="Kurs suchen... (Musik, Sport, Natur...)"
+              style={{
+                width: "100%", padding: "18px 24px 18px 56px", borderRadius: 20,
+                border: "2px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.1)",
+                color: "white", fontSize: 16, outline: "none",
+                backdropFilter: "blur(10px)"
+              }}
+            />
+            <span style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", fontSize: 20 }}>🔍</span>
+            <button
+              onClick={() => setPage("courses")}
+              style={{
+                position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)",
+                background: "#FF6B6B", color: "white", border: "none", borderRadius: 14,
+                padding: "10px 20px", fontWeight: 800, cursor: "pointer", fontSize: 14
+              }}
+            >
+              Suchen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured courses */}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
+          <div>
+            <h2 style={{ margin: 0, fontSize: 32, fontWeight: 900, color: "#1a1a2e" }}>🔥 Beliebt diese Woche</h2>
+            <p style={{ margin: "4px 0 0", color: "#888", fontSize: 15 }}>Die am stärksten gefragten Kurse</p>
+          </div>
+          <button onClick={() => setPage("courses")} style={{
+            background: "none", border: "2px solid #FF6B6B", color: "#FF6B6B",
+            borderRadius: 14, padding: "10px 20px", fontWeight: 700, cursor: "pointer", fontSize: 14
+          }}>
+            Alle Kurse →
+          </button>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+          {courses.sort((a, b) => b.booked - a.booked).slice(0, 3).map((c) => (
+            <CourseCard key={c.id} course={c} onBook={handleBook} onDetail={setDetailModal} isFav={favorites.includes(c.id)} onToggleFav={toggleFav} />
+          ))}
+        </div>
+      </div>
+
+      {/* How it works */}
+      <div style={{ background: "white", padding: "60px 24px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <h2 style={{ textAlign: "center", fontSize: 32, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>So funktioniert's</h2>
+          <p style={{ textAlign: "center", color: "#888", marginBottom: 48 }}>In 3 Schritten zum Ferienabenteuer</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 32 }}>
+            {[
+              { icon: "🎫", step: "1", title: "Ferienpass kaufen", desc: "Einmalig kaufen und den ganzen Sommer davon profitieren. Digital oder als PDF." },
+              { icon: "🔍", step: "2", title: "Kurse entdecken", desc: "Filter nach Kategorie, Alter, Woche und Budget. Favoriten speichern, vergleichen." },
+              { icon: "🎉", step: "3", title: "Buchen & loslegen", desc: "Ein Klick, Bestätigung per E-Mail. Änderungen jederzeit möglich." },
+            ].map((s) => (
+              <div key={s.step} style={{ textAlign: "center", padding: 32 }}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: "50%",
+                  background: "linear-gradient(135deg, #FF6B6B22, #FDCB6E22)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 32, margin: "0 auto 16px"
+                }}>
+                  {s.icon}
+                </div>
+                <div style={{ fontWeight: 900, color: "#FF6B6B", fontSize: 12, letterSpacing: 2, marginBottom: 8 }}>SCHRITT {s.step}</div>
+                <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 800, color: "#1a1a2e" }}>{s.title}</h3>
+                <p style={{ margin: 0, color: "#666", fontSize: 14, lineHeight: 1.7 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Category blocks */}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 24px" }}>
+        <h2 style={{ fontSize: 32, fontWeight: 900, color: "#1a1a2e", marginBottom: 32 }}>Nach Kategorie entdecken</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 16 }}>
+          {[
+            { cat: "Musik", icon: "🎵", color: "#FF6B6B" },
+            { cat: "Sport", icon: "⚽", color: "#4ECDC4" },
+            { cat: "Technik", icon: "🤖", color: "#A29BFE" },
+            { cat: "Natur", icon: "🌿", color: "#55EFC4" },
+            { cat: "Kunst", icon: "🎨", color: "#FD79A8" },
+            { cat: "Kulinarik", icon: "👨‍🍳", color: "#FDCB6E" },
+          ].map(({ cat, icon, color }) => (
+            <button
+              key={cat}
+              onClick={() => { setFilterCat(cat); setPage("courses"); }}
+              style={{
+                background: `linear-gradient(135deg, ${color}22, ${color}44)`,
+                border: `2px solid ${color}44`,
+                borderRadius: 20, padding: "24px 16px", cursor: "pointer",
+                textAlign: "center", transition: "all 0.2s"
+              }}
+            >
+              <div style={{ fontSize: 36, marginBottom: 8 }}>{icon}</div>
+              <div style={{ fontWeight: 800, color: "#1a1a2e", fontSize: 14 }}>{cat}</div>
+              <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>
+                {courses.filter((c) => c.category === cat).length} Kurse
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* ── COURSES PAGE ── */}
+  {page === "courses" && (
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px" }}>
+      <h1 style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>Kurse entdecken</h1>
+      <p style={{ color: "#888", marginBottom: 32 }}>{filteredCourses.length} Kurse gefunden</p>
+
+      {/* Filters */}
+      <div style={{
+        background: "white", borderRadius: 20, padding: 24,
+        boxShadow: "0 4px 20px rgba(0,0,0,0.07)", marginBottom: 32,
+        display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center"
+      }}>
+        <input
+          value={searchQ}
+          onChange={(e) => setSearchQ(e.target.value)}
+          placeholder="🔍 Suchen..."
+          style={{
+            border: "2px solid #eee", borderRadius: 12, padding: "10px 16px",
+            fontSize: 14, outline: "none", flex: "1 1 180px"
+          }}
+        />
+        {[
+          { label: "Kategorie", value: filterCat, setter: setFilterCat, opts: CATEGORIES },
+          { label: "Woche", value: filterWeek, setter: setFilterWeek, opts: WEEKS },
+          { label: "Preis", value: filterBand, setter: setFilterBand, opts: PRICE_BANDS },
+        ].map(({ label, value, setter, opts }) => (
+          <select
+            key={label}
+            value={value}
+            onChange={(e) => setter(e.target.value)}
+            style={{
+              border: "2px solid #eee", borderRadius: 12, padding: "10px 16px",
+              fontSize: 14, outline: "none", flex: "1 1 160px", cursor: "pointer",
+              background: "white"
+            }}
+          >
+            {opts.map((o) => <option key={o}>{o}</option>)}
+          </select>
+        ))}
+        <button
+          onClick={() => { setFilterCat("Alle"); setFilterWeek("Alle Wochen"); setFilterBand("Alle"); setSearchQ(""); }}
+          style={{
+            border: "2px solid #FF6B6B", borderRadius: 12, padding: "10px 16px",
+            background: "white", color: "#FF6B6B", fontWeight: 700, cursor: "pointer", fontSize: 14
+          }}
+        >
+          Reset
+        </button>
+      </div>
+
+      {/* Cat pills */}
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setFilterCat(cat)}
+            style={{
+              border: "none", borderRadius: 20, padding: "8px 18px",
+              background: filterCat === cat ? "#FF6B6B" : "#f0f0f0",
+              color: filterCat === cat ? "white" : "#555",
+              fontWeight: 700, cursor: "pointer", fontSize: 13, transition: "all 0.2s"
+            }}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {filteredCourses.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "80px 0", color: "#888" }}>
+          <div style={{ fontSize: 64 }}>😔</div>
+          <h3>Keine Kurse gefunden</h3>
+          <p>Versuche andere Filter</p>
+        </div>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 24 }}>
+          {filteredCourses.map((c) => (
+            <CourseCard key={c.id} course={c} onBook={handleBook} onDetail={setDetailModal} isFav={favorites.includes(c.id)} onToggleFav={toggleFav} />
+          ))}
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* ── BOOKINGS PAGE ── */}
+  {page === "bookings" && (
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
+      <h1 style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>Meine Buchungen</h1>
+      <p style={{ color: "#888", marginBottom: 32 }}>{bookings.length} aktive Buchungen · {waitlist.length} Wartelisten</p>
+
+      {bookings.length === 0 && waitlist.length === 0 ? (
+        <div style={{
+          background: "white", borderRadius: 24, padding: "60px", textAlign: "center",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.07)"
+        }}>
+          <div style={{ fontSize: 64, marginBottom: 16 }}>📋</div>
+          <h3 style={{ color: "#1a1a2e", marginBottom: 8 }}>Noch keine Buchungen</h3>
+          <p style={{ color: "#888" }}>Stöbere in den Kursen und buche dein erstes Abenteuer!</p>
+          <button onClick={() => setPage("courses")} style={{
+            marginTop: 16, background: "#FF6B6B", color: "white", border: "none",
+            borderRadius: 14, padding: "12px 24px", fontWeight: 700, cursor: "pointer", fontSize: 15
+          }}>
+            Kurse entdecken
+          </button>
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {bookings.map((b, i) => (
+            <div key={i} style={{
+              background: "white", borderRadius: 20, padding: 24,
+              boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+              display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap"
+            }}>
+              <div style={{
+                width: 60, height: 60, borderRadius: 16,
+                background: `linear-gradient(135deg, ${b.color}33, ${b.color}55)`,
+                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28
+              }}>
+                {b.image}
+              </div>
+              <div style={{ flex: 1, minWidth: 200 }}>
+                <h3 style={{ margin: "0 0 4px", fontSize: 17, fontWeight: 800, color: "#1a1a2e" }}>{b.title}</h3>
+                <div style={{ fontSize: 13, color: "#888" }}>👤 {b.child} · 📅 {b.week} · ✅ gebucht am {b.bookedAt}</div>
+              </div>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <Badge label={b.status} color="#00B894" bg="#00B89422" />
+                <Badge label={priceBadge(b)} color="#666" bg="#f5f5f5" />
+                <button
+                  onClick={() => {
+                    setBookings((bk) => bk.filter((_, j) => j !== i));
+                    setCourses((cs) => cs.map((c) => c.id === b.id ? { ...c, booked: c.booked - 1 } : c));
+                    showToast(`"${b.title}" storniert.`, "info");
+                  }}
+                  style={{
+                    border: "2px solid #FF6B6B", borderRadius: 10, padding: "6px 14px",
+                    background: "white", color: "#FF6B6B", fontWeight: 700, cursor: "pointer", fontSize: 13
+                  }}
+                >
+                  Stornieren
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {waitlist.length > 0 && (
+            <>
+              <h2 style={{ margin: "24px 0 8px", fontSize: 22, fontWeight: 800, color: "#1a1a2e" }}>⏳ Warteliste</h2>
+              {waitlist.map((b, i) => (
+                <div key={i} style={{
+                  background: "white", borderRadius: 20, padding: 24,
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+                  display: "flex", alignItems: "center", gap: 20, borderLeft: "4px solid #FDCB6E"
+                }}>
+                  <div style={{ fontSize: 28 }}>{b.image}</div>
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: "#1a1a2e" }}>{b.title}</h3>
+                    <div style={{ fontSize: 13, color: "#888" }}>📅 {b.week} · eingetragen am {b.addedAt}</div>
+                  </div>
+                  <Badge label="Warteliste" color="#FDCB6E" bg="#FDCB6E22" />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* ── PROFILE PAGE ── */}
+  {page === "profile" && (
+    <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 24px" }}>
+      <h1 style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e", marginBottom: 32 }}>Familienprofil</h1>
+
+      {/* Profile card */}
+      <div style={{
+        background: "white", borderRadius: 24, padding: 32,
+        boxShadow: "0 4px 20px rgba(0,0,0,0.07)", marginBottom: 24
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 28 }}>
+          <div style={{
+            width: 80, height: 80, borderRadius: "50%",
+            background: "linear-gradient(135deg, #FF6B6B, #FDCB6E)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 32
+          }}>👩</div>
+          <div>
+            <h2 style={{ margin: 0, fontSize: 24, fontWeight: 900, color: "#1a1a2e" }}>{profile.name}</h2>
+            <div style={{ color: "#888", fontSize: 14, marginTop: 4 }}>{profile.email}</div>
+          </div>
+          <div style={{ marginLeft: "auto" }}>
+            {profile.pass ? (
+              <div style={{
+                background: "linear-gradient(135deg, #6C5CE7, #A29BFE)",
+                color: "white", borderRadius: 20, padding: "10px 20px",
+                fontWeight: 800, fontSize: 14, textAlign: "center"
+              }}>
+                ✓ Ferienpass aktiv<br />
+                <span style={{ fontSize: 11, fontWeight: 600, opacity: 0.8 }}>Sommer 2025</span>
+              </div>
+            ) : (
+              <button style={{
+                background: "#FF6B6B", color: "white", border: "none",
+                borderRadius: 14, padding: "12px 20px", fontWeight: 700, cursor: "pointer"
+              }}>
+                Pass kaufen · CHF 0
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 24 }}>
+          <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 800, color: "#1a1a2e" }}>Kinder</h3>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            {profile.kids.map((k, i) => (
+              <div key={i} style={{
+                background: "#f7f8fc", borderRadius: 16, padding: "12px 20px",
+                display: "flex", alignItems: "center", gap: 10
+              }}>
+                <span style={{ fontSize: 24 }}>{i === 0 ? "👧" : "👦"}</span>
+                <span style={{ fontWeight: 700, color: "#1a1a2e" }}>{k}</span>
+              </div>
+            ))}
+            <button
+              onClick={() => {
+                const name = prompt("Kind hinzufügen (Name & Alter, z.B. 'Anna (10)'):");
+                if (name) setProfile((p) => ({ ...p, kids: [...p.kids, name] }));
+              }}
+              style={{
+                background: "none", border: "2px dashed #ddd", borderRadius: 16,
+                padding: "12px 20px", color: "#888", cursor: "pointer", fontWeight: 700
+              }}
+            >
+              + Kind hinzufügen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Favorites */}
+      <div style={{
+        background: "white", borderRadius: 24, padding: 32,
+        boxShadow: "0 4px 20px rgba(0,0,0,0.07)"
+      }}>
+        <h3 style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 800, color: "#1a1a2e" }}>❤️ Gespeicherte Kurse ({favorites.length})</h3>
+        {favorites.length === 0 ? (
+          <p style={{ color: "#888" }}>Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!</p>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {courses.filter((c) => favorites.includes(c.id)).map((c) => (
+              <div key={c.id} style={{
+                display: "flex", alignItems: "center", gap: 16, padding: 16,
+                background: "#f7f8fc", borderRadius: 16
+              }}>
+                <span style={{ fontSize: 24 }}>{c.image}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, color: "#1a1a2e" }}>{c.title}</div>
+                  <div style={{ fontSize: 12, color: "#888" }}>📅 {c.week} · {priceBadge(c)}</div>
+                </div>
+                <button
+                  onClick={() => handleBook(c)}
+                  style={{
+                    background: "#FF6B6B", color: "white", border: "none",
+                    borderRadius: 10, padding: "8px 16px", fontWeight: 700, cursor: "pointer", fontSize: 13
+                  }}
+                >
+                  Buchen
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  {/* ── ADMIN PAGE ── */}
+  {page === "admin" && (
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px" }}>
+      {!adminAuth ? (
+        <div style={{ maxWidth: 400, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ fontSize: 64, marginBottom: 16 }}>🔐</div>
+          <h2 style={{ fontSize: 28, fontWeight: 900, color: "#1a1a2e", marginBottom: 8 }}>Admin-Zugang</h2>
+          <p style={{ color: "#888", marginBottom: 24 }}>Bitte Passwort eingeben</p>
+          <input
+            type="password"
+            value={adminPw}
+            onChange={(e) => setAdminPw(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && (adminPw === "admin123" ? setAdminAuth(true) : showToast("Falsches Passwort", "info"))}
+            placeholder="Passwort..."
+            style={{
+              width: "100%", border: "2px solid #eee", borderRadius: 14,
+              padding: "14px 20px", fontSize: 16, outline: "none", marginBottom: 12
+            }}
+          />
+          <p style={{ fontSize: 12, color: "#aaa", marginBottom: 16 }}>Demo: "admin123"</p>
+          <button
+            onClick={() => adminPw === "admin123" ? setAdminAuth(true) : showToast("Falsches Passwort", "info")}
+            style={{
+              width: "100%", background: "#FF6B6B", color: "white", border: "none",
+              borderRadius: 14, padding: "14px", fontWeight: 800, cursor: "pointer", fontSize: 16
+            }}
+          >
+            Einloggen
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
+            <h1 style={{ fontSize: 32, fontWeight: 900, color: "#1a1a2e", margin: 0 }}>⚙️ Admin Dashboard</h1>
+            <button onClick={() => setAdminAuth(false)} style={{
+              border: "2px solid #FF6B6B", borderRadius: 12, padding: "8px 16px",
+              background: "white", color: "#FF6B6B", fontWeight: 700, cursor: "pointer"
+            }}>
+              Logout
+            </button>
+          </div>
+
+          {/* Stats */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 36 }}>
+            {[
+              { label: "Kurse total", value: courses.length, icon: "📚", color: "#A29BFE" },
+              { label: "Buchungen", value: bookings.length, icon: "✅", color: "#00B894" },
+              { label: "Warteliste", value: waitlist.length, icon: "⏳", color: "#FDCB6E" },
+              { label: "Belegte Plätze", value: courses.reduce((s, c) => s + c.booked, 0), icon: "👥", color: "#FF6B6B" },
+            ].map((s) => (
+              <div key={s.label} style={{
+                background: "white", borderRadius: 20, padding: 24,
+                boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+                borderLeft: `4px solid ${s.color}`
+              }}>
+                <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
+                <div style={{ fontSize: 36, fontWeight: 900, color: "#1a1a2e" }}>{s.value}</div>
+                <div style={{ fontSize: 13, color: "#888", fontWeight: 600 }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Course management table */}
+          <div style={{ background: "white", borderRadius: 24, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}>
+            <div style={{ padding: "24px 28px", borderBottom: "1px solid #f0f0f0" }}>
+              <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: "#1a1a2e" }}>Kursübersicht</h2>
+            </div>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ background: "#f7f8fc" }}>
+                    {["Kurs", "Anbieter", "Kategorie", "Woche", "Preis", "Auslastung", "Status", "Aktionen"].map((h) => (
+                      <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontSize: 12, fontWeight: 800, color: "#888", letterSpacing: 0.5 }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {courses.map((c, i) => (
+                    <tr key={c.id} style={{ borderBottom: "1px solid #f5f5f5", transition: "background 0.2s" }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = "#fafafa"}
+                      onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+                    >
+                      <td style={{ padding: "14px 16px" }}>
+                        <span style={{ marginRight: 8 }}>{c.image}</span>
+                        <span style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>{c.title}</span>
+                      </td>
+                      <td style={{ padding: "14px 16px", fontSize: 13, color: "#666" }}>{c.provider}</td>
+                      <td style={{ padding: "14px 16px" }}><Badge label={c.category} color={c.color} bg={`${c.color}22`} /></td>
+                      <td style={{ padding: "14px 16px", fontSize: 13, color: "#666" }}>{c.week}</td>
+                      <td style={{ padding: "14px 16px", fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>{priceBadge(c)}</td>
+                      <td style={{ padding: "14px 16px" }}>
+                        <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>{c.booked}/{c.spots}</div>
+                        <div style={{ background: "#eee", borderRadius: 10, height: 6, width: 80 }}>
+                          <div style={{
+                            width: `${Math.min((c.booked / c.spots) * 100, 100)}%`,
+                            background: isFull(c) ? "#FF6B6B" : "#00B894",
+                            height: "100%", borderRadius: 10
+                          }} />
+                        </div>
+                      </td>
+                      <td style={{ padding: "14px 16px" }}>
+                        <Badge
+                          label={isFull(c) ? "Ausgebucht" : "Verfügbar"}
+                          color={isFull(c) ? "#FF6B6B" : "#00B894"}
+                          bg={isFull(c) ? "#FF6B6B22" : "#00B89422"}
+                        />
+                      </td>
+                      <td style={{ padding: "14px 16px" }}>
+                        <button
+                          onClick={() => {
+                            const newSpots = prompt(`Plätze für "${c.title}" (aktuell: ${c.spots}):`, c.spots);
+                            if (newSpots && !isNaN(newSpots)) {
+                              setCourses((cs) => cs.map((x) => x.id === c.id ? { ...x, spots: parseInt(newSpots) } : x));
+                              showToast(`Plätze für "${c.title}" auf ${newSpots} gesetzt.`);
+                            }
+                          }}
+                          style={{
+                            border: "2px solid #A29BFE", borderRadius: 8, padding: "5px 10px",
+                            background: "white", color: "#A29BFE", fontWeight: 700,
+                            cursor: "pointer", fontSize: 12
+                          }}
+                        >
+                          Bearbeiten
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Add course */}
+          <div style={{ background: "white", borderRadius: 24, padding: 28, boxShadow: "0 4px 20px rgba(0,0,0,0.07)", marginTop: 24 }}>
+            <h3 style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 800, color: "#1a1a2e" }}>➕ Neuen Kurs hinzufügen</h3>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              {["Titel", "Anbieter", "Kategorie"].map((f) => (
+                <input key={f} placeholder={f} id={`new-${f}`} style={{
+                  border: "2px solid #eee", borderRadius: 12, padding: "10px 16px",
+                  fontSize: 14, outline: "none", flex: "1 1 150px"
+                }} />
+              ))}
+              <button
+                onClick={() => {
+                  const title = document.getElementById("new-Titel").value;
+                  if (!title) { showToast("Bitte Titel eingeben", "info"); return; }
+                  const newCourse = {
+                    id: Date.now(), title,
+                    provider: document.getElementById("new-Anbieter").value || "Unbekannt",
+                    category: document.getElementById("new-Kategorie").value || "Diverses",
+                    price: 0, priceband: "low", age: "8-14", spots: 15, booked: 0,
+                    days: ["Mo", "Di"], week: "1. Sept", image: "⭐", color: "#A29BFE",
+                    desc: "Neuer Kurs", rating: 0, reviews: 0,
+                    location: "Basel", duration: "2 Tage", time: "09:00–17:00"
+                  };
+                  setCourses((cs) => [...cs, newCourse]);
+                  showToast(`"${title}" wurde hinzugefügt!`);
+                  ["Titel", "Anbieter", "Kategorie"].forEach((f) => { document.getElementById(`new-${f}`).value = ""; });
+                }}
+                style={{
+                  background: "#FF6B6B", color: "white", border: "none",
+                  borderRadius: 12, padding: "10px 24px", fontWeight: 800,
+                  cursor: "pointer", fontSize: 14, flex: "0 0 auto"
+                }}
+              >
+                Hinzufügen
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* ── BOOK MODAL ── */}
+  {bookModal && (
+    <Modal onClose={() => setBookModal(null)}>
+      <div style={{ padding: 32 }}>
+        <div style={{
+          background: `linear-gradient(135deg, ${bookModal.color}22, ${bookModal.color}44)`,
+          borderRadius: 16, padding: "20px", marginBottom: 24, textAlign: "center"
+        }}>
+          <div style={{ fontSize: 48 }}>{bookModal.image}</div>
+          <h2 style={{ margin: "8px 0 4px", fontSize: 22, fontWeight: 900, color: "#1a1a2e" }}>{bookModal.title}</h2>
+          <div style={{ color: "#888", fontSize: 14 }}>📅 {bookModal.week} · ⏱ {bookModal.duration}</div>
+        </div>
+
+        <div style={{ marginBottom: 24, padding: "16px", background: "#f7f8fc", borderRadius: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, fontSize: 14, color: "#555" }}>
+            <div>📍 {bookModal.location}</div>
+            <div>🕐 {bookModal.time}</div>
+            <div>👶 Alter: {bookModal.age} J.</div>
+            <div>💰 {priceBadge(bookModal)}</div>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 24 }}>
+          <label style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 15, display: "block", marginBottom: 10 }}>
+            Für welches Kind?
+          </label>
+          <div style={{ display: "flex", gap: 10 }}>
+            {profile.kids.map((k) => (
+              <button
+                key={k}
+                id={`kid-${k}`}
+                onClick={() => {
+                  profile.kids.forEach((kk) => {
+                    const el = document.getElementById(`kid-${kk}`);
+                    if (el) el.style.background = kk === k ? bookModal.color : "white";
+                    if (el) el.style.color = kk === k ? "white" : "#333";
+                  });
+                }}
+                style={{
+                  border: `2px solid ${bookModal.color}`, borderRadius: 14,
+                  padding: "10px 20px", background: "white", color: "#333",
+                  fontWeight: 700, cursor: "pointer", fontSize: 14, transition: "all 0.2s"
+                }}
+              >
+                {k}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: 12 }}>
+          <button
+            onClick={() => setBookModal(null)}
+            style={{
+              flex: 1, padding: "14px", borderRadius: 14, border: "2px solid #eee",
+              background: "white", color: "#333", fontWeight: 700, cursor: "pointer", fontSize: 15
+            }}
+          >
+            Abbrechen
+          </button>
+          <button
+            onClick={() => {
+              const activeKid = profile.kids.find((k) => {
+                const el = document.getElementById(`kid-${k}`);
+                return el && el.style.color === "white";
+              }) || profile.kids[0];
+              confirmBook(bookModal, activeKid);
+            }}
+            style={{
+              flex: 2, padding: "14px", borderRadius: 14, border: "none",
+              background: `linear-gradient(135deg, ${bookModal.color}, ${bookModal.color}cc)`,
+              color: "white", fontWeight: 800, cursor: "pointer", fontSize: 15
+            }}
+          >
+            🎉 Jetzt buchen · {priceBadge(bookModal)}
+          </button>
+        </div>
+      </div>
+    </Modal>
+  )}
+
+  {/* ── DETAIL MODAL ── */}
+  {detailModal && (
+    <Modal onClose={() => setDetailModal(null)}>
+      <div>
+        <div style={{
+          background: `linear-gradient(135deg, ${detailModal.color}33, ${detailModal.color}55)`,
+          padding: "32px", borderBottom: `3px solid ${detailModal.color}`
+        }}>
+          <button
+            onClick={() => setDetailModal(null)}
+            style={{
+              float: "right", background: "rgba(255,255,255,0.8)", border: "none",
+              borderRadius: "50%", width: 36, height: 36, cursor: "pointer", fontSize: 16
+            }}
+          >✕</button>
+          <div style={{ fontSize: 56, marginBottom: 12 }}>{detailModal.image}</div>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+            <Badge label={detailModal.category} color={detailModal.color} bg={`${detailModal.color}33`} />
+            <Badge label={`${detailModal.age} Jahre`} color="#555" bg="#f0f0f0" />
+            <Badge label={bandLabel(detailModal.priceband)} color="#555" bg="#f0f0f0" />
+          </div>
+          <h2 style={{ margin: "0 0 4px", fontSize: 26, fontWeight: 900, color: "#1a1a2e" }}>{detailModal.title}</h2>
+          <div style={{ color: "#666", fontSize: 14 }}>von {detailModal.provider}</div>
+        </div>
+
+        <div style={{ padding: 32 }}>
+          <p style={{ color: "#555", lineHeight: 1.8, fontSize: 15, marginBottom: 24 }}>{detailModal.desc}</p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+            {[
+              ["📅 Woche", detailModal.week],
+              ["⏱ Dauer", detailModal.duration],
+              ["🕐 Zeiten", detailModal.time],
+              ["📍 Ort", detailModal.location],
+              ["👶 Alter", `${detailModal.age} Jahre`],
+              ["💰 Preis", priceBadge(detailModal)],
+            ].map(([l, v]) => (
+              <div key={l} style={{ background: "#f7f8fc", borderRadius: 12, padding: "14px 16px" }}>
+                <div style={{ fontSize: 11, color: "#888", fontWeight: 700, letterSpacing: 0.5, marginBottom: 4 }}>{l}</div>
+                <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginBottom: 24 }}>
+            <StarRating rating={detailModal.rating} />
+            <span style={{ color: "#888", fontSize: 13, marginLeft: 8 }}>({detailModal.reviews} Bewertungen)</span>
+          </div>
+
+          <SpotBar course={detailModal} />
+
+          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+            <button
+              onClick={() => { toggleFav(detailModal.id); showToast(favorites.includes(detailModal.id) ? "Aus Favoriten entfernt" : "Zu Favoriten hinzugefügt", "info"); }}
+              style={{
+                flex: 1, padding: "14px", borderRadius: 14,
+                border: `2px solid ${detailModal.color}`,
+                background: favorites.includes(detailModal.id) ? `${detailModal.color}22` : "white",
+                color: detailModal.color, fontWeight: 800, cursor: "pointer", fontSize: 15
+              }}
+            >
+              {favorites.includes(detailModal.id) ? "♥ Gespeichert" : "♡ Speichern"}
+            </button>
+            <button
+              onClick={() => { setDetailModal(null); handleBook(detailModal); }}
+              style={{
+                flex: 2, padding: "14px", borderRadius: 14, border: "none",
+                background: isFull(detailModal) ? "#e0e0e0" : `linear-gradient(135deg, ${detailModal.color}, ${detailModal.color}cc)`,
+                color: isFull(detailModal) ? "#999" : "white",
+                fontWeight: 800, cursor: isFull(detailModal) ? "not-allowed" : "pointer", fontSize: 15
+              }}
+            >
+              {isFull(detailModal) ? "⏳ Warteliste beitreten" : `🎉 Buchen · ${priceBadge(detailModal)}`}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  )}
+
+  {/* Footer */}
+  <footer style={{
+    background: "#1a1a2e", color: "rgba(255,255,255,0.5)",
+    padding: "40px 24px", textAlign: "center", marginTop: 60, fontSize: 13
+  }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 16 }}>
+        <div style={{ fontSize: 20 }}>☀️</div>
+        <span style={{ fontWeight: 900, color: "white", fontSize: 16 }}>Basler Ferienpass 2025</span>
+      </div>
+      <p style={{ margin: "0 0 8px" }}>Basierend auf basler-ferienpass.ch · Demo-Version</p>
+      <p style={{ margin: 0 }}>Alle Kursdaten sind fiktiv · Admin-Demo-Passwort: admin123</p>
+    </div>
+  </footer>
+</div>
+```
+
+);
+}
