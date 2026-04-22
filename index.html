@@ -2,1145 +2,1237 @@
 
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basler Ferienpass 2025</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Nunito', system-ui, sans-serif; background: #f7f8fc; color: #1a1a2e; min-height: 100vh; }
-    button { font-family: inherit; cursor: pointer; }
-    input, select { font-family: inherit; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
-
-```
-/* ── NAV ── */
-nav {
-  background: white; border-bottom: 1px solid #eee;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 20px rgba(0,0,0,.08);
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Basler Ferienpass 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f7f8fc;color:#1a1a2e}
+button,input,select{font-family:inherit;cursor:pointer}
+/* NAV */
+nav{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.nw{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:8px;height:62px}
+.logo{display:flex;align-items:center;gap:8px;border:none;background:none;padding:0;flex-shrink:0}
+.li{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B6B,#FDCB6E);display:flex;align-items:center;justify-content:center;font-size:18px}
+.lt{font-weight:900;font-size:13px;line-height:1.2;text-align:left}
+.lt span:first-child{color:#1a1a2e;display:block}
+.lt span:last-child{color:#FF6B6B;display:block}
+.navlinks{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.nb{padding:6px 10px;border-radius:10px;border:none;background:transparent;color:#555;font-weight:600;font-size:12px;white-space:nowrap}
+.nb:hover{background:#f5f5f5}
+.nb.on{background:#FF6B6B;color:#fff;font-weight:700}
+.langbar{display:flex;gap:3px;flex-shrink:0}
+.lb{padding:4px 9px;border-radius:8px;border:2px solid #eee;background:#fff;font-size:11px;font-weight:800;color:#666}
+.lb:hover{border-color:#FF6B6B;color:#FF6B6B}
+.lb.on{background:#FF6B6B;color:#fff;border-color:#FF6B6B}
+.pbadge{background:linear-gradient(135deg,#6C5CE7,#A29BFE);color:#fff;border-radius:16px;padding:4px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
+/* PAGES */
+.pg{display:none}
+.pg.on{display:block;animation:fu .3s ease}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a1a2e,#16213e 50%,#0f3460);padding:64px 20px 84px;position:relative;overflow:hidden;text-align:center}
+.orb{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}
+.hw{max-width:1100px;margin:0 auto;position:relative}
+.hpill{display:inline-block;background:rgba(255,107,107,.18);border:1px solid rgba(255,107,107,.4);border-radius:26px;padding:6px 16px;margin-bottom:18px;font-size:12px;color:#FF6B6B;font-weight:700}
+.htitle{color:#fff;font-size:clamp(28px,5.5vw,50px);font-weight:900;line-height:1.1;letter-spacing:-.5px;margin-bottom:14px}
+.htitle .grad{background:linear-gradient(135deg,#FF6B6B,#FDCB6E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hsub{color:rgba(255,255,255,.65);font-size:16px;max-width:500px;margin:0 auto 30px;line-height:1.7}
+.hstats{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.hv{font-size:26px;font-weight:900;color:#FDCB6E}
+.hl{font-size:11px;color:rgba(255,255,255,.45);font-weight:600;margin-top:1px}
+.sw{position:relative;max-width:440px;margin:0 auto}
+.sw input{width:100%;padding:14px 46px 14px 44px;border-radius:15px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.1);color:#fff;font-size:14px;outline:none;font-family:inherit}
+.sw input::placeholder{color:rgba(255,255,255,.4)}
+.sico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px}
+.sbtn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#FF6B6B;color:#fff;border:none;border-radius:10px;padding:7px 14px;font-weight:800;font-size:12px}
+.sbtn:hover{background:#e55}
+/* SECTION */
+.sec{max-width:1200px;margin:0 auto;padding:48px 20px}
+.sech{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.sech h2{font-size:clamp(18px,3.5vw,27px);font-weight:900}
+.sech p{color:#888;font-size:13px;margin-top:3px}
+.obtn{border:2px solid #FF6B6B;border-radius:10px;padding:8px 15px;background:#fff;color:#FF6B6B;font-weight:700;font-size:13px;white-space:nowrap;flex-shrink:0}
+.obtn:hover{background:#fff0f0}
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+/* CARD */
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,.07);display:flex;flex-direction:column;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.card:hover{box-shadow:0 16px 50px rgba(0,0,0,.13);transform:translateY(-5px) scale(1.01)}
+.ch{padding:20px 18px 14px;position:relative}
+.ce{font-size:40px;line-height:1;margin-bottom:8px;display:block}
+.cbg{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
+.bdg{border-radius:16px;padding:2px 8px;font-size:10px;font-weight:700;display:inline-block}
+.fb{position:absolute;top:12px;right:12px;border-radius:50%;width:30px;height:30px;font-size:13px;display:flex;align-items:center;justify-content:center;border-width:2px;border-style:solid;transition:all .2s}
+.cb{padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:9px}
+.ct{font-size:14.5px;font-weight:800;line-height:1.3}
+.cp{font-size:11px;color:#888;margin-top:1px}
+.cd{font-size:12px;color:#555;line-height:1.5}
+.cm{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#666}
+.str{color:#FDCB6E;font-size:12px}
+.sr{display:flex;justify-content:space-between;font-size:10.5px;color:#888;margin-bottom:2px}
+.sbg{background:#eee;border-radius:8px;height:5px;overflow:hidden}
+.sfl{height:100%;border-radius:8px;transition:width .4s}
+.ca{display:flex;gap:5px;margin-top:auto;padding-top:5px}
+.dbt{flex:1;padding:8px;border-radius:9px;border:2px solid #e0e0e0;background:#fff;color:#333;font-weight:700;font-size:12px}
+.dbt:hover{border-color:#bbb;background:#fafafa}
+.bbt{flex:2;padding:8px;border-radius:9px;border:none;color:#fff;font-weight:800;font-size:12px}
+.bbt:hover{filter:brightness(1.07)}
+.bbt.full{background:#e0e0e0!important;color:#999;cursor:not-allowed}
+/* HOW */
+.how{background:#fff;padding:48px 20px}
+.howi{max-width:1100px;margin:0 auto;text-align:center}
+.howg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:36px}
+.howico{width:60px;height:60px;border-radius:50%;margin:0 auto 11px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.hows{font-weight:900;color:#FF6B6B;font-size:10px;letter-spacing:1.5px;margin-bottom:4px}
+.howt{font-size:16px;font-weight:800;margin-bottom:4px}
+.howd{font-size:12px;color:#666;line-height:1.6}
+/* CAT */
+.catg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px}
+.catc{border-radius:15px;padding:18px 12px;text-align:center;border-width:2px;border-style:solid;background:#fff;transition:all .2s}
+.catc:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.09)}
+.catic{font-size:30px;margin-bottom:5px}
+.catn{font-weight:800;font-size:12px}
+.catct{font-size:10.5px;color:#888;margin-top:2px}
+/* FILTER */
+.fbar{background:#fff;border-radius:15px;padding:14px 18px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fbar input,.fbar select{border:2px solid #eee;border-radius:9px;padding:7px 11px;font-size:13px;outline:none;flex:1 1 120px;background:#fff}
+.fbar input:focus,.fbar select:focus{border-color:#FF6B6B}
+.rbtn{border:2px solid #FF6B6B;border-radius:9px;padding:7px 12px;background:#fff;color:#FF6B6B;font-weight:700;font-size:12px;flex-shrink:0}
+.pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:20px}
+.pill{border:none;border-radius:16px;padding:5px 13px;background:#f0f0f0;color:#555;font-weight:700;font-size:11.5px}
+.pill.on{background:#FF6B6B;color:#fff}
+.pill:hover:not(.on){background:#e0e0e0}
+.empty{text-align:center;padding:64px 20px;color:#888}
+.empty .ei{font-size:54px;display:block;margin-bottom:11px}
+/* BOOKINGS */
+.bcard{background:#fff;border-radius:16px;padding:18px;box-shadow:0 3px 16px rgba(0,0,0,.07);display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:11px}
+.bico{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.binfo{flex:1;min-width:140px}
+.bt{font-size:14px;font-weight:800}
+.bs{font-size:11.5px;color:#888;margin-top:2px}
+.bact{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.ccbtn{border:2px solid #FF6B6B;border-radius:7px;padding:5px 10px;background:#fff;color:#FF6B6B;font-weight:700;font-size:11.5px}
+.ccbtn:hover{background:#fff0f0}
+.wlc{border-left:4px solid #FDCB6E}
+/* PROFILE */
+.wcard{background:#fff;border-radius:18px;padding:24px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin-bottom:16px}
+.ph{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.pav{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#FF6B6B,#FDCB6E);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.pn{font-size:19px;font-weight:900}
+.pe{color:#888;font-size:13px;margin-top:2px}
+.pcb{background:linear-gradient(135deg,#6C5CE7,#A29BFE);color:#fff;border-radius:14px;padding:9px 14px;font-weight:800;font-size:12px;text-align:center;margin-left:auto}
+.sdiv{border-top:1px solid #f0f0f0;padding-top:18px;margin-top:2px}
+.krow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.ktag{background:#f7f8fc;border-radius:11px;padding:8px 14px;font-weight:700;font-size:12.5px}
+.akbtn{background:none;border:2px dashed #ddd;border-radius:11px;padding:8px 14px;color:#888;font-weight:700;font-size:12.5px}
+.akbtn:hover{border-color:#FF6B6B;color:#FF6B6B}
+.frow{display:flex;align-items:center;gap:11px;padding:11px;background:#f7f8fc;border-radius:11px;margin-bottom:7px}
+.fi{flex:1}
+.ft{font-weight:700;font-size:13px}
+.fs{font-size:11px;color:#888;margin-top:1px}
+.bsm{background:#FF6B6B;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-weight:700;font-size:11.5px}
+/* ADMIN */
+.alockw{max-width:340px;margin:56px auto;text-align:center;padding:0 20px}
+.aei{font-size:54px;display:block;margin-bottom:11px}
+.ainp{width:100%;border:2px solid #eee;border-radius:11px;padding:12px 16px;font-size:14px;outline:none;margin-bottom:8px;font-family:inherit}
+.ainp:focus{border-color:#FF6B6B}
+.pbtn{background:#FF6B6B;color:#fff;border:none;border-radius:11px;padding:11px 18px;font-weight:800;font-size:14px;width:100%}
+.pbtn:hover{background:#e55}
+.statg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:24px}
+.stc{background:#fff;border-radius:15px;padding:18px;box-shadow:0 3px 16px rgba(0,0,0,.07)}
+.sti{font-size:22px;margin-bottom:5px}
+.stv{font-size:28px;font-weight:900}
+.stl{font-size:11.5px;color:#888;font-weight:600;margin-top:1px}
+.tw{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,.07)}
+.th2{padding:18px 22px;border-bottom:1px solid #f0f0f0;font-size:16px;font-weight:800}
+table{width:100%;border-collapse:collapse}
+th{padding:9px 12px;text-align:left;font-size:10px;font-weight:800;color:#888;letter-spacing:.4px;background:#f7f8fc}
+td{padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:12px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.ebtn{border:2px solid #A29BFE;border-radius:6px;padding:3px 8px;background:#fff;color:#A29BFE;font-weight:700;font-size:11px}
+.aform{background:#fff;border-radius:18px;padding:22px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin-top:18px}
+.arow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.arow input{border:2px solid #eee;border-radius:9px;padding:8px 12px;font-size:12.5px;outline:none;flex:1 1 110px}
+.arow input:focus{border-color:#FF6B6B}
+.addbtn{background:#FF6B6B;color:#fff;border:none;border-radius:9px;padding:8px 18px;font-weight:800;font-size:13px;flex-shrink:0}
+.lgbtn{border:2px solid #FF6B6B;border-radius:9px;padding:6px 12px;background:#fff;color:#FF6B6B;font-weight:700;font-size:12px}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(3px)}
+.ov.on{display:flex}
+.modal{background:#fff;border-radius:22px;max-width:510px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 36px 100px rgba(0,0,0,.28);animation:mi .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes mi{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
+.mh{padding:24px}
+.mb{padding:0 24px 24px}
+.mm{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.mi{background:#f7f8fc;border-radius:9px;padding:11px 12px}
+.mil{font-size:10px;color:#888;font-weight:700;letter-spacing:.4px;margin-bottom:2px}
+.miv{font-weight:700;font-size:12.5px}
+.mdesc{color:#555;line-height:1.75;font-size:13px;margin-bottom:14px}
+.mact{display:flex;gap:8px;margin-top:14px}
+.secbtn{flex:1;padding:11px;border-radius:11px;border:2px solid #eee;background:#fff;color:#333;font-weight:700;font-size:13px}
+.cnfbtn{flex:2;padding:11px;border-radius:11px;border:none;color:#fff;font-weight:800;font-size:13px}
+.xbtn{float:right;background:rgba(255,255,255,.85);border:none;border-radius:50%;width:31px;height:31px;font-size:13px;line-height:31px;text-align:center}
+.ksel{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.kbtn{border-width:2px;border-style:solid;border-radius:11px;padding:7px 14px;background:#fff;color:#333;font-weight:700;font-size:12.5px}
+/* TOAST */
+.toast{position:fixed;top:72px;right:18px;z-index:2000;color:#fff;border-radius:12px;padding:11px 16px;box-shadow:0 7px 24px rgba(0,0,0,.18);max-width:290px;font-size:13px;font-weight:600;animation:tin .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:none}
+.toast.s{background:#00B894}
+.toast.i{background:#6C5CE7}
+@keyframes tin{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
+/* FOOTER */
+footer{background:#1a1a2e;color:rgba(255,255,255,.45);padding:30px 20px;text-align:center;margin-top:48px;font-size:12px}
+.fw{max-width:1100px;margin:0 auto}
+.flogo{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:8px;font-size:16px}
+.flogo span{font-weight:900;color:#fff;font-size:13px}
+@media(max-width:600px){
+  .nb{padding:5px 7px;font-size:11px}
+  .bcard,.ph{flex-direction:column;align-items:flex-start}
+  .pcb{margin-left:0}
+  .mm{grid-template-columns:1fr}
+  table{font-size:11px}
+  th,td{padding:7px 8px}
 }
-.nav-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; align-items: center; gap: 16px; height: 68px;
-}
-.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
-.logo-icon {
-  width: 40px; height: 40px; border-radius: 12px;
-  background: linear-gradient(135deg, #FF6B6B, #FDCB6E);
-  display: flex; align-items: center; justify-content: center; font-size: 20px;
-}
-.logo-text-top { font-weight: 900; font-size: 16px; color: #1a1a2e; line-height: 1; }
-.logo-text-bot { font-weight: 900; font-size: 16px; color: #FF6B6B; line-height: 1; }
-.nav-links { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
-.nav-btn {
-  padding: 8px 14px; border-radius: 12px; border: none;
-  background: transparent; color: #555; font-weight: 600;
-  font-size: 13px; transition: all .2s; white-space: nowrap;
-}
-.nav-btn:hover { background: #f5f5f5; }
-.nav-btn.active { background: #FF6B6B; color: white; font-weight: 700; }
-.pass-badge {
-  background: linear-gradient(135deg, #6C5CE7, #A29BFE);
-  color: white; border-radius: 20px; padding: 6px 14px;
-  font-size: 12px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
-}
-
-/* ── PAGES ── */
-.page { display: none; }
-.page.active { display: block; animation: fadeUp .35s ease; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
-
-/* ── HERO ── */
-.hero {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  padding: 80px 24px 100px; position: relative; overflow: hidden;
-}
-.hero-orb {
-  position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none;
-}
-.hero-inner { max-width: 1200px; margin: 0 auto; position: relative; text-align: center; }
-.hero-pill {
-  display: inline-block; background: rgba(255,107,107,.2);
-  border: 1px solid rgba(255,107,107,.4); border-radius: 30px;
-  padding: 8px 20px; margin-bottom: 24px; font-size: 13px;
-  color: #FF6B6B; font-weight: 700;
-}
-.hero h1 { color: white; font-size: clamp(36px,6vw,56px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
-.hero h1 span { background: linear-gradient(135deg,#FF6B6B,#FDCB6E); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero p { color: rgba(255,255,255,.7); font-size: 18px; max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
-.hero-stats { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
-.hero-stat-val { font-size: 30px; font-weight: 900; color: #FDCB6E; }
-.hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,.5); font-weight: 600; margin-top: 2px; }
-.search-wrap { position: relative; max-width: 500px; margin: 0 auto; }
-.search-wrap input {
-  width: 100%; padding: 18px 56px 18px 52px; border-radius: 20px;
-  border: 2px solid rgba(255,255,255,.15); background: rgba(255,255,255,.1);
-  color: white; font-size: 15px; outline: none; font-family: inherit;
-  backdrop-filter: blur(10px);
-}
-.search-wrap input::placeholder { color: rgba(255,255,255,.5); }
-.search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; }
-.search-btn {
-  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
-  background: #FF6B6B; color: white; border: none; border-radius: 14px;
-  padding: 10px 20px; font-weight: 800; font-size: 14px; font-family: inherit;
-}
-.search-btn:hover { background: #e85d5d; }
-
-/* ── SECTION ── */
-.section { max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
-.section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
-.section-head h2 { font-size: clamp(22px,4vw,32px); font-weight: 900; color: #1a1a2e; }
-.section-head p { color: #888; font-size: 15px; margin-top: 4px; }
-.btn-outline {
-  border: 2px solid #FF6B6B; border-radius: 14px; padding: 10px 20px;
-  background: white; color: #FF6B6B; font-weight: 700; font-size: 14px;
-  white-space: nowrap; flex-shrink: 0;
-}
-.btn-outline:hover { background: #fff0f0; }
-
-/* ── COURSE GRID ── */
-.course-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 24px; }
-
-/* ── CARD ── */
-.card {
-  background: white; border-radius: 20px; overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,.07);
-  transition: all .3s cubic-bezier(.34,1.56,.64,1);
-  display: flex; flex-direction: column;
-}
-.card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.15); transform: translateY(-6px) scale(1.01); }
-.card-head { padding: 28px 24px 20px; position: relative; }
-.card-emoji { font-size: 48px; line-height: 1; margin-bottom: 10px; display: block; }
-.card-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-.badge { border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; letter-spacing: .4px; display: inline-block; }
-.fav-btn {
-  position: absolute; top: 16px; right: 16px;
-  border-radius: 50%; width: 36px; height: 36px;
-  font-size: 16px; display: flex; align-items: center; justify-content: center;
-  transition: all .2s; border-width: 2px; border-style: solid;
-}
-.card-body { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
-.card-title { font-size: 17px; font-weight: 800; color: #1a1a2e; line-height: 1.3; }
-.card-provider { font-size: 12px; color: #888; margin-top: 3px; }
-.card-desc { font-size: 13px; color: #555; line-height: 1.6; }
-.card-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; color: #666; }
-.stars { color: #FDCB6E; font-size: 13px; }
-.stars span { color: #999; margin-left: 4px; }
-.spot-bar-row { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 4px; }
-.spot-bar-bg { background: #eee; border-radius: 10px; height: 6px; overflow: hidden; }
-.spot-bar-fill { height: 100%; border-radius: 10px; transition: width .5s; }
-.card-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; }
-.btn-details {
-  flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #e0e0e0;
-  background: white; color: #333; font-weight: 700; font-size: 13px; transition: all .2s;
-}
-.btn-details:hover { border-color: #ccc; background: #fafafa; }
-.btn-book {
-  flex: 2; padding: 10px; border-radius: 12px; border: none;
-  color: white; font-weight: 800; font-size: 13px; transition: all .2s;
-}
-.btn-book:hover { filter: brightness(1.1); }
-.btn-book.full { background: #e0e0e0 !important; color: #999; cursor: not-allowed; }
-
-/* ── HOW IT WORKS ── */
-.how-section { background: white; padding: 60px 24px; }
-.how-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
-.how-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 32px; margin-top: 48px; }
-.how-icon { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
-.how-step { font-weight: 900; color: #FF6B6B; font-size: 11px; letter-spacing: 2px; margin-bottom: 8px; }
-.how-title { font-size: 20px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
-.how-desc { font-size: 14px; color: #666; line-height: 1.7; }
-
-/* ── CAT GRID ── */
-.cat-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 16px; }
-.cat-card {
-  border-radius: 20px; padding: 24px 16px; cursor: pointer; text-align: center;
-  border-width: 2px; border-style: solid; transition: all .2s; background: white;
-}
-.cat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.1); }
-.cat-icon { font-size: 36px; margin-bottom: 8px; }
-.cat-name { font-weight: 800; color: #1a1a2e; font-size: 14px; }
-.cat-count { font-size: 12px; color: #888; margin-top: 4px; }
-
-/* ── FILTER BAR ── */
-.filter-bar {
-  background: white; border-radius: 20px; padding: 20px 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.07); margin-bottom: 28px;
-  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
-}
-.filter-bar input, .filter-bar select {
-  border: 2px solid #eee; border-radius: 12px; padding: 10px 16px;
-  font-size: 14px; outline: none; flex: 1 1 150px; background: white;
-}
-.filter-bar input:focus, .filter-bar select:focus { border-color: #FF6B6B; }
-.btn-reset {
-  border: 2px solid #FF6B6B; border-radius: 12px; padding: 10px 16px;
-  background: white; color: #FF6B6B; font-weight: 700; font-size: 14px; flex-shrink: 0;
-}
-.pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
-.pill {
-  border: none; border-radius: 20px; padding: 8px 18px;
-  background: #f0f0f0; color: #555; font-weight: 700; font-size: 13px; transition: all .2s;
-}
-.pill.active { background: #FF6B6B; color: white; }
-.pill:hover:not(.active) { background: #e0e0e0; }
-.empty-state { text-align: center; padding: 80px 20px; color: #888; }
-.empty-state .emoji { font-size: 64px; display: block; margin-bottom: 16px; }
-
-/* ── BOOKINGS ── */
-.booking-card {
-  background: white; border-radius: 20px; padding: 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.07);
-  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-.booking-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
-.booking-info { flex: 1; min-width: 180px; }
-.booking-title { font-size: 17px; font-weight: 800; color: #1a1a2e; }
-.booking-sub { font-size: 13px; color: #888; margin-top: 4px; }
-.booking-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.btn-cancel { border: 2px solid #FF6B6B; border-radius: 10px; padding: 6px 14px; background: white; color: #FF6B6B; font-weight: 700; font-size: 13px; }
-.btn-cancel:hover { background: #fff0f0; }
-.waitlist-card { border-left: 4px solid #FDCB6E; }
-
-/* ── PROFILE ── */
-.white-card { background: white; border-radius: 24px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,.07); margin-bottom: 24px; }
-.profile-head { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; flex-wrap: wrap; }
-.profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg,#FF6B6B,#FDCB6E); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; }
-.profile-name { font-size: 24px; font-weight: 900; }
-.profile-email { color: #888; font-size: 14px; margin-top: 4px; }
-.pass-card { background: linear-gradient(135deg,#6C5CE7,#A29BFE); color: white; border-radius: 20px; padding: 10px 20px; font-weight: 800; font-size: 14px; text-align: center; margin-left: auto; }
-.section-divider { border-top: 1px solid #f0f0f0; padding-top: 24px; margin-top: 4px; }
-.kids-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
-.kid-tag { background: #f7f8fc; border-radius: 16px; padding: 12px 20px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
-.btn-add-kid { background: none; border: 2px dashed #ddd; border-radius: 16px; padding: 12px 20px; color: #888; font-weight: 700; font-size: 14px; }
-.btn-add-kid:hover { border-color: #FF6B6B; color: #FF6B6B; }
-.fav-row { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f7f8fc; border-radius: 16px; margin-bottom: 10px; }
-.fav-row-info { flex: 1; }
-.fav-title { font-weight: 700; color: #1a1a2e; }
-.fav-sub { font-size: 12px; color: #888; margin-top: 2px; }
-.btn-book-sm { background: #FF6B6B; color: white; border: none; border-radius: 10px; padding: 8px 16px; font-weight: 700; font-size: 13px; }
-
-/* ── ADMIN ── */
-.admin-lock { max-width: 400px; margin: 60px auto; text-align: center; padding: 0 24px; }
-.admin-emoji { font-size: 64px; display: block; margin-bottom: 16px; }
-.admin-input { width: 100%; border: 2px solid #eee; border-radius: 14px; padding: 14px 20px; font-size: 16px; outline: none; margin-bottom: 10px; font-family: inherit; }
-.admin-input:focus { border-color: #FF6B6B; }
-.btn-primary { background: #FF6B6B; color: white; border: none; border-radius: 14px; padding: 14px 24px; font-weight: 800; font-size: 15px; width: 100%; font-family: inherit; }
-.btn-primary:hover { background: #e85d5d; }
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 20px; margin-bottom: 36px; }
-.stat-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
-.stat-icon { font-size: 28px; margin-bottom: 8px; }
-.stat-val { font-size: 36px; font-weight: 900; }
-.stat-lbl { font-size: 13px; color: #888; font-weight: 600; margin-top: 2px; }
-.table-wrap { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
-.table-head { padding: 24px 28px; border-bottom: 1px solid #f0f0f0; font-size: 20px; font-weight: 800; }
-table { width: 100%; border-collapse: collapse; }
-th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 800; color: #888; letter-spacing: .5px; background: #f7f8fc; }
-td { padding: 14px 16px; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
-tr:hover td { background: #fafafa; }
-.btn-edit { border: 2px solid #A29BFE; border-radius: 8px; padding: 5px 10px; background: white; color: #A29BFE; font-weight: 700; font-size: 12px; font-family: inherit; }
-.add-form { background: white; border-radius: 24px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,.07); margin-top: 24px; }
-.add-form-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-.add-form input { border: 2px solid #eee; border-radius: 12px; padding: 10px 16px; font-size: 14px; outline: none; flex: 1 1 150px; font-family: inherit; }
-.add-form input:focus { border-color: #FF6B6B; }
-.btn-add { background: #FF6B6B; color: white; border: none; border-radius: 12px; padding: 10px 24px; font-weight: 800; font-size: 14px; font-family: inherit; flex-shrink: 0; }
-.logout-btn { border: 2px solid #FF6B6B; border-radius: 12px; padding: 8px 16px; background: white; color: #FF6B6B; font-weight: 700; font-family: inherit; }
-
-/* ── MODAL ── */
-.overlay {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6);
-  z-index: 1000; align-items: center; justify-content: center; padding: 20px;
-  backdrop-filter: blur(4px);
-}
-.overlay.open { display: flex; }
-.modal {
-  background: white; border-radius: 28px; max-width: 560px; width: 100%;
-  max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 40px 120px rgba(0,0,0,.3);
-  animation: modalIn .3s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes modalIn { from { opacity:0; transform:scale(.9) translateY(20px); } to { opacity:1; transform:none; } }
-.modal-header { padding: 32px; }
-.modal-header-emoji { font-size: 48px; display: block; margin-bottom: 12px; }
-.modal-title { font-size: 22px; font-weight: 900; color: #1a1a2e; }
-.modal-sub { font-size: 14px; color: #888; margin-top: 4px; }
-.modal-body { padding: 0 32px 32px; }
-.modal-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.meta-item { background: #f7f8fc; border-radius: 12px; padding: 14px 16px; }
-.meta-label { font-size: 11px; color: #888; font-weight: 700; letter-spacing: .5px; margin-bottom: 4px; }
-.meta-value { font-weight: 700; font-size: 14px; }
-.modal-desc { color: #555; line-height: 1.8; font-size: 15px; margin-bottom: 20px; }
-.modal-actions { display: flex; gap: 12px; margin-top: 20px; }
-.btn-secondary { flex: 1; padding: 14px; border-radius: 14px; border: 2px solid #eee; background: white; color: #333; font-weight: 700; font-size: 15px; font-family: inherit; }
-.btn-confirm { flex: 2; padding: 14px; border-radius: 14px; border: none; color: white; font-weight: 800; font-size: 15px; font-family: inherit; }
-.close-btn { float: right; background: rgba(255,255,255,.8); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
-.kids-selector { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-.kid-btn {
-  border-width: 2px; border-style: solid; border-radius: 14px;
-  padding: 10px 20px; background: white; color: #333;
-  font-weight: 700; font-size: 14px; transition: all .2s; font-family: inherit;
-}
-.kid-btn.selected { color: white; }
-
-/* ── TOAST ── */
-.toast {
-  position: fixed; top: 80px; right: 24px; z-index: 2000;
-  color: white; border-radius: 16px; padding: 14px 20px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.2); max-width: 340px;
-  font-size: 14px; font-weight: 600;
-  animation: toastIn .4s cubic-bezier(.34,1.56,.64,1);
-  pointer-events: none;
-}
-.toast.success { background: #00B894; }
-.toast.info { background: #6C5CE7; }
-@keyframes toastIn { from { opacity:0; transform:translateX(100px); } to { opacity:1; transform:none; } }
-
-/* ── FOOTER ── */
-footer { background: #1a1a2e; color: rgba(255,255,255,.5); padding: 40px 24px; text-align: center; margin-top: 60px; font-size: 13px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; font-size: 20px; }
-.footer-logo span { font-weight: 900; color: white; font-size: 16px; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 600px) {
-  .nav-links .nav-btn:not(.active) { display: none; }
-  .hero h1 { font-size: 32px; }
-  .booking-card { flex-direction: column; align-items: flex-start; }
-  .profile-head { flex-direction: column; align-items: flex-start; }
-}
-```
-
-  </style>
+</style>
 </head>
 <body>
 
-<!-- NAV -->
-
 <nav>
-  <div class="nav-inner">
-    <div class="logo" onclick="navigate('home')">
-      <div class="logo-icon">☀️</div>
-      <div>
-        <div class="logo-text-top">Basler</div>
-        <div class="logo-text-bot">Ferienpass</div>
-      </div>
+  <div class="nw">
+    <button class="logo" onclick="go('home')">
+      <div class="li">☀️</div>
+      <div class="lt"><span>Basler</span><span>Ferienpass</span></div>
+    </button>
+    <div class="navlinks">
+      <button class="nb on" data-p="home" onclick="go('home')">🏠 <span data-k="n_home">Home</span></button>
+      <button class="nb" data-p="courses" onclick="go('courses')">📚 <span data-k="n_courses">Kurse</span></button>
+      <button class="nb" data-p="bookings" onclick="go('bookings')" id="bnav">📋 <span data-k="n_bookings">Buchungen</span></button>
+      <button class="nb" data-p="profile" onclick="go('profile')">👨‍👩‍👧‍👦 <span data-k="n_profile">Profil</span></button>
+      <button class="nb" data-p="admin" onclick="go('admin')">⚙️ <span data-k="n_admin">Admin</span></button>
     </div>
-    <div class="nav-links">
-      <button class="nav-btn active" data-page="home" onclick="navigate('home')">🏠 Home</button>
-      <button class="nav-btn" data-page="courses" onclick="navigate('courses')">📚 Kurse</button>
-      <button class="nav-btn" data-page="bookings" onclick="navigate('bookings')" id="nav-bookings">📋 Buchungen</button>
-      <button class="nav-btn" data-page="profile" onclick="navigate('profile')">👨‍👩‍👧‍👦 Profil</button>
-      <button class="nav-btn" data-page="admin" onclick="navigate('admin')">⚙️ Admin</button>
+    <div class="langbar">
+      <button class="lb on" onclick="setLang('de')">DE</button>
+      <button class="lb" onclick="setLang('fr')">FR</button>
+      <button class="lb" onclick="setLang('en')">EN</button>
     </div>
-    <div class="pass-badge">✓ Pass aktiv</div>
+    <div class="pbadge">✓ <span data-k="pass">Pass aktiv</span></div>
   </div>
 </nav>
 
-<!-- TOAST -->
+<div id="toast" class="toast"></div>
 
-<div id="toast" class="toast" style="display:none"></div>
+<!-- ===== HOME ===== -->
 
-<!-- ══════════════════════ HOME PAGE ══════════════════════ -->
-
-<div id="page-home" class="page active">
+<div id="pg-home" class="pg on">
   <div class="hero">
-    <div class="hero-orb" style="width:300px;height:300px;background:#FF6B6B18;top:-10%;left:-5%;"></div>
-    <div class="hero-orb" style="width:400px;height:400px;background:#FDCB6E18;top:5%;left:25%;"></div>
-    <div class="hero-orb" style="width:250px;height:250px;background:#4ECDC418;top:-5%;left:55%;"></div>
-    <div class="hero-orb" style="width:350px;height:350px;background:#A29BFE18;top:10%;left:72%;"></div>
-    <div class="hero-inner">
-      <div class="hero-pill">🎉 Sommer 2025 — Anmeldung offen</div>
-      <h1>Ferienzeit ist<br><span>Abenteuerzeit</span></h1>
-      <p>Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren. Günstig, vielfältig, unvergesslich.</p>
-      <div class="hero-stats">
-        <div><div class="hero-stat-val">50+</div><div class="hero-stat-lbl">Kurse</div></div>
-        <div><div class="hero-stat-val">200+</div><div class="hero-stat-lbl">Plätze</div></div>
-        <div><div class="hero-stat-val">30+</div><div class="hero-stat-lbl">Anbieter</div></div>
-        <div><div class="hero-stat-val">0–80 CHF</div><div class="hero-stat-lbl">Preise</div></div>
+    <div class="orb" style="width:260px;height:260px;background:#FF6B6B15;top:-8%;left:-4%"></div>
+    <div class="orb" style="width:340px;height:340px;background:#FDCB6E15;top:4%;left:21%"></div>
+    <div class="orb" style="width:220px;height:220px;background:#4ECDC415;top:-4%;left:55%"></div>
+    <div class="orb" style="width:290px;height:290px;background:#A29BFE15;top:9%;left:73%"></div>
+    <div class="hw">
+      <div class="hpill" data-k="h_pill">🎉 Sommer 2025 — Anmeldung offen</div>
+      <div class="htitle"><span data-k="h1a">Ferienzeit ist</span><br><span class="grad" data-k="h1b">Abenteuerzeit</span></div>
+      <p class="hsub" data-k="h_sub">Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren.</p>
+      <div class="hstats">
+        <div><div class="hv">50+</div><div class="hl" data-k="s_c">Kurse</div></div>
+        <div><div class="hv">200+</div><div class="hl" data-k="s_s">Plätze</div></div>
+        <div><div class="hv">30+</div><div class="hl" data-k="s_p">Anbieter</div></div>
+        <div><div class="hv">0–80</div><div class="hl" data-k="s_pr">CHF</div></div>
       </div>
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input id="hero-search" type="text" placeholder="Kurs suchen... (Musik, Sport, Natur...)" oninput="heroSearch(this.value)" />
-        <button class="search-btn" onclick="navigate('courses')">Suchen</button>
+      <div class="sw">
+        <span class="sico">🔍</span>
+        <input id="hs" type="text" data-ph="srch_ph" placeholder="Kurs suchen..." oninput="heroSrch(this.value)"/>
+        <button class="sbtn" onclick="go('courses')" data-k="srch_btn">Suchen</button>
       </div>
     </div>
   </div>
 
-  <!-- Featured -->
-
-  <div class="section">
-    <div class="section-head">
-      <div><h2>🔥 Beliebt diese Woche</h2><p>Die am stärksten gefragten Kurse</p></div>
-      <button class="btn-outline" onclick="navigate('courses')">Alle Kurse →</button>
+  <div class="sec">
+    <div class="sech">
+      <div><h2>🔥 <span data-k="feat_t">Beliebt diese Woche</span></h2><p data-k="feat_s">Die am stärksten gefragten Kurse</p></div>
+      <button class="obtn" onclick="go('courses')" data-k="all_btn">Alle Kurse →</button>
     </div>
-    <div class="course-grid" id="home-featured"></div>
+    <div class="grid" id="hfeat"></div>
   </div>
 
-  <!-- How it works -->
-
-  <div class="how-section">
-    <div class="how-inner">
-      <h2 style="font-size:32px;font-weight:900;color:#1a1a2e">So funktioniert's</h2>
-      <p style="color:#888;margin-top:8px">In 3 Schritten zum Ferienabenteuer</p>
-      <div class="how-grid">
+  <div class="how">
+    <div class="howi">
+      <h2 style="font-size:clamp(19px,4vw,28px);font-weight:900" data-k="how_t">So funktioniert's</h2>
+      <p style="color:#888;margin-top:4px" data-k="how_s">In 3 Schritten zum Ferienabenteuer</p>
+      <div class="howg">
         <div>
-          <div class="how-icon" style="background:linear-gradient(135deg,#FF6B6B22,#FDCB6E22)">🎫</div>
-          <div class="how-step">SCHRITT 1</div>
-          <div class="how-title">Ferienpass kaufen</div>
-          <p class="how-desc">Einmalig kaufen und den ganzen Sommer davon profitieren. Digital oder als PDF.</p>
+          <div class="howico" style="background:linear-gradient(135deg,#FF6B6B22,#FDCB6E22)">🎫</div>
+          <div class="hows" data-k="st1n">SCHRITT 1</div><div class="howt" data-k="st1t">Ferienpass kaufen</div>
+          <p class="howd" data-k="st1d">Einmalig kaufen und den ganzen Sommer profitieren.</p>
         </div>
         <div>
-          <div class="how-icon" style="background:linear-gradient(135deg,#4ECDC422,#55EFC422)">🔍</div>
-          <div class="how-step">SCHRITT 2</div>
-          <div class="how-title">Kurse entdecken</div>
-          <p class="how-desc">Filter nach Kategorie, Alter, Woche und Budget. Favoriten speichern, vergleichen.</p>
+          <div class="howico" style="background:linear-gradient(135deg,#4ECDC422,#55EFC422)">🔍</div>
+          <div class="hows" data-k="st2n">SCHRITT 2</div><div class="howt" data-k="st2t">Kurse entdecken</div>
+          <p class="howd" data-k="st2d">Filter nach Kategorie, Alter, Woche und Budget.</p>
         </div>
         <div>
-          <div class="how-icon" style="background:linear-gradient(135deg,#A29BFE22,#FD79A822)">🎉</div>
-          <div class="how-step">SCHRITT 3</div>
-          <div class="how-title">Buchen & loslegen</div>
-          <p class="how-desc">Ein Klick, Bestätigung per E-Mail. Änderungen jederzeit möglich.</p>
+          <div class="howico" style="background:linear-gradient(135deg,#A29BFE22,#FD79A822)">🎉</div>
+          <div class="hows" data-k="st3n">SCHRITT 3</div><div class="howt" data-k="st3t">Buchen & loslegen</div>
+          <p class="howd" data-k="st3d">Ein Klick, Bestätigung per E-Mail.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Categories -->
-
-  <div class="section">
-    <h2 style="font-size:32px;font-weight:900;color:#1a1a2e;margin-bottom:32px">Nach Kategorie entdecken</h2>
-    <div class="cat-grid" id="cat-grid"></div>
+  <div class="sec">
+    <h2 style="font-size:clamp(18px,3.5vw,27px);font-weight:900;margin-bottom:22px" data-k="cat_t">Nach Kategorie entdecken</h2>
+    <div class="catg" id="catg"></div>
   </div>
 
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">☀️ <span>Basler Ferienpass 2025</span></div>
-      <p>Basierend auf basler-ferienpass.ch · Demo-Version</p>
-      <p style="margin-top:6px">Alle Kursdaten sind fiktiv · Admin-Demo-Passwort: <strong style="color:rgba(255,255,255,.7)">admin123</strong></p>
+  <footer><div class="fw">
+    <div class="flogo">☀️ <span>Basler Ferienpass 2025</span></div>
+    <p data-k="foot">Demo · basler-ferienpass.ch</p>
+    <p style="margin-top:4px">Admin: <strong style="color:rgba(255,255,255,.75)">admin123</strong></p>
+  </div></footer>
+</div>
+
+<!-- ===== COURSES ===== -->
+
+<div id="pg-courses" class="pg">
+  <div class="sec" style="padding-top:34px">
+    <h1 style="font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:5px" data-k="cr_t">Kurse entdecken</h1>
+    <p id="cr-count" style="color:#888;margin-bottom:22px"></p>
+    <div class="fbar">
+      <input id="fi-s" type="text" data-ph="srch_ph" placeholder="🔍 Suchen..." oninput="doFilter()"/>
+      <select id="fi-c" onchange="doFilter()"></select>
+      <select id="fi-w" onchange="doFilter()"></select>
+      <select id="fi-p" onchange="doFilter()"></select>
+      <button class="rbtn" onclick="resetF()" data-k="rst">Reset</button>
     </div>
-  </footer>
-</div>
-
-<!-- ══════════════════════ COURSES PAGE ══════════════════════ -->
-
-<div id="page-courses" class="page">
-  <div class="section" style="padding-top:40px">
-    <h1 style="font-size:36px;font-weight:900;margin-bottom:8px">Kurse entdecken</h1>
-    <p id="courses-count" style="color:#888;margin-bottom:32px">8 Kurse gefunden</p>
-
-```
-<div class="filter-bar">
-  <input id="search-input" type="text" placeholder="🔍 Suchen..." oninput="applyFilters()" />
-  <select id="filter-cat" onchange="applyFilters()">
-    <option>Alle</option>
-    <option>Musik</option><option>Sport</option><option>Technik</option>
-    <option>Natur</option><option>Kunst</option><option>Kulinarik</option>
-  </select>
-  <select id="filter-week" onchange="applyFilters()">
-    <option>Alle Wochen</option>
-    <option>14. Juli</option><option>21. Juli</option><option>28. Juli</option>
-    <option>4. Aug</option><option>11. Aug</option><option>18. Aug</option>
-    <option>25. Aug</option><option>1. Sept</option>
-  </select>
-  <select id="filter-price" onchange="applyFilters()">
-    <option>Alle Preise</option>
-    <option>Kostenlos</option>
-    <option>Günstig (CHF 1–50)</option>
-    <option>Premium (CHF 50+)</option>
-  </select>
-  <button class="btn-reset" onclick="resetFilters()">Reset</button>
-</div>
-
-<div class="pill-row" id="cat-pills"></div>
-<div class="course-grid" id="courses-grid"></div>
-<div id="no-results" class="empty-state" style="display:none">
-  <span class="emoji">😔</span>
-  <h3>Keine Kurse gefunden</h3>
-  <p style="margin-top:8px">Versuche andere Filter</p>
-</div>
-```
-
-  </div>
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">☀️ <span>Basler Ferienpass 2025</span></div>
-      <p>Admin-Passwort: <strong style="color:rgba(255,255,255,.7)">admin123</strong></p>
-    </div>
-  </footer>
-</div>
-
-<!-- ══════════════════════ BOOKINGS PAGE ══════════════════════ -->
-
-<div id="page-bookings" class="page">
-  <div class="section" style="padding-top:40px">
-    <h1 style="font-size:36px;font-weight:900;margin-bottom:8px">Meine Buchungen</h1>
-    <p id="bookings-meta" style="color:#888;margin-bottom:32px">0 aktive Buchungen · 0 Wartelisten</p>
-    <div id="bookings-list"></div>
-  </div>
-</div>
-
-<!-- ══════════════════════ PROFILE PAGE ══════════════════════ -->
-
-<div id="page-profile" class="page">
-  <div class="section" style="padding-top:40px;max-width:800px">
-    <h1 style="font-size:36px;font-weight:900;margin-bottom:32px">Familienprofil</h1>
-
-```
-<div class="white-card">
-  <div class="profile-head">
-    <div class="profile-avatar">👩</div>
-    <div>
-      <div class="profile-name">Claudia Meier</div>
-      <div class="profile-email">claudia.meier@gmail.com</div>
-    </div>
-    <div class="pass-card">✓ Ferienpass aktiv<br><span style="font-size:11px;opacity:.8;font-weight:600">Sommer 2025</span></div>
-  </div>
-  <div class="section-divider">
-    <strong style="font-size:16px;font-weight:800">Kinder</strong>
-    <div class="kids-row" id="kids-row">
-      <div class="kid-tag">👧 Lena (8)</div>
-      <div class="kid-tag">👦 Tim (14)</div>
-      <button class="btn-add-kid" onclick="addKid()">+ Kind hinzufügen</button>
+    <div class="pills" id="pills"></div>
+    <div class="grid" id="cgrid"></div>
+    <div id="nores" class="empty" style="display:none">
+      <span class="ei">😔</span>
+      <h3 data-k="nores_t">Keine Kurse gefunden</h3>
+      <p style="margin-top:5px" data-k="nores_s">Versuche andere Filter</p>
     </div>
   </div>
+  <footer><div class="fw">
+    <div class="flogo">☀️ <span>Basler Ferienpass 2025</span></div>
+    <p>Admin: <strong style="color:rgba(255,255,255,.75)">admin123</strong></p>
+  </div></footer>
 </div>
 
-<div class="white-card">
-  <strong style="font-size:18px;font-weight:800">❤️ Gespeicherte Kurse</strong>
-  <div id="fav-list" style="margin-top:16px">
-    <p style="color:#888">Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!</p>
+<!-- ===== BOOKINGS ===== -->
+
+<div id="pg-bookings" class="pg">
+  <div class="sec" style="padding-top:34px">
+    <h1 style="font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:5px" data-k="bk_t">Meine Buchungen</h1>
+    <p id="bk-meta" style="color:#888;margin-bottom:22px"></p>
+    <div id="bklist"></div>
   </div>
 </div>
-```
 
-  </div>
-</div>
+<!-- ===== PROFILE ===== -->
 
-<!-- ══════════════════════ ADMIN PAGE ══════════════════════ -->
-
-<div id="page-admin" class="page">
-  <!-- Lock screen -->
-  <div id="admin-lock">
-    <div class="admin-lock">
-      <span class="admin-emoji">🔐</span>
-      <h2 style="font-size:28px;font-weight:900;margin-bottom:8px">Admin-Zugang</h2>
-      <p style="color:#888;margin-bottom:24px">Bitte Passwort eingeben</p>
-      <input id="admin-pw" class="admin-input" type="password" placeholder="Passwort..." onkeydown="if(event.key==='Enter')adminLogin()" />
-      <p style="font-size:12px;color:#aaa;margin-bottom:16px">Demo: "admin123"</p>
-      <button class="btn-primary" onclick="adminLogin()">Einloggen</button>
-    </div>
-  </div>
-
-  <!-- Dashboard -->
-
-  <div id="admin-dash" style="display:none">
-    <div class="section" style="padding-top:40px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px">
-        <h1 style="font-size:32px;font-weight:900">⚙️ Admin Dashboard</h1>
-        <button class="logout-btn" onclick="adminLogout()">Logout</button>
+<div id="pg-profile" class="pg">
+  <div class="sec" style="padding-top:34px;max-width:740px">
+    <h1 style="font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:24px" data-k="pr_t">Familienprofil</h1>
+    <div class="wcard">
+      <div class="ph">
+        <div class="pav">👩</div>
+        <div><div class="pn">Claudia Meier</div><div class="pe">claudia.meier@gmail.com</div></div>
+        <div class="pcb">✓ <span data-k="pass">Pass aktiv</span><br><span style="font-size:10px;opacity:.75;font-weight:600">Sommer 2025</span></div>
       </div>
-
-```
-  <div class="stats-grid" id="admin-stats"></div>
-
-  <div class="table-wrap">
-    <div class="table-head">Kursübersicht</div>
-    <div style="overflow-x:auto">
-      <table>
-        <thead>
-          <tr><th>Kurs</th><th>Anbieter</th><th>Kategorie</th><th>Woche</th><th>Preis</th><th>Auslastung</th><th>Status</th><th>Aktionen</th></tr>
-        </thead>
-        <tbody id="admin-table"></tbody>
-      </table>
+      <div class="sdiv">
+        <strong style="font-size:13.5px;font-weight:800" data-k="kids_l">Kinder</strong>
+        <div class="krow" id="krow">
+          <div class="ktag">👧 Lena (8)</div>
+          <div class="ktag">👦 Tim (14)</div>
+          <button class="akbtn" onclick="addKid()" data-k="add_k">+ Kind hinzufügen</button>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="add-form">
-    <strong style="font-size:18px;font-weight:800">➕ Neuen Kurs hinzufügen</strong>
-    <div class="add-form-row">
-      <input id="new-title" placeholder="Titel" />
-      <input id="new-provider" placeholder="Anbieter" />
-      <input id="new-category" placeholder="Kategorie" />
-      <input id="new-price" placeholder="Preis (CHF)" type="number" />
-      <button class="btn-add" onclick="addCourse()">Hinzufügen</button>
+    <div class="wcard">
+      <strong style="font-size:15px;font-weight:800">❤️ <span data-k="sv_t">Gespeicherte Kurse</span></strong>
+      <div id="favlist" style="margin-top:12px"></div>
     </div>
   </div>
 </div>
-```
 
+<!-- ===== ADMIN ===== -->
+
+<div id="pg-admin" class="pg">
+  <div id="alock">
+    <div class="alockw">
+      <span class="aei">🔐</span>
+      <h2 style="font-size:22px;font-weight:900;margin-bottom:5px" data-k="adm_t">Admin-Zugang</h2>
+      <p style="color:#888;margin-bottom:18px" data-k="adm_s">Bitte Passwort eingeben</p>
+      <input id="apw" class="ainp" type="password" placeholder="Passwort..." data-ph="pw_ph" onkeydown="if(event.key==='Enter')aLogin()"/>
+      <p style="font-size:11px;color:#aaa;margin-bottom:12px">Demo: "admin123"</p>
+      <button class="pbtn" onclick="aLogin()" data-k="adm_btn">Einloggen</button>
+    </div>
+  </div>
+  <div id="adash" style="display:none">
+    <div class="sec" style="padding-top:34px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:8px">
+        <h1 style="font-size:clamp(19px,4vw,27px);font-weight:900">⚙️ <span data-k="adm_dash">Admin Dashboard</span></h1>
+        <button class="lgbtn" onclick="aLogout()" data-k="adm_out">Logout</button>
+      </div>
+      <div class="statg" id="astats"></div>
+      <div class="tw">
+        <div class="th2" data-k="adm_ov">Kursübersicht</div>
+        <div style="overflow-x:auto"><table><thead><tr id="athead"></tr></thead><tbody id="atbody"></tbody></table></div>
+      </div>
+      <div class="aform">
+        <strong style="font-size:15px;font-weight:800" data-k="adm_add">➕ Neuen Kurs hinzufügen</strong>
+        <div class="arow">
+          <input id="nt" data-ph="nt_ph" placeholder="Titel"/>
+          <input id="np" data-ph="np_ph" placeholder="Anbieter"/>
+          <input id="nc" data-ph="nc_ph" placeholder="Kategorie"/>
+          <input id="npr" data-ph="npr_ph" placeholder="Preis CHF" type="number"/>
+          <button class="addbtn" onclick="addCourse()" data-k="adm_abtn">Hinzufügen</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ══════════════════════ BOOK MODAL ══════════════════════ -->
+<!-- BOOK MODAL -->
 
-<div id="book-modal" class="overlay" onclick="closeBookModal(event)">
+<div id="bkmod" class="ov" onclick="if(event.target===this)this.classList.remove('on')">
   <div class="modal">
-    <div class="modal-header" id="book-modal-header"></div>
-    <div class="modal-body">
-      <div class="modal-meta" id="book-modal-meta"></div>
+    <div class="mh" id="bkmod-h"></div>
+    <div class="mb">
+      <div class="mm" id="bkmod-m"></div>
       <div>
-        <strong style="font-size:15px;font-weight:800;color:#1a1a2e">Für welches Kind?</strong>
-        <div class="kids-selector" id="kids-selector"></div>
+        <strong style="font-size:13px;font-weight:800" id="wck-lbl">Für welches Kind?</strong>
+        <div class="ksel" id="ksel"></div>
       </div>
-      <div class="modal-actions">
-        <button class="btn-secondary" onclick="document.getElementById('book-modal').classList.remove('open')">Abbrechen</button>
-        <button class="btn-confirm" id="btn-confirm-book" onclick="confirmBook()">🎉 Jetzt buchen</button>
+      <div class="mact">
+        <button class="secbtn" id="bkmod-cancel" onclick="document.getElementById('bkmod').classList.remove('on')">Abbrechen</button>
+        <button class="cnfbtn" id="bkmod-ok" onclick="confirmBook()">🎉 Jetzt buchen</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════ DETAIL MODAL ══════════════════════ -->
+<!-- DETAIL MODAL -->
 
-<div id="detail-modal" class="overlay" onclick="closeDetailModal(event)">
-  <div class="modal">
-    <div id="detail-modal-content"></div>
-  </div>
+<div id="dtmod" class="ov" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="modal"><div id="dtmod-body"></div></div>
 </div>
 
 <script>
-// ── DATA ────────────────────────────────────────────────────────────────────
-const COURSES = [
-  { id:1, title:"Musik & Klang Camp", provider:"Fabio Landi", category:"Musik", price:0, priceband:"low", age:"8-14", spots:12, booked:9, week:"14. Juli", emoji:"🎵", color:"#FF6B6B", desc:"Tauche ein in die Welt der Musik – von Rhythmus über Melodie bis hin zu eigenen Kompositionen.", rating:4.8, reviews:23, location:"Musikschule Basel, Leonhardsgraben 6", duration:"3 Tage", time:"09:00–16:00" },
-  { id:2, title:"Zirkus Akrobatik", provider:"Zirkus Basilisk", category:"Sport", price:45, priceband:"mid", age:"6-12", spots:15, booked:15, week:"21. Juli", emoji:"🎪", color:"#4ECDC4", desc:"Jonglieren, Balancieren, Akrobatik – eine Woche voller Spass und neuer Fähigkeiten.", rating:4.9, reviews:41, location:"Sportanlage Rankhof", duration:"5 Tage", time:"08:30–17:00" },
-  { id:3, title:"Coding & Robotik", provider:"TechKids Basel", category:"Technik", price:80, priceband:"market", age:"10-16", spots:10, booked:6, week:"28. Juli", emoji:"🤖", color:"#A29BFE", desc:"Programmieren lernen, eigene Roboter bauen und die Welt von morgen gestalten.", rating:4.7, reviews:18, location:"Digitalhub Basel, Hochbergerstrasse", duration:"4 Tage", time:"09:00–17:00" },
-  { id:4, title:"Naturentdecker Camp", provider:"NABU Basel", category:"Natur", price:0, priceband:"low", age:"7-12", spots:20, booked:14, week:"4. Aug", emoji:"🌿", color:"#00B894", desc:"Käfer, Kräuter, Flussleben – die Natur Basels hautnah entdecken mit echten Biologen.", rating:4.6, reviews:35, location:"Petite Camargue Alsacienne", duration:"3 Tage", time:"09:30–15:30" },
-  { id:5, title:"Theater & Performance", provider:"Junges Theater Basel", category:"Kunst", price:20, priceband:"low", age:"9-15", spots:16, booked:10, week:"11. Aug", emoji:"🎭", color:"#FD79A8", desc:"Eigene Stücke schreiben, proben und am Ende der Woche vor Eltern aufführen.", rating:4.5, reviews:29, location:"Theater Basel, Probe-Bühne", duration:"5 Tage", time:"10:00–17:00" },
-  { id:6, title:"Kochen & Backen", provider:"Kochschule Basilicum", category:"Kulinarik", price:55, priceband:"mid", age:"8-14", spots:12, booked:8, week:"18. Aug", emoji:"👨‍🍳", color:"#FDCB6E", desc:"Teig kneten, Saucen kochen, Kuchen dekorieren – Küchenmagie für Kinder.", rating:4.8, reviews:22, location:"Kochschule am Marktplatz", duration:"3 Tage", time:"10:00–15:00" },
-  { id:7, title:"Streetart & Graffiti", provider:"Kunsthalle Basel Youth", category:"Kunst", price:35, priceband:"mid", age:"12-17", spots:10, booked:7, week:"25. Aug", emoji:"🎨", color:"#E17055", desc:"Legales Sprühen unter Anleitung professioneller Streetart-Künstler. Eigene Wand inklusive.", rating:4.9, reviews:15, location:"Gundeldinger Feld", duration:"3 Tage", time:"11:00–18:00" },
-  { id:8, title:"Schwimmen & Wassersport", provider:"Sportamt Basel", category:"Sport", price:0, priceband:"low", age:"6-14", spots:25, booked:20, week:"1. Sept", emoji:"🏊", color:"#74B9FF", desc:"Kraul lernen, Wasserball spielen und sicher im Wasser sein – für alle Levels.", rating:4.4, reviews:48, location:"Gartenbad Bachgraben", duration:"5 Tage", time:"09:00–12:00" },
+// ============================================================
+// TRANSLATIONS
+// ============================================================
+var TX = {
+  de:{
+    n_home:"Home",n_courses:"Kurse",n_bookings:"Buchungen",n_profile:"Profil",n_admin:"Admin",
+    pass:"Pass aktiv",
+    h_pill:"🎉 Sommer 2025 — Anmeldung offen",
+    h1a:"Ferienzeit ist",h1b:"Abenteuerzeit",
+    h_sub:"Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren. Günstig, vielfältig, unvergesslich.",
+    s_c:"Kurse",s_s:"Plätze",s_p:"Anbieter",s_pr:"CHF Preise",
+    srch_ph:"Kurs suchen... (Musik, Sport, Natur...)",srch_btn:"Suchen",
+    feat_t:"Beliebt diese Woche",feat_s:"Die am stärksten gefragten Kurse",
+    all_btn:"Alle Kurse →",
+    how_t:"So funktioniert's",how_s:"In 3 Schritten zum Ferienabenteuer",
+    st1n:"SCHRITT 1",st1t:"Ferienpass kaufen",st1d:"Einmalig kaufen und den ganzen Sommer profitieren.",
+    st2n:"SCHRITT 2",st2t:"Kurse entdecken",st2d:"Filter nach Kategorie, Alter, Woche und Budget.",
+    st3n:"SCHRITT 3",st3t:"Buchen & loslegen",st3d:"Ein Klick, Bestätigung per E-Mail.",
+    cat_t:"Nach Kategorie entdecken",
+    foot:"Demo · basler-ferienpass.ch",
+    cr_t:"Kurse entdecken",cr_found:"Kurse gefunden",
+    rst:"Reset",nores_t:"Keine Kurse gefunden",nores_s:"Versuche andere Filter",
+    bk_t:"Meine Buchungen",bk_act:"aktive Buchungen",bk_wl:"Wartelisten",
+    bk_cancel:"Abbrechen",bk_storno:"Stornieren",bk_rm:"Entfernen",
+    wl_lbl:"Warteliste",conf_lbl:"Bestätigt",
+    nobk_t:"Noch keine Buchungen",nobk_s:"Stöbere in den Kursen und buche dein erstes Abenteuer!",
+    expl_btn:"Kurse entdecken",
+    pr_t:"Familienprofil",kids_l:"Kinder",add_k:"+ Kind hinzufügen",
+    sv_t:"Gespeicherte Kurse",no_fav:"Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!",
+    adm_t:"Admin-Zugang",adm_s:"Bitte Passwort eingeben",pw_ph:"Passwort...",adm_btn:"Einloggen",
+    adm_dash:"Admin Dashboard",adm_out:"Logout",adm_ov:"Kursübersicht",
+    th_c:"Kurs",th_pr:"Anbieter",th_ca:"Kategorie",th_w:"Woche",th_p:"Preis",
+    th_l:"Auslastung",th_st:"Status",th_a:"Aktionen",ed_btn:"Bearbeiten",
+    adm_add:"➕ Neuen Kurs hinzufügen",nt_ph:"Titel",np_ph:"Anbieter",nc_ph:"Kategorie",npr_ph:"Preis (CHF)",adm_abtn:"Hinzufügen",
+    wck:"Für welches Kind?",cnf_bk:"Jetzt buchen",
+    bk_btn:"Buchen",wl_btn:"Warteliste",sv_btn:"♡ Speichern",svd_btn:"♥ Gespeichert",
+    free:"Gratis",bl:"Günstig",bm:"Standard",bh:"Premium",
+    full:"⚡ Ausgebucht",sp_free:"Plätze frei",
+    dw:"📅 WOCHE",dd:"⏱ DAUER",dt:"🕐 ZEITEN",dl:"📍 ORT",da:"👶 ALTER",dp:"💰 PREIS",
+    by:"von",
+    tf_a:"❤️ Zu Favoriten hinzugefügt",tf_r:"Aus Favoriten entfernt",
+    tb:"gebucht!",tw2:"Auf Warteliste gesetzt!",tc:"storniert.",tsp:"Plätze gesetzt.",tad:"wurde hinzugefügt!",
+    tpw:"Falsches Passwort",ttl:"Bitte Titel eingeben",
+    bon:"gebucht am",ron:"eingetragen am",
+    ca:"Alle",wa:"Alle Wochen",pa:"Alle Preise",pf:"Kostenlos",pm:"Günstig (CHF 1–50)",pp:"Premium (CHF 50+)",
+    sta_c:"Kurse total",sta_b:"Buchungen",sta_w:"Warteliste",sta_s:"Belegte Plätze",
+    rev:"Bewertungen",kid_pr:"Kind hinzufügen (Name (Alter)):",det:"Details",days:"Tage",
+    spts_pr:"Plätze (aktuell:"
+  },
+  fr:{
+    n_home:"Accueil",n_courses:"Cours",n_bookings:"Réservations",n_profile:"Profil",n_admin:"Admin",
+    pass:"Pass actif",
+    h_pill:"🎉 Été 2025 — Inscriptions ouvertes",
+    h1a:"Les vacances, c'est",h1b:"l'aventure!",
+    h_sub:"Plus de 50 cours passionnants pour les enfants de 6 à 17 ans. Abordable, varié, inoubliable.",
+    s_c:"Cours",s_s:"Places",s_p:"Prestataires",s_pr:"Prix CHF",
+    srch_ph:"Chercher... (Musique, Sport, Nature...)",srch_btn:"Chercher",
+    feat_t:"Populaire cette semaine",feat_s:"Les cours les plus demandés",
+    all_btn:"Tous les cours →",
+    how_t:"Comment ça marche",how_s:"3 étapes vers l'aventure de vacances",
+    st1n:"ÉTAPE 1",st1t:"Acheter le Ferienpass",st1d:"Achetez une fois et profitez tout l'été.",
+    st2n:"ÉTAPE 2",st2t:"Découvrir des cours",st2d:"Filtrez par catégorie, âge, semaine et budget.",
+    st3n:"ÉTAPE 3",st3t:"Réserver et partir",st3d:"Un clic, confirmation par e-mail.",
+    cat_t:"Découvrir par catégorie",
+    foot:"Démo · basler-ferienpass.ch",
+    cr_t:"Découvrir des cours",cr_found:"cours trouvés",
+    rst:"Réinitialiser",nores_t:"Aucun cours trouvé",nores_s:"Essayez d'autres filtres",
+    bk_t:"Mes réservations",bk_act:"réservations actives",bk_wl:"listes d'attente",
+    bk_cancel:"Annuler",bk_storno:"Annuler la réservation",bk_rm:"Supprimer",
+    wl_lbl:"Liste d'attente",conf_lbl:"Confirmé",
+    nobk_t:"Pas encore de réservations",nobk_s:"Parcourez les cours et réservez votre première aventure!",
+    expl_btn:"Découvrir des cours",
+    pr_t:"Profil de famille",kids_l:"Enfants",add_k:"+ Ajouter un enfant",
+    sv_t:"Cours enregistrés",no_fav:"Pas encore de cours enregistrés. Cliquez sur ♡!",
+    adm_t:"Accès administrateur",adm_s:"Veuillez entrer le mot de passe",pw_ph:"Mot de passe...",adm_btn:"Se connecter",
+    adm_dash:"Tableau de bord",adm_out:"Déconnexion",adm_ov:"Aperçu des cours",
+    th_c:"Cours",th_pr:"Prestataire",th_ca:"Catégorie",th_w:"Semaine",th_p:"Prix",
+    th_l:"Remplissage",th_st:"Statut",th_a:"Actions",ed_btn:"Modifier",
+    adm_add:"➕ Ajouter un nouveau cours",nt_ph:"Titre",np_ph:"Prestataire",nc_ph:"Catégorie",npr_ph:"Prix (CHF)",adm_abtn:"Ajouter",
+    wck:"Pour quel enfant?",cnf_bk:"Réserver maintenant",
+    bk_btn:"Réserver",wl_btn:"Liste d'attente",sv_btn:"♡ Enregistrer",svd_btn:"♥ Enregistré",
+    free:"Gratuit",bl:"Économique",bm:"Standard",bh:"Premium",
+    full:"⚡ Complet",sp_free:"places libres",
+    dw:"📅 SEMAINE",dd:"⏱ DURÉE",dt:"🕐 HORAIRES",dl:"📍 LIEU",da:"👶 ÂGE",dp:"💰 PRIX",
+    by:"par",
+    tf_a:"❤️ Ajouté aux favoris",tf_r:"Retiré des favoris",
+    tb:"réservé!",tw2:"Ajouté à la liste d'attente!",tc:"annulé.",tsp:"Places mises à jour.",tad:"a été ajouté!",
+    tpw:"Mot de passe incorrect",ttl:"Veuillez entrer un titre",
+    bon:"réservé le",ron:"inscrit le",
+    ca:"Toutes",wa:"Toutes les semaines",pa:"Tous les prix",pf:"Gratuit",pm:"Économique (CHF 1–50)",pp:"Premium (CHF 50+)",
+    sta_c:"Cours au total",sta_b:"Réservations",sta_w:"Liste d'attente",sta_s:"Places occupées",
+    rev:"avis",kid_pr:"Ajouter un enfant (Prénom (âge)) :",det:"Détails",days:"jours",
+    spts_pr:"Places (actuel:"
+  },
+  en:{
+    n_home:"Home",n_courses:"Courses",n_bookings:"Bookings",n_profile:"Profile",n_admin:"Admin",
+    pass:"Pass active",
+    h_pill:"🎉 Summer 2025 — Registration open",
+    h1a:"Holiday time is",h1b:"Adventure time!",
+    h_sub:"Over 50 exciting courses for children aged 6 to 17. Affordable, diverse, unforgettable.",
+    s_c:"Courses",s_s:"Spots",s_p:"Providers",s_pr:"CHF Prices",
+    srch_ph:"Search courses... (Music, Sport, Nature...)",srch_btn:"Search",
+    feat_t:"Popular this week",feat_s:"The most requested courses",
+    all_btn:"All courses →",
+    how_t:"How it works",how_s:"3 steps to your holiday adventure",
+    st1n:"STEP 1",st1t:"Buy the Ferienpass",st1d:"Buy once and enjoy the whole summer.",
+    st2n:"STEP 2",st2t:"Discover courses",st2d:"Filter by category, age, week and budget.",
+    st3n:"STEP 3",st3t:"Book and go",st3d:"One click, confirmation by email.",
+    cat_t:"Discover by category",
+    foot:"Demo · basler-ferienpass.ch",
+    cr_t:"Discover courses",cr_found:"courses found",
+    rst:"Reset",nores_t:"No courses found",nores_s:"Try different filters",
+    bk_t:"My bookings",bk_act:"active bookings",bk_wl:"waitlists",
+    bk_cancel:"Cancel",bk_storno:"Cancel booking",bk_rm:"Remove",
+    wl_lbl:"Waitlist",conf_lbl:"Confirmed",
+    nobk_t:"No bookings yet",nobk_s:"Browse courses and book your first adventure!",
+    expl_btn:"Discover courses",
+    pr_t:"Family profile",kids_l:"Children",add_k:"+ Add child",
+    sv_t:"Saved courses",no_fav:"No saved courses yet. Click ♡ on a course!",
+    adm_t:"Admin access",adm_s:"Please enter password",pw_ph:"Password...",adm_btn:"Log in",
+    adm_dash:"Admin Dashboard",adm_out:"Logout",adm_ov:"Course overview",
+    th_c:"Course",th_pr:"Provider",th_ca:"Category",th_w:"Week",th_p:"Price",
+    th_l:"Occupancy",th_st:"Status",th_a:"Actions",ed_btn:"Edit",
+    adm_add:"➕ Add new course",nt_ph:"Title",np_ph:"Provider",nc_ph:"Category",npr_ph:"Price (CHF)",adm_abtn:"Add",
+    wck:"For which child?",cnf_bk:"Book now",
+    bk_btn:"Book",wl_btn:"Waitlist",sv_btn:"♡ Save",svd_btn:"♥ Saved",
+    free:"Free",bl:"Budget",bm:"Standard",bh:"Premium",
+    full:"⚡ Full",sp_free:"spots available",
+    dw:"📅 WEEK",dd:"⏱ DURATION",dt:"🕐 TIMES",dl:"📍 LOCATION",da:"👶 AGE",dp:"💰 PRICE",
+    by:"by",
+    tf_a:"❤️ Added to favourites",tf_r:"Removed from favourites",
+    tb:"booked!",tw2:"Added to waitlist!",tc:"cancelled.",tsp:"Spots updated.",tad:"has been added!",
+    tpw:"Wrong password",ttl:"Please enter a title",
+    bon:"booked on",ron:"registered on",
+    ca:"All",wa:"All weeks",pa:"All prices",pf:"Free",pm:"Budget (CHF 1–50)",pp:"Premium (CHF 50+)",
+    sta_c:"Total courses",sta_b:"Bookings",sta_w:"Waitlist",sta_s:"Occupied spots",
+    rev:"reviews",kid_pr:"Add child (Name (age)):",det:"Details",days:"days",
+    spts_pr:"Spots (current:"
+  }
+};
+
+// ============================================================
+// COURSE DATA  (multilingual titles/desc/loc)
+// ============================================================
+var CDATA = [
+  {id:1,prov:"Fabio Landi",cat:"Musik",price:0,pb:"low",age:"8-14",spots:12,booked:9,week:"14. Juli",em:"🎵",col:"#FF6B6B",rat:4.8,rev:23,days:3,time:"09:00–16:00",
+   title:{de:"Musik & Klang Camp",fr:"Camp Musique & Son",en:"Music & Sound Camp"},
+   desc:{de:"Tauche ein in die Welt der Musik – von Rhythmus über Melodie bis zu eigenen Kompositionen.",fr:"Plongez dans le monde de la musique – du rythme à la mélodie jusqu'à vos propres compositions.",en:"Dive into the world of music – from rhythm and melody to your own compositions."},
+   loc:{de:"Musikschule Basel, Leonhardsgraben 6",fr:"École de musique Bâle, Leonhardsgraben 6",en:"Basel Music School, Leonhardsgraben 6"}},
+  {id:2,prov:"Zirkus Basilisk",cat:"Sport",price:45,pb:"mid",age:"6-12",spots:15,booked:15,week:"21. Juli",em:"🎪",col:"#4ECDC4",rat:4.9,rev:41,days:5,time:"08:30–17:00",
+   title:{de:"Zirkus Akrobatik",fr:"Acrobatie de Cirque",en:"Circus Acrobatics"},
+   desc:{de:"Jonglieren, Balancieren, Akrobatik – eine Woche voller Spass und neuer Fähigkeiten.",fr:"Jongler, équilibrer, acrobatie – une semaine pleine de plaisir et de nouvelles compétences.",en:"Juggling, balancing, acrobatics – a week full of fun and new skills."},
+   loc:{de:"Sportanlage Rankhof",fr:"Installation sportive Rankhof",en:"Rankhof Sports Complex"}},
+  {id:3,prov:"TechKids Basel",cat:"Technik",price:80,pb:"market",age:"10-16",spots:10,booked:6,week:"28. Juli",em:"🤖",col:"#A29BFE",rat:4.7,rev:18,days:4,time:"09:00–17:00",
+   title:{de:"Coding & Robotik",fr:"Codage & Robotique",en:"Coding & Robotics"},
+   desc:{de:"Programmieren lernen, eigene Roboter bauen und die Welt von morgen gestalten.",fr:"Apprendre à programmer, construire ses propres robots et façonner le monde de demain.",en:"Learn to code, build robots, and shape the world of tomorrow."},
+   loc:{de:"Digitalhub Basel, Hochbergerstrasse",fr:"Digitalhub Bâle, Hochbergerstrasse",en:"Digitalhub Basel, Hochbergerstrasse"}},
+  {id:4,prov:"NABU Basel",cat:"Natur",price:0,pb:"low",age:"7-12",spots:20,booked:14,week:"4. Aug",em:"🌿",col:"#00B894",rat:4.6,rev:35,days:3,time:"09:30–15:30",
+   title:{de:"Naturentdecker Camp",fr:"Camp Explorateurs Nature",en:"Nature Discovery Camp"},
+   desc:{de:"Käfer, Kräuter, Flussleben – die Natur Basels hautnah entdecken mit echten Biologen.",fr:"Insectes, herbes, vie fluviale – découvrez la nature de Bâle avec de vrais biologistes.",en:"Bugs, herbs, river life – discover Basel's nature up close with real biologists."},
+   loc:{de:"Petite Camargue Alsacienne",fr:"Petite Camargue Alsacienne",en:"Petite Camargue Alsacienne"}},
+  {id:5,prov:"Junges Theater Basel",cat:"Kunst",price:20,pb:"low",age:"9-15",spots:16,booked:10,week:"11. Aug",em:"🎭",col:"#FD79A8",rat:4.5,rev:29,days:5,time:"10:00–17:00",
+   title:{de:"Theater & Performance",fr:"Théâtre & Performance",en:"Theatre & Performance"},
+   desc:{de:"Eigene Stücke schreiben, proben und am Ende der Woche vor Eltern aufführen.",fr:"Écrire ses propres pièces, répéter et les jouer devant les parents en fin de semaine.",en:"Write your own plays, rehearse and perform for parents at the end of the week."},
+   loc:{de:"Theater Basel, Probe-Bühne",fr:"Théâtre de Bâle, scène de répétition",en:"Theater Basel, Rehearsal Stage"}},
+  {id:6,prov:"Kochschule Basilicum",cat:"Kulinarik",price:55,pb:"mid",age:"8-14",spots:12,booked:8,week:"18. Aug",em:"👨‍🍳",col:"#FDCB6E",rat:4.8,rev:22,days:3,time:"10:00–15:00",
+   title:{de:"Kochen & Backen",fr:"Cuisine & Pâtisserie",en:"Cooking & Baking"},
+   desc:{de:"Teig kneten, Saucen kochen, Kuchen dekorieren – Küchenmagie für Kinder.",fr:"Pétrir la pâte, cuisiner des sauces, décorer des gâteaux – magie culinaire pour les enfants.",en:"Knead dough, cook sauces, decorate cakes – kitchen magic for children."},
+   loc:{de:"Kochschule am Marktplatz",fr:"École de cuisine du Marktplatz",en:"Cooking School at Marktplatz"}},
+  {id:7,prov:"Kunsthalle Basel Youth",cat:"Kunst",price:35,pb:"mid",age:"12-17",spots:10,booked:7,week:"25. Aug",em:"🎨",col:"#E17055",rat:4.9,rev:15,days:3,time:"11:00–18:00",
+   title:{de:"Streetart & Graffiti",fr:"Street Art & Graffiti",en:"Street Art & Graffiti"},
+   desc:{de:"Legales Sprühen unter Anleitung professioneller Streetart-Künstler.",fr:"Spray légal sous la direction d'artistes de street art professionnels.",en:"Legal spraying guided by professional street art artists."},
+   loc:{de:"Gundeldinger Feld",fr:"Gundeldinger Feld",en:"Gundeldinger Feld"}},
+  {id:8,prov:"Sportamt Basel",cat:"Sport",price:0,pb:"low",age:"6-14",spots:25,booked:20,week:"1. Sept",em:"🏊",col:"#74B9FF",rat:4.4,rev:48,days:5,time:"09:00–12:00",
+   title:{de:"Schwimmen & Wassersport",fr:"Natation & Sports nautiques",en:"Swimming & Water Sports"},
+   desc:{de:"Kraul lernen, Wasserball spielen und sicher im Wasser sein – für alle Levels.",fr:"Apprendre le crawl, jouer au water-polo et être en sécurité dans l'eau – pour tous niveaux.",en:"Learn crawl, play water polo and be safe in the water – for all levels."},
+   loc:{de:"Gartenbad Bachgraben",fr:"Piscine Gartenbad Bachgraben",en:"Gartenbad Bachgraben Pool"}}
 ];
 
-const CATS = [
-  {name:"Musik",emoji:"🎵",color:"#FF6B6B"},
-  {name:"Sport",emoji:"⚽",color:"#4ECDC4"},
-  {name:"Technik",emoji:"🤖",color:"#A29BFE"},
-  {name:"Natur",emoji:"🌿",color:"#00B894"},
-  {name:"Kunst",emoji:"🎨",color:"#FD79A8"},
-  {name:"Kulinarik",emoji:"👨‍🍳",color:"#FDCB6E"},
+var CATS = [
+  {key:"Musik",  em:"🎵",col:"#FF6B6B",lbl:{de:"Musik",fr:"Musique",en:"Music"}},
+  {key:"Sport",  em:"⚽",col:"#4ECDC4",lbl:{de:"Sport",fr:"Sport",en:"Sport"}},
+  {key:"Technik",em:"🤖",col:"#A29BFE",lbl:{de:"Technik",fr:"Technologie",en:"Technology"}},
+  {key:"Natur",  em:"🌿",col:"#00B894",lbl:{de:"Natur",fr:"Nature",en:"Nature"}},
+  {key:"Kunst",  em:"🎨",col:"#FD79A8",lbl:{de:"Kunst",fr:"Arts",en:"Arts"}},
+  {key:"Kulinarik",em:"👨‍🍳",col:"#FDCB6E",lbl:{de:"Kulinarik",fr:"Cuisine",en:"Culinary"}}
 ];
 
-// ── STATE ────────────────────────────────────────────────────────────────────
-let courses = JSON.parse(JSON.stringify(COURSES));
-let favorites = JSON.parse(localStorage.getItem('fp_fav') || '[]');
-let bookings  = JSON.parse(localStorage.getItem('fp_book') || '[]');
-let waitlist  = JSON.parse(localStorage.getItem('fp_wait') || '[]');
-let kids      = JSON.parse(localStorage.getItem('fp_kids') || '["Lena (8)","Tim (14)"]');
-let selectedKid = kids[0];
-let currentBookCourse = null;
-let currentDetailCourse = null;
-let activeCatFilter = 'Alle';
+// ============================================================
+// STATE
+// ============================================================
+var L = localStorage.getItem('fp_lang') || 'de';
+var courses = JSON.parse(JSON.stringify(CDATA));
+var favs    = JSON.parse(localStorage.getItem('fp_fav')  || '[]');
+var books   = JSON.parse(localStorage.getItem('fp_bk')   || '[]');
+var wlist   = JSON.parse(localStorage.getItem('fp_wl')   || '[]');
+var kids    = JSON.parse(localStorage.getItem('fp_kids') || '["Lena (8)","Tim (14)"]');
+var selKid  = kids[0];
+var curBook = null;
+var catF    = 'ALL';
+var adminOK = false;
 
-function save() {
-  localStorage.setItem('fp_fav',  JSON.stringify(favorites));
-  localStorage.setItem('fp_book', JSON.stringify(bookings));
-  localStorage.setItem('fp_wait', JSON.stringify(waitlist));
+// ============================================================
+// HELPERS
+// ============================================================
+function t(k) { return (TX[L] && TX[L][k] != null) ? TX[L][k] : (TX.de[k] || k); }
+
+function sav() {
+  localStorage.setItem('fp_fav',  JSON.stringify(favs));
+  localStorage.setItem('fp_bk',   JSON.stringify(books));
+  localStorage.setItem('fp_wl',   JSON.stringify(wlist));
   localStorage.setItem('fp_kids', JSON.stringify(kids));
+  localStorage.setItem('fp_lang', L);
 }
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-const spotsLeft = c => c.spots - c.booked;
-const isFull    = c => spotsLeft(c) <= 0;
-const priceTxt  = c => c.price === 0 ? 'Gratis' : `CHF ${c.price}`;
-const bandLabel = b => ({low:'Günstig',mid:'Standard',market:'Premium'}[b]);
-const stars     = r => '★'.repeat(Math.floor(r)) + '☆'.repeat(5-Math.floor(r));
-const hexAlpha  = (h,a) => h + Math.round(a*255).toString(16).padStart(2,'0');
+function gt(c)  { return c.title[L] || c.title.de; }
+function gd(c)  { return c.desc[L]  || c.desc.de; }
+function gl(c)  { return (c.loc[L]  || c.loc.de); }
+function gls(c) { return gl(c).split(',')[0]; }
 
-function spotBarColor(c) {
-  const p = c.booked/c.spots;
-  return p>=1?'#FF6B6B':p>=.75?'#FDCB6E':'#00B894';
+function gcl(key) {
+  var x = CATS.filter(function(c){ return c.key === key; })[0];
+  return x ? (x.lbl[L] || x.lbl.de) : key;
 }
 
-function spotBarHTML(c) {
-  const p = Math.min(c.booked/c.spots*100,100);
-  const clr = spotBarColor(c);
-  const txt = isFull(c) ? '⚡ Ausgebucht' : `${spotsLeft(c)} Plätze frei`;
-  return `
-    <div class="spot-bar-row"><span>${txt}</span><span>${c.booked}/${c.spots}</span></div>
-    <div class="spot-bar-bg"><div class="spot-bar-fill" style="width:${p}%;background:${clr}"></div></div>`;
+function ptx(c)  { return c.price === 0 ? t('free') : 'CHF ' + c.price; }
+function blbl(b) { return {low:t('bl'),mid:t('bm'),market:t('bh')}[b] || b; }
+function dtx(c)  { return c.days + ' ' + t('days'); }
+function full(c) { return c.booked >= c.spots; }
+function sleft(c){ return c.spots - c.booked; }
+
+function ha(h, a) {
+  var v = Math.round(a * 255).toString(16);
+  if (v.length < 2) v = '0' + v;
+  return h + v;
 }
 
-function cardHTML(c) {
-  const full = isFull(c);
-  const fav = favorites.includes(c.id);
-  const bookBg = full ? '#e0e0e0' : `linear-gradient(135deg,${c.color},${c.color}cc)`;
-  const bookClr = full ? '#999' : 'white';
-  const bookTxt = full ? 'Warteliste' : `Buchen · ${priceTxt(c)}`;
-  return `
-    <div class="card">
-      <div class="card-head" style="background:linear-gradient(135deg,${hexAlpha(c.color,.13)},${hexAlpha(c.color,.26)});border-bottom:3px solid ${c.color}">
-        <span class="card-emoji">${c.emoji}</span>
-        <div class="card-badges">
-          <span class="badge" style="background:${hexAlpha(c.color,.15)};color:${c.color}">${c.category}</span>
-          <span class="badge" style="background:#f5f5f5;color:#666">${bandLabel(c.priceband)}</span>
-          <span class="badge" style="background:#f0f0f0;color:#555">${c.age} J.</span>
-        </div>
-        <button class="fav-btn" style="background:${fav?c.color:'white'};border-color:${c.color};color:${fav?'white':c.color}" onclick="toggleFav(${c.id})">${fav?'♥':'♡'}</button>
-      </div>
-      <div class="card-body">
-        <div>
-          <div class="card-title">${c.title}</div>
-          <div class="card-provider">by ${c.provider}</div>
-        </div>
-        <p class="card-desc">${c.desc}</p>
-        <div class="card-meta">
-          <div>📅 ${c.week}</div><div>⏱ ${c.duration}</div>
-          <div>🕐 ${c.time}</div><div>📍 ${c.location.split(',')[0]}</div>
-        </div>
-        <div><span class="stars">${stars(c.rating)}</span><span style="color:#999;font-size:13px;margin-left:4px">${c.rating}</span></div>
-        ${spotBarHTML(c)}
-        <div class="card-actions">
-          <button class="btn-details" onclick="openDetail(${c.id})">Details</button>
-          <button class="btn-book${full?' full':''}" style="background:${bookBg};color:${bookClr}" onclick="openBook(${c.id})">${bookTxt}</button>
-        </div>
-      </div>
-    </div>`;
+function starsH(r) {
+  var s = '';
+  for(var i=0;i<Math.floor(r);i++) s += '★';
+  for(var i=Math.floor(r);i<5;i++) s += '☆';
+  return '<span style="color:#FDCB6E;font-size:12px">' + s + '</span>' +
+         '<span style="color:#999;font-size:10.5px;margin-left:2px">' + r + '</span>';
 }
 
-// ── NAVIGATION ───────────────────────────────────────────────────────────────
-function navigate(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  const btn = document.querySelector(`.nav-btn[data-page="${page}"]`);
-  if(btn) btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(page==='courses') renderCourses();
-  if(page==='bookings') renderBookings();
-  if(page==='profile') renderProfile();
-  if(page==='admin') renderAdmin();
+function sbarH(c) {
+  var p = Math.min(c.booked / c.spots * 100, 100);
+  var col = p >= 100 ? '#FF6B6B' : p >= 75 ? '#FDCB6E' : '#00B894';
+  var txt = full(c) ? t('full') : sleft(c) + ' ' + t('sp_free');
+  return '<div class="sr"><span>' + txt + '</span><span>' + c.booked + '/' + c.spots + '</span></div>' +
+         '<div class="sbg"><div class="sfl" style="width:' + p + '%;background:' + col + '"></div></div>';
 }
 
-// ── TOAST ────────────────────────────────────────────────────────────────────
-let toastTimeout;
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast ${type}`;
-  t.style.display = 'block';
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => t.style.display='none', 3000);
-}
-
-// ── HOME ─────────────────────────────────────────────────────────────────────
-function renderHome() {
-  // Featured
-  const sorted = [...courses].sort((a,b) => b.booked-a.booked).slice(0,3);
-  document.getElementById('home-featured').innerHTML = sorted.map(cardHTML).join('');
-
-  // Category grid
-  document.getElementById('cat-grid').innerHTML = CATS.map(cat => {
-    const count = courses.filter(c => c.category===cat.name).length;
-    return `<button class="cat-card" style="border-color:${cat.color}44;background:linear-gradient(135deg,${hexAlpha(cat.color,.08)},${hexAlpha(cat.color,.15)})" onclick="filterByCat('${cat.name}')">
-      <div class="cat-icon">${cat.emoji}</div>
-      <div class="cat-name">${cat.name}</div>
-      <div class="cat-count">${count} Kurse</div>
-    </button>`;
-  }).join('');
-
-  // Category pills
-  const pills = ['Alle',...CATS.map(c=>c.name)];
-  document.getElementById('cat-pills').innerHTML = pills.map(p =>
-    `<button class="pill${activeCatFilter===p?' active':''}" onclick="setCatPill('${p}')">${p}</button>`
-  ).join('');
-}
-
-function heroSearch(val) {
-  document.getElementById('search-input').value = val;
-  navigate('courses');
-}
-
-function filterByCat(cat) {
-  activeCatFilter = cat;
-  document.getElementById('filter-cat').value = cat;
-  navigate('courses');
-}
-
-// ── COURSES ──────────────────────────────────────────────────────────────────
-function applyFilters() {
-  const q    = document.getElementById('search-input').value.toLowerCase();
-  const cat  = document.getElementById('filter-cat').value;
-  const week = document.getElementById('filter-week').value;
-  const price= document.getElementById('filter-price').value;
-
-  activeCatFilter = cat;
-  document.querySelectorAll('#cat-pills .pill').forEach(p => {
-    p.classList.toggle('active', p.textContent.trim()===cat);
+// ============================================================
+// LANGUAGE SWITCH
+// ============================================================
+function setLang(l) {
+  L = l;
+  sav();
+  document.querySelectorAll('.lb').forEach(function(b) {
+    b.classList.toggle('on', b.textContent.trim() === l.toUpperCase());
   });
+  applyTX();
+  rHome();
+  var ap = document.querySelector('.pg.on');
+  if (ap) {
+    var id = ap.id.replace('pg-','');
+    if (id === 'courses')  rCourses();
+    if (id === 'bookings') rBookings();
+    if (id === 'profile')  rProfile();
+    if (id === 'admin' && adminOK) rAdmin();
+  }
+}
 
-  const filtered = courses.filter(c => {
-    if(cat!=='Alle' && c.category!==cat) return false;
-    if(week!=='Alle Wochen' && c.week!==week) return false;
-    if(price==='Kostenlos' && c.price!==0) return false;
-    if(price==='Günstig (CHF 1–50)' && (c.price===0||c.price>50)) return false;
-    if(price==='Premium (CHF 50+)' && c.price<=50) return false;
-    if(q && !c.title.toLowerCase().includes(q) && !c.category.toLowerCase().includes(q)) return false;
+function applyTX() {
+  document.querySelectorAll('[data-k]').forEach(function(el) {
+    var k = el.getAttribute('data-k');
+    if (TX[L] && TX[L][k] != null) el.textContent = TX[L][k];
+  });
+  document.querySelectorAll('[data-ph]').forEach(function(el) {
+    var k = el.getAttribute('data-ph');
+    if (TX[L] && TX[L][k] != null) el.placeholder = TX[L][k];
+  });
+  buildSelects();
+}
+
+function buildSelects() {
+  var cs = document.getElementById('fi-c');
+  var ws = document.getElementById('fi-w');
+  var ps = document.getElementById('fi-p');
+  if (!cs) return;
+  cs.innerHTML = '<option value="ALL">' + t('ca') + '</option>' +
+    CATS.map(function(c){ return '<option value="'+c.key+'">'+(c.lbl[L]||c.lbl.de)+'</option>'; }).join('');
+  cs.value = catF;
+  ws.innerHTML = '<option value="ALL">' + t('wa') + '</option>' +
+    ['14. Juli','21. Juli','28. Juli','4. Aug','11. Aug','18. Aug','25. Aug','1. Sept']
+    .map(function(w){ return '<option>'+w+'</option>'; }).join('');
+  ps.innerHTML = '<option value="ALL">' + t('pa') + '</option>' +
+    '<option value="free">' + t('pf') + '</option>' +
+    '<option value="mid">'  + t('pm') + '</option>' +
+    '<option value="prem">' + t('pp') + '</option>';
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function go(page) {
+  document.querySelectorAll('.pg').forEach(function(p){ p.classList.remove('on'); });
+  document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('pg-' + page).classList.add('on');
+  var btn = document.querySelector('.nb[data-p="' + page + '"]');
+  if (btn) btn.classList.add('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (page === 'courses')  rCourses();
+  if (page === 'bookings') rBookings();
+  if (page === 'profile')  rProfile();
+  if (page === 'admin')    rAdmin();
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+var toastTM;
+function toast(msg, type) {
+  type = type || 's';
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + type;
+  el.style.display = 'block';
+  clearTimeout(toastTM);
+  toastTM = setTimeout(function(){ el.style.display='none'; }, 3000);
+}
+
+// ============================================================
+// CARD HTML
+// ============================================================
+function cardH(c) {
+  var f    = full(c);
+  var isFav = favs.indexOf(c.id) >= 0;
+  var bbg  = f ? '#e0e0e0' : 'linear-gradient(135deg,' + c.col + ',' + c.col + 'cc)';
+  var btxt = f ? t('wl_btn') : t('bk_btn') + ' · ' + ptx(c);
+  return '<div class="card">' +
+    '<div class="ch" style="background:linear-gradient(135deg,' + ha(c.col,.10) + ',' + ha(c.col,.22) + ');border-bottom:3px solid ' + c.col + '">' +
+      '<span class="ce">' + c.em + '</span>' +
+      '<div class="cbg">' +
+        '<span class="bdg" style="background:' + ha(c.col,.16) + ';color:' + c.col + '">' + gcl(c.cat) + '</span>' +
+        '<span class="bdg" style="background:#f5f5f5;color:#666">' + blbl(c.pb) + '</span>' +
+        '<span class="bdg" style="background:#f0f0f0;color:#555">' + c.age + '</span>' +
+      '</div>' +
+      '<button class="fb" style="background:' + (isFav ? c.col : '#fff') + ';border-color:' + c.col + ';color:' + (isFav ? '#fff' : c.col) + '" onclick="toggleFav(' + c.id + ')">' + (isFav ? '♥' : '♡') + '</button>' +
+    '</div>' +
+    '<div class="cb">' +
+      '<div><div class="ct">' + gt(c) + '</div><div class="cp">' + t('by') + ' ' + c.prov + '</div></div>' +
+      '<p class="cd">' + gd(c) + '</p>' +
+      '<div class="cm"><div>📅 ' + c.week + '</div><div>⏱ ' + dtx(c) + '</div><div>🕐 ' + c.time + '</div><div>📍 ' + gls(c) + '</div></div>' +
+      '<div>' + starsH(c.rat) + '</div>' +
+      sbarH(c) +
+      '<div class="ca">' +
+        '<button class="dbt" onclick="openDet(' + c.id + ')">' + t('det') + '</button>' +
+        '<button class="bbt' + (f ? ' full' : '') + '" style="background:' + bbg + '" onclick="openBook(' + c.id + ')">' + btxt + '</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ============================================================
+// HOME
+// ============================================================
+function rHome() {
+  applyTX();
+  var hf = document.getElementById('hfeat');
+  if (hf) {
+    var sorted = courses.slice().sort(function(a,b){ return b.booked - a.booked; }).slice(0,3);
+    hf.innerHTML = sorted.map(cardH).join('');
+  }
+  var cg = document.getElementById('catg');
+  if (cg) {
+    cg.innerHTML = CATS.map(function(cat) {
+      var cnt = courses.filter(function(c){ return c.cat === cat.key; }).length;
+      var lbl = cat.lbl[L] || cat.lbl.de;
+      return '<button class="catc" style="border-color:' + cat.col + '44;background:linear-gradient(135deg,' + ha(cat.col,.07) + ',' + ha(cat.col,.14) + ')" onclick="filterByCat(\'' + cat.key + '\')">' +
+        '<div class="catic">' + cat.em + '</div>' +
+        '<div class="catn">' + lbl + '</div>' +
+        '<div class="catct">' + cnt + ' ' + t('s_c').toLowerCase() + '</div>' +
+      '</button>';
+    }).join('');
+  }
+}
+
+function heroSrch(v) {
+  var el = document.getElementById('fi-s');
+  if (el) el.value = v;
+  go('courses');
+}
+
+function filterByCat(key) {
+  catF = key;
+  go('courses');
+}
+
+// ============================================================
+// COURSES
+// ============================================================
+function rCourses() {
+  buildSelects();
+  buildPills();
+  doFilter();
+}
+
+function buildPills() {
+  var row = document.getElementById('pills');
+  if (!row) return;
+  var h = '<button class="pill' + (catF === 'ALL' ? ' on' : '') + '" onclick="setPill(\'ALL\')">' + t('ca') + '</button>';
+  CATS.forEach(function(cat) {
+    var lbl = cat.lbl[L] || cat.lbl.de;
+    h += '<button class="pill' + (catF === cat.key ? ' on' : '') + '" onclick="setPill(\'' + cat.key + '\')">' + lbl + '</button>';
+  });
+  row.innerHTML = h;
+}
+
+function setPill(key) {
+  catF = key;
+  var sel = document.getElementById('fi-c');
+  if (sel) sel.value = key;
+  doFilter();
+}
+
+function doFilter() {
+  var q  = (document.getElementById('fi-s')  || {value:''}).value.toLowerCase();
+  var ca = (document.getElementById('fi-c')  || {value:'ALL'}).value;
+  var wk = (document.getElementById('fi-w')  || {value:'ALL'}).value;
+  var pr = (document.getElementById('fi-p')  || {value:'ALL'}).value;
+  catF = ca;
+  buildPills();
+  var res = courses.filter(function(c) {
+    if (ca !== 'ALL' && c.cat !== ca) return false;
+    if (wk !== 'ALL' && c.week !== wk) return false;
+    if (pr === 'free' && c.price !== 0) return false;
+    if (pr === 'mid'  && (c.price === 0 || c.price > 50)) return false;
+    if (pr === 'prem' && c.price <= 50) return false;
+    if (q && !gt(c).toLowerCase().includes(q) && !gcl(c.cat).toLowerCase().includes(q)) return false;
     return true;
   });
-
-  document.getElementById('courses-count').textContent = `${filtered.length} Kurse gefunden`;
-  const grid = document.getElementById('courses-grid');
-  const empty = document.getElementById('no-results');
-  if(filtered.length===0) { grid.innerHTML=''; empty.style.display='block'; }
-  else { grid.innerHTML=filtered.map(cardHTML).join(''); empty.style.display='none'; }
-}
-
-function renderCourses() {
-  const pills = ['Alle',...CATS.map(c=>c.name)];
-  document.getElementById('cat-pills').innerHTML = pills.map(p =>
-    `<button class="pill${activeCatFilter===p?' active':''}" onclick="setCatPill('${p}')">${p}</button>`
-  ).join('');
-  applyFilters();
-}
-
-function setCatPill(cat) {
-  activeCatFilter = cat;
-  document.getElementById('filter-cat').value = cat;
-  applyFilters();
-  renderHome();
-}
-
-function resetFilters() {
-  activeCatFilter = 'Alle';
-  document.getElementById('search-input').value = '';
-  document.getElementById('filter-cat').value = 'Alle';
-  document.getElementById('filter-week').value = 'Alle Wochen';
-  document.getElementById('filter-price').value = 'Alle Preise';
-  applyFilters();
-}
-
-// ── FAVORITES ────────────────────────────────────────────────────────────────
-function toggleFav(id) {
-  if(favorites.includes(id)) {
-    favorites = favorites.filter(x=>x!==id);
-    showToast('Aus Favoriten entfernt','info');
+  var cc = document.getElementById('cr-count');
+  if (cc) cc.textContent = res.length + ' ' + t('cr_found');
+  var gr = document.getElementById('cgrid');
+  var ne = document.getElementById('nores');
+  if (res.length === 0) {
+    if (gr) gr.innerHTML = '';
+    if (ne) ne.style.display = 'block';
   } else {
-    favorites.push(id);
-    showToast('❤️ Zu Favoriten hinzugefügt');
+    if (gr) gr.innerHTML = res.map(cardH).join('');
+    if (ne) ne.style.display = 'none';
   }
-  save(); renderHome(); if(document.getElementById('page-courses').classList.contains('active')) renderCourses();
-  if(document.getElementById('page-profile').classList.contains('active')) renderProfile();
 }
 
-// ── BOOK MODAL ───────────────────────────────────────────────────────────────
-function openBook(id) {
-  const c = courses.find(x=>x.id===id);
-  if(!c) return;
-  if(isFull(c)) {
-    waitlist.push({...c, addedAt: new Date().toLocaleDateString('de-CH')});
-    save(); renderBookings();
-    showToast(`⏳ Auf Warteliste für "${c.title}" gesetzt!`,'info');
-    updateBookingsNav(); return;
-  }
-  currentBookCourse = c;
-  document.getElementById('book-modal-header').innerHTML = `
-    <div style="background:linear-gradient(135deg,${hexAlpha(c.color,.13)},${hexAlpha(c.color,.26)});border-radius:16px;padding:20px;text-align:center;margin-bottom:20px">
-      <div style="font-size:48px">${c.emoji}</div>
-      <h2 class="modal-title" style="margin-top:8px">${c.title}</h2>
-      <p class="modal-sub">📅 ${c.week} · ⏱ ${c.duration}</p>
-    </div>`;
-  document.getElementById('book-modal-meta').innerHTML = `
-    <div class="meta-item"><div class="meta-label">📍 ORT</div><div class="meta-value">${c.location.split(',')[0]}</div></div>
-    <div class="meta-item"><div class="meta-label">🕐 ZEITEN</div><div class="meta-value">${c.time}</div></div>
-    <div class="meta-item"><div class="meta-label">👶 ALTER</div><div class="meta-value">${c.age} Jahre</div></div>
-    <div class="meta-item"><div class="meta-label">💰 PREIS</div><div class="meta-value">${priceTxt(c)}</div></div>`;
-  selectedKid = kids[0];
-  document.getElementById('kids-selector').innerHTML = kids.map(k =>
-    `<button class="kid-btn${k===selectedKid?' selected':''}" style="border-color:${c.color};${k===selectedKid?'background:'+c.color+';color:white':''}" onclick="selectKid('${k}',this)">${k}</button>`
-  ).join('');
-  const confirmBtn = document.getElementById('btn-confirm-book');
-  confirmBtn.style.background = `linear-gradient(135deg,${c.color},${c.color}cc)`;
-  confirmBtn.textContent = `🎉 Jetzt buchen · ${priceTxt(c)}`;
-  document.getElementById('book-modal').classList.add('open');
-}
-
-function selectKid(kid, btn) {
-  selectedKid = kid;
-  const c = currentBookCourse;
-  document.querySelectorAll('.kid-btn').forEach(b => {
-    b.classList.remove('selected');
-    b.style.background = 'white'; b.style.color = '#333';
+function resetF() {
+  catF = 'ALL';
+  ['fi-c','fi-w','fi-p'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.value = 'ALL';
   });
-  btn.classList.add('selected');
-  btn.style.background = c.color; btn.style.color = 'white';
+  var si = document.getElementById('fi-s'); if (si) si.value = '';
+  doFilter();
+}
+
+// ============================================================
+// FAVOURITES
+// ============================================================
+function toggleFav(id) {
+  var i = favs.indexOf(id);
+  if (i >= 0) { favs.splice(i, 1); toast(t('tf_r'), 'i'); }
+  else         { favs.push(id);    toast(t('tf_a')); }
+  sav();
+  rHome();
+  if (document.getElementById('pg-courses').classList.contains('on'))  doFilter();
+  if (document.getElementById('pg-profile').classList.contains('on'))  rProfile();
+}
+
+// ============================================================
+// BOOK MODAL
+// ============================================================
+function openBook(id) {
+  var c = courses.filter(function(x){ return x.id === id; })[0];
+  if (!c) return;
+  if (full(c)) {
+    wlist.push(JSON.parse(JSON.stringify(c)));
+    wlist[wlist.length-1].addedAt = new Date().toLocaleDateString('de-CH');
+    sav(); rBookings(); updNav();
+    toast('⏳ ' + t('tw2'), 'i');
+    return;
+  }
+  curBook = c;
+  document.getElementById('bkmod-h').innerHTML =
+    '<div style="background:linear-gradient(135deg,' + ha(c.col,.10) + ',' + ha(c.col,.22) + ');border-radius:12px;padding:14px;text-align:center;margin-bottom:13px">' +
+      '<div style="font-size:38px">' + c.em + '</div>' +
+      '<h2 style="font-size:17px;font-weight:900;color:#1a1a2e;margin-top:5px">' + gt(c) + '</h2>' +
+      '<p style="color:#888;font-size:11.5px;margin-top:2px">📅 ' + c.week + ' · ⏱ ' + dtx(c) + '</p>' +
+    '</div>';
+  document.getElementById('bkmod-m').innerHTML =
+    '<div class="mi"><div class="mil">' + t('dl') + '</div><div class="miv">' + gls(c) + '</div></div>' +
+    '<div class="mi"><div class="mil">' + t('dt') + '</div><div class="miv">' + c.time + '</div></div>' +
+    '<div class="mi"><div class="mil">' + t('da') + '</div><div class="miv">' + c.age + '</div></div>' +
+    '<div class="mi"><div class="mil">' + t('dp') + '</div><div class="miv">' + ptx(c) + '</div></div>';
+  selKid = kids[0];
+  document.getElementById('wck-lbl').textContent = t('wck');
+  document.getElementById('ksel').innerHTML = kids.map(function(k) {
+    var sel = (k === selKid);
+    var esc = k.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return '<button class="kbtn' + (sel ? ' on' : '') + '" style="border-color:' + c.col + ';' + (sel ? 'background:' + c.col + ';color:#fff' : '') + '" onclick="selK(\'' + esc + '\',this)">' + k + '</button>';
+  }).join('');
+  var ok = document.getElementById('bkmod-ok');
+  ok.style.background = 'linear-gradient(135deg,' + c.col + ',' + c.col + 'cc)';
+  ok.textContent = '🎉 ' + t('cnf_bk') + ' · ' + ptx(c);
+  document.getElementById('bkmod-cancel').textContent = t('bk_cancel');
+  document.getElementById('bkmod').classList.add('on');
+}
+
+function selK(kid, btn) {
+  selKid = kid;
+  var c = curBook;
+  document.querySelectorAll('.kbtn').forEach(function(b) {
+    b.classList.remove('on');
+    b.style.background = '#fff';
+    b.style.color = '#333';
+  });
+  btn.classList.add('on');
+  btn.style.background = c.col;
+  btn.style.color = '#fff';
 }
 
 function confirmBook() {
-  const c = currentBookCourse;
-  if(!c) return;
-  const idx = courses.findIndex(x=>x.id===c.id);
-  if(idx>=0) courses[idx].booked++;
-  bookings.push({...c, booked: courses[idx].booked, child: selectedKid, bookedAt: new Date().toLocaleDateString('de-CH'), status:'Bestätigt'});
-  save(); updateBookingsNav();
-  document.getElementById('book-modal').classList.remove('open');
-  showToast(`🎉 "${c.title}" für ${selectedKid} gebucht!`);
-  renderHome();
-  if(document.getElementById('page-courses').classList.contains('active')) renderCourses();
+  var c = curBook; if (!c) return;
+  var idx = -1;
+  courses.forEach(function(x,i){ if(x.id===c.id) idx=i; });
+  if (idx >= 0) courses[idx].booked++;
+  var entry = JSON.parse(JSON.stringify(c));
+  entry.booked = courses[idx].booked;
+  entry.child  = selKid;
+  entry.bookedAt = new Date().toLocaleDateString('de-CH');
+  books.push(entry);
+  sav(); updNav();
+  document.getElementById('bkmod').classList.remove('on');
+  toast('🎉 "' + gt(c) + '" ' + t('tb'));
+  rHome();
+  if (document.getElementById('pg-courses').classList.contains('on')) doFilter();
 }
 
-function closeBookModal(e) {
-  if(e.target===document.getElementById('book-modal')) document.getElementById('book-modal').classList.remove('open');
+// ============================================================
+// DETAIL MODAL
+// ============================================================
+function openDet(id) {
+  var c = courses.filter(function(x){ return x.id === id; })[0];
+  if (!c) return;
+  var isFav = favs.indexOf(c.id) >= 0;
+  var f = full(c);
+  document.getElementById('dtmod-body').innerHTML =
+    '<div style="background:linear-gradient(135deg,' + ha(c.col,.16) + ',' + ha(c.col,.30) + ');padding:24px;border-bottom:3px solid ' + c.col + '">' +
+      '<button class="xbtn" onclick="document.getElementById(\'dtmod\').classList.remove(\'on\')">✕</button>' +
+      '<div style="font-size:44px;margin-bottom:8px">' + c.em + '</div>' +
+      '<div class="cbg" style="margin-bottom:8px">' +
+        '<span class="bdg" style="background:' + ha(c.col,.18) + ';color:' + c.col + '">' + gcl(c.cat) + '</span>' +
+        '<span class="bdg" style="background:#f0f0f0;color:#555">' + c.age + '</span>' +
+        '<span class="bdg" style="background:#f0f0f0;color:#555">' + blbl(c.pb) + '</span>' +
+      '</div>' +
+      '<h2 style="font-size:21px;font-weight:900;color:#1a1a2e;margin-bottom:3px">' + gt(c) + '</h2>' +
+      '<div style="color:#666;font-size:12.5px">' + t('by') + ' ' + c.prov + '</div>' +
+    '</div>' +
+    '<div class="mb" style="padding-top:18px">' +
+      '<p class="mdesc">' + gd(c) + '</p>' +
+      '<div class="mm">' +
+        '<div class="mi"><div class="mil">' + t('dw') + '</div><div class="miv">' + c.week + '</div></div>' +
+        '<div class="mi"><div class="mil">' + t('dd') + '</div><div class="miv">' + dtx(c) + '</div></div>' +
+        '<div class="mi"><div class="mil">' + t('dt') + '</div><div class="miv">' + c.time + '</div></div>' +
+        '<div class="mi"><div class="mil">' + t('dl') + '</div><div class="miv">' + gls(c) + '</div></div>' +
+        '<div class="mi"><div class="mil">' + t('da') + '</div><div class="miv">' + c.age + '</div></div>' +
+        '<div class="mi"><div class="mil">' + t('dp') + '</div><div class="miv">' + ptx(c) + '</div></div>' +
+      '</div>' +
+      '<div style="margin-bottom:12px">' + starsH(c.rat) + ' <span style="color:#999;font-size:11.5px;margin-left:5px">(' + c.rev + ' ' + t('rev') + ')</span></div>' +
+      sbarH(c) +
+      '<div class="mact">' +
+        '<button class="secbtn" style="border-color:' + c.col + ';color:' + c.col + ';background:' + (isFav ? ha(c.col,.10) : '#fff') + ';flex:1" onclick="dtFav(' + c.id + ')">' + (isFav ? t('svd_btn') : t('sv_btn')) + '</button>' +
+        '<button class="cnfbtn" style="flex:2;background:' + (f ? '#e0e0e0' : 'linear-gradient(135deg,' + c.col + ',' + c.col + 'cc)') + ';color:' + (f ? '#999' : '#fff') + ';cursor:' + (f ? 'not-allowed' : 'pointer') + '" onclick="dtBook(' + c.id + ')">' +
+          (f ? ('⏳ ' + t('wl_btn')) : ('🎉 ' + t('bk_btn') + ' · ' + ptx(c))) +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  document.getElementById('dtmod').classList.add('on');
 }
 
-// ── DETAIL MODAL ─────────────────────────────────────────────────────────────
-function openDetail(id) {
-  const c = courses.find(x=>x.id===id);
-  if(!c) return;
-  currentDetailCourse = c;
-  const fav = favorites.includes(c.id);
-  const full = isFull(c);
-  const favBg = fav ? hexAlpha(c.color,.13) : 'white';
-  document.getElementById('detail-modal-content').innerHTML = `
-    <div style="background:linear-gradient(135deg,${hexAlpha(c.color,.2)},${hexAlpha(c.color,.33)});padding:32px;border-bottom:3px solid ${c.color}">
-      <button class="close-btn" onclick="document.getElementById('detail-modal').classList.remove('open')">✕</button>
-      <div style="font-size:56px;margin-bottom:12px">${c.emoji}</div>
-      <div class="card-badges" style="margin-bottom:12px">
-        <span class="badge" style="background:${hexAlpha(c.color,.2)};color:${c.color}">${c.category}</span>
-        <span class="badge" style="background:#f0f0f0;color:#555">${c.age} Jahre</span>
-        <span class="badge" style="background:#f0f0f0;color:#555">${bandLabel(c.priceband)}</span>
-      </div>
-      <h2 style="font-size:26px;font-weight:900;color:#1a1a2e;margin-bottom:4px">${c.title}</h2>
-      <div style="color:#666;font-size:14px">von ${c.provider}</div>
-    </div>
-    <div class="modal-body" style="padding-top:24px">
-      <p class="modal-desc">${c.desc}</p>
-      <div class="modal-meta">
-        <div class="meta-item"><div class="meta-label">📅 WOCHE</div><div class="meta-value">${c.week}</div></div>
-        <div class="meta-item"><div class="meta-label">⏱ DAUER</div><div class="meta-value">${c.duration}</div></div>
-        <div class="meta-item"><div class="meta-label">🕐 ZEITEN</div><div class="meta-value">${c.time}</div></div>
-        <div class="meta-item"><div class="meta-label">📍 ORT</div><div class="meta-value">${c.location.split(',')[0]}</div></div>
-        <div class="meta-item"><div class="meta-label">👶 ALTER</div><div class="meta-value">${c.age} Jahre</div></div>
-        <div class="meta-item"><div class="meta-label">💰 PREIS</div><div class="meta-value">${priceTxt(c)}</div></div>
-      </div>
-      <div style="margin-bottom:16px"><span class="stars">${stars(c.rating)}</span><span style="color:#999;font-size:13px;margin-left:8px">(${c.reviews} Bewertungen)</span></div>
-      ${spotBarHTML(c)}
-      <div class="modal-actions" style="margin-top:20px">
-        <button class="btn-secondary" style="border-color:${c.color};color:${c.color};background:${favBg};flex:1" onclick="detailToggleFav(${c.id})">
-          ${fav?'♥ Gespeichert':'♡ Speichern'}
-        </button>
-        <button class="btn-confirm" style="flex:2;background:${full?'#e0e0e0':`linear-gradient(135deg,${c.color},${c.color}cc)`};color:${full?'#999':'white'};cursor:${full?'not-allowed':'pointer'}" onclick="detailBook(${c.id})">
-          ${full?'⏳ Warteliste':'🎉 Buchen · '+priceTxt(c)}
-        </button>
-      </div>
-    </div>`;
-  document.getElementById('detail-modal').classList.add('open');
+function dtFav(id)  { toggleFav(id); openDet(id); }
+function dtBook(id) { document.getElementById('dtmod').classList.remove('on'); openBook(id); }
+
+// ============================================================
+// BOOKINGS
+// ============================================================
+function updNav() {
+  var el = document.getElementById('bnav'); if (!el) return;
+  var sp = el.querySelector('[data-k="n_bookings"]');
+  if (sp) sp.textContent = books.length ? t('n_bookings') + ' (' + books.length + ')' : t('n_bookings');
 }
 
-function detailToggleFav(id) {
-  toggleFav(id);
-  openDetail(id);
+function cancelBook(i) {
+  var b = books[i];
+  courses.forEach(function(c){ if(c.id===b.id && c.booked>0) c.booked--; });
+  books.splice(i, 1);
+  sav(); rBookings(); updNav(); rHome();
+  if (document.getElementById('pg-courses').classList.contains('on')) doFilter();
+  toast('"' + gt(b) + '" ' + t('tc'), 'i');
 }
 
-function detailBook(id) {
-  document.getElementById('detail-modal').classList.remove('open');
-  openBook(id);
+function rmWL(i) {
+  wlist.splice(i, 1);
+  sav(); rBookings();
+  toast(t('tf_r'), 'i');
 }
 
-function closeDetailModal(e) {
-  if(e.target===document.getElementById('detail-modal')) document.getElementById('detail-modal').classList.remove('open');
-}
-
-// ── BOOKINGS ─────────────────────────────────────────────────────────────────
-function updateBookingsNav() {
-  const n = document.getElementById('nav-bookings');
-  if(n) n.textContent = `📋 Buchungen${bookings.length?` (${bookings.length})`:''}`;
-}
-
-function cancelBooking(idx) {
-  const b = bookings[idx];
-  const ci = courses.findIndex(x=>x.id===b.id);
-  if(ci>=0 && courses[ci].booked>0) courses[ci].booked--;
-  bookings.splice(idx,1);
-  save(); renderBookings(); updateBookingsNav();
-  renderHome();
-  showToast(`"${b.title}" storniert.`,'info');
-}
-
-function removeWaitlist(idx) {
-  waitlist.splice(idx,1);
-  save(); renderBookings(); updateBookingsNav();
-  showToast('Von Warteliste entfernt','info');
-}
-
-function renderBookings() {
-  updateBookingsNav();
-  document.getElementById('bookings-meta').textContent = `${bookings.length} aktive Buchungen · ${waitlist.length} Wartelisten`;
-  let html = '';
-  if(bookings.length===0 && waitlist.length===0) {
-    html = `<div class="white-card" style="text-align:center;padding:60px">
-      <div style="font-size:64px;margin-bottom:16px">📋</div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:8px">Noch keine Buchungen</h3>
-      <p style="color:#888">Stöbere in den Kursen und buche dein erstes Abenteuer!</p>
-      <button class="btn-primary" style="margin-top:20px;width:auto;padding:12px 24px" onclick="navigate('courses')">Kurse entdecken</button>
-    </div>`;
-  } else {
-    bookings.forEach((b,i) => {
-      html += `<div class="booking-card">
-        <div class="booking-icon" style="background:linear-gradient(135deg,${hexAlpha(b.color,.2)},${hexAlpha(b.color,.35)})">${b.emoji}</div>
-        <div class="booking-info">
-          <div class="booking-title">${b.title}</div>
-          <div class="booking-sub">👤 ${b.child} · 📅 ${b.week} · ✅ gebucht am ${b.bookedAt}</div>
-        </div>
-        <div class="booking-actions">
-          <span class="badge" style="background:#00B89422;color:#00B894">${b.status}</span>
-          <span class="badge" style="background:#f5f5f5;color:#666">${priceTxt(b)}</span>
-          <button class="btn-cancel" onclick="cancelBooking(${i})">Stornieren</button>
-        </div>
-      </div>`;
+function rBookings() {
+  updNav();
+  var meta = document.getElementById('bk-meta');
+  if (meta) meta.textContent = books.length + ' ' + t('bk_act') + ' · ' + wlist.length + ' ' + t('bk_wl');
+  var lst = document.getElementById('bklist'); if (!lst) return;
+  if (books.length === 0 && wlist.length === 0) {
+    lst.innerHTML =
+      '<div class="wcard" style="text-align:center;padding:48px">' +
+        '<div style="font-size:52px;margin-bottom:10px">📋</div>' +
+        '<h3 style="font-size:18px;font-weight:800;margin-bottom:5px">' + t('nobk_t') + '</h3>' +
+        '<p style="color:#888">' + t('nobk_s') + '</p>' +
+        '<button class="pbtn" style="width:auto;padding:9px 18px;margin-top:14px" onclick="go(\'courses\')">' + t('expl_btn') + '</button>' +
+      '</div>';
+    return;
+  }
+  var h = '';
+  books.forEach(function(b, i) {
+    h += '<div class="bcard">' +
+      '<div class="bico" style="background:linear-gradient(135deg,' + ha(b.col,.16) + ',' + ha(b.col,.30) + ')">' + b.em + '</div>' +
+      '<div class="binfo"><div class="bt">' + gt(b) + '</div><div class="bs">👤 ' + b.child + ' · 📅 ' + b.week + ' · ✅ ' + t('bon') + ' ' + b.bookedAt + '</div></div>' +
+      '<div class="bact">' +
+        '<span class="bdg" style="background:#00B89422;color:#00B894">' + t('conf_lbl') + '</span>' +
+        '<span class="bdg" style="background:#f5f5f5;color:#666">' + ptx(b) + '</span>' +
+        '<button class="ccbtn" onclick="cancelBook(' + i + ')">' + t('bk_storno') + '</button>' +
+      '</div>' +
+    '</div>';
+  });
+  if (wlist.length > 0) {
+    h += '<h2 style="font-size:18px;font-weight:800;margin:18px 0 9px">⏳ ' + t('wl_lbl') + '</h2>';
+    wlist.forEach(function(b, i) {
+      h += '<div class="bcard wlc">' +
+        '<div style="font-size:22px;flex-shrink:0">' + b.em + '</div>' +
+        '<div class="binfo"><div class="bt">' + gt(b) + '</div><div class="bs">📅 ' + b.week + ' · ' + t('ron') + ' ' + b.addedAt + '</div></div>' +
+        '<div class="bact">' +
+          '<span class="bdg" style="background:#FDCB6E22;color:#FDCB6E">' + t('wl_lbl') + '</span>' +
+          '<button class="ccbtn" onclick="rmWL(' + i + ')">' + t('bk_rm') + '</button>' +
+        '</div>' +
+      '</div>';
     });
-    if(waitlist.length>0) {
-      html += `<h2 style="font-size:22px;font-weight:800;color:#1a1a2e;margin:24px 0 12px">⏳ Warteliste</h2>`;
-      waitlist.forEach((b,i) => {
-        html += `<div class="booking-card waitlist-card">
-          <div style="font-size:28px;flex-shrink:0">${b.emoji}</div>
-          <div class="booking-info">
-            <div class="booking-title">${b.title}</div>
-            <div class="booking-sub">📅 ${b.week} · eingetragen am ${b.addedAt}</div>
-          </div>
-          <div class="booking-actions">
-            <span class="badge" style="background:#FDCB6E22;color:#FDCB6E">Warteliste</span>
-            <button class="btn-cancel" onclick="removeWaitlist(${i})">Entfernen</button>
-          </div>
-        </div>`;
-      });
-    }
   }
-  document.getElementById('bookings-list').innerHTML = html;
+  lst.innerHTML = h;
 }
 
-// ── PROFILE ──────────────────────────────────────────────────────────────────
+// ============================================================
+// PROFILE
+// ============================================================
 function addKid() {
-  const name = prompt('Kind hinzufügen (Name & Alter, z.B. "Anna (10)"):');
-  if(name && name.trim()) {
-    kids.push(name.trim()); save();
-    const row = document.getElementById('kids-row');
-    const addBtn = row.querySelector('.btn-add-kid');
-    const tag = document.createElement('div');
-    tag.className = 'kid-tag';
-    tag.textContent = `🧒 ${name.trim()}`;
-    row.insertBefore(tag, addBtn);
-    showToast(`${name.trim()} hinzugefügt!`);
+  var name = prompt(t('kid_pr'));
+  if (name && name.trim()) {
+    kids.push(name.trim()); sav();
+    var row = document.getElementById('krow');
+    var abtn = row.querySelector('.akbtn');
+    var tag = document.createElement('div');
+    tag.className = 'ktag';
+    tag.textContent = '🧒 ' + name.trim();
+    row.insertBefore(tag, abtn);
+    toast(name.trim() + ' ✓');
   }
 }
 
-function renderProfile() {
-  const favs = courses.filter(c => favorites.includes(c.id));
-  const favList = document.getElementById('fav-list');
-  if(favs.length===0) {
-    favList.innerHTML = '<p style="color:#888">Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!</p>';
-  } else {
-    favList.innerHTML = favs.map(c => `
-      <div class="fav-row">
-        <span style="font-size:24px">${c.emoji}</span>
-        <div class="fav-row-info">
-          <div class="fav-title">${c.title}</div>
-          <div class="fav-sub">📅 ${c.week} · ${priceTxt(c)}</div>
-        </div>
-        <button class="btn-book-sm" onclick="openBook(${c.id})">Buchen</button>
-      </div>`).join('');
+function rProfile() {
+  var ab = document.querySelector('[data-k="add_k"]');
+  if (ab) ab.textContent = t('add_k');
+  var favCourses = courses.filter(function(c){ return favs.indexOf(c.id) >= 0; });
+  var fl = document.getElementById('favlist'); if (!fl) return;
+  if (favCourses.length === 0) {
+    fl.innerHTML = '<p style="color:#888">' + t('no_fav') + '</p>';
+    return;
   }
-}
-
-// ── ADMIN ────────────────────────────────────────────────────────────────────
-let adminAuthed = false;
-
-function adminLogin() {
-  const pw = document.getElementById('admin-pw').value;
-  if(pw==='admin123') {
-    adminAuthed = true;
-    document.getElementById('admin-lock').style.display = 'none';
-    document.getElementById('admin-dash').style.display = 'block';
-    renderAdmin();
-  } else {
-    showToast('Falsches Passwort','info');
-  }
-}
-
-function adminLogout() {
-  adminAuthed = false;
-  document.getElementById('admin-lock').style.display = 'block';
-  document.getElementById('admin-dash').style.display = 'none';
-  document.getElementById('admin-pw').value = '';
-}
-
-function renderAdmin() {
-  if(!adminAuthed) return;
-  const totalBooked = courses.reduce((s,c) => s+c.booked, 0);
-  document.getElementById('admin-stats').innerHTML = [
-    {label:'Kurse total', val:courses.length, icon:'📚', clr:'#A29BFE'},
-    {label:'Buchungen', val:bookings.length, icon:'✅', clr:'#00B894'},
-    {label:'Warteliste', val:waitlist.length, icon:'⏳', clr:'#FDCB6E'},
-    {label:'Belegte Plätze', val:totalBooked, icon:'👥', clr:'#FF6B6B'},
-  ].map(s => `
-    <div class="stat-card" style="border-left:4px solid ${s.clr}">
-      <div class="stat-icon">${s.icon}</div>
-      <div class="stat-val" style="color:${s.clr}">${s.val}</div>
-      <div class="stat-lbl">${s.label}</div>
-    </div>`).join('');
-
-  document.getElementById('admin-table').innerHTML = courses.map((c,i) => {
-    const p = Math.min(c.booked/c.spots*100,100);
-    const full = isFull(c);
-    return `<tr>
-      <td><span style="margin-right:8px">${c.emoji}</span><strong>${c.title}</strong></td>
-      <td style="color:#666">${c.provider}</td>
-      <td><span class="badge" style="background:${hexAlpha(c.color,.15)};color:${c.color}">${c.category}</span></td>
-      <td style="color:#666">${c.week}</td>
-      <td style="font-weight:700">${priceTxt(c)}</td>
-      <td>
-        <div style="font-size:11px;color:#888;margin-bottom:4px">${c.booked}/${c.spots}</div>
-        <div style="background:#eee;border-radius:10px;height:6px;width:80px">
-          <div style="width:${p}%;background:${full?'#FF6B6B':'#00B894'};height:100%;border-radius:10px"></div>
-        </div>
-      </td>
-      <td><span class="badge" style="background:${full?'#FF6B6B22':'#00B89422'};color:${full?'#FF6B6B':'#00B894'}">${full?'Ausgebucht':'Verfügbar'}</span></td>
-      <td><button class="btn-edit" onclick="editSpots(${i})">Bearbeiten</button></td>
-    </tr>`;
+  fl.innerHTML = favCourses.map(function(c) {
+    return '<div class="frow">' +
+      '<span style="font-size:20px">' + c.em + '</span>' +
+      '<div class="fi"><div class="ft">' + gt(c) + '</div><div class="fs">📅 ' + c.week + ' · ' + ptx(c) + '</div></div>' +
+      '<button class="bsm" onclick="openBook(' + c.id + ')">' + t('bk_btn') + '</button>' +
+    '</div>';
   }).join('');
 }
 
-function editSpots(idx) {
-  const c = courses[idx];
-  const newVal = prompt(`Plätze für "${c.title}" (aktuell: ${c.spots}):`, c.spots);
-  if(newVal && !isNaN(newVal) && parseInt(newVal)>0) {
-    courses[idx].spots = parseInt(newVal);
-    renderAdmin(); renderHome();
-    showToast(`Plätze auf ${newVal} gesetzt.`);
+// ============================================================
+// ADMIN
+// ============================================================
+function aLogin() {
+  if (document.getElementById('apw').value === 'admin123') {
+    adminOK = true;
+    document.getElementById('alock').style.display = 'none';
+    document.getElementById('adash').style.display = 'block';
+    rAdmin();
+  } else {
+    toast(t('tpw'), 'i');
+  }
+}
+
+function aLogout() {
+  adminOK = false;
+  document.getElementById('alock').style.display = 'block';
+  document.getElementById('adash').style.display = 'none';
+  document.getElementById('apw').value = '';
+}
+
+function rAdmin() {
+  if (!adminOK) return;
+  var tot = courses.reduce(function(s,c){ return s + c.booked; }, 0);
+  document.getElementById('astats').innerHTML = [
+    {l:t('sta_c'), v:courses.length, i:'📚', c:'#A29BFE'},
+    {l:t('sta_b'), v:books.length,   i:'✅', c:'#00B894'},
+    {l:t('sta_w'), v:wlist.length,   i:'⏳', c:'#FDCB6E'},
+    {l:t('sta_s'), v:tot,            i:'👥', c:'#FF6B6B'}
+  ].map(function(s) {
+    return '<div class="stc" style="border-left:4px solid ' + s.c + '">' +
+      '<div class="sti">' + s.i + '</div>' +
+      '<div class="stv" style="color:' + s.c + '">' + s.v + '</div>' +
+      '<div class="stl">' + s.l + '</div>' +
+    '</div>';
+  }).join('');
+
+  var th = document.getElementById('athead');
+  if (th) th.innerHTML = [t('th_c'),t('th_pr'),t('th_ca'),t('th_w'),t('th_p'),t('th_l'),t('th_st'),t('th_a')]
+    .map(function(h){ return '<th>' + h + '</th>'; }).join('');
+
+  document.getElementById('atbody').innerHTML = courses.map(function(c, i) {
+    var p = Math.min(c.booked / c.spots * 100, 100);
+    var f = full(c);
+    return '<tr>' +
+      '<td><span style="margin-right:4px">' + c.em + '</span><strong>' + gt(c) + '</strong></td>' +
+      '<td style="color:#666">' + c.prov + '</td>' +
+      '<td><span class="bdg" style="background:' + ha(c.col,.13) + ';color:' + c.col + '">' + gcl(c.cat) + '</span></td>' +
+      '<td style="color:#666">' + c.week + '</td>' +
+      '<td style="font-weight:700">' + ptx(c) + '</td>' +
+      '<td>' +
+        '<div style="font-size:10.5px;color:#888;margin-bottom:2px">' + c.booked + '/' + c.spots + '</div>' +
+        '<div style="background:#eee;border-radius:7px;height:5px;width:64px">' +
+          '<div style="width:' + p + '%;background:' + (f ? '#FF6B6B' : '#00B894') + ';height:100%;border-radius:7px"></div>' +
+        '</div>' +
+      '</td>' +
+      '<td><span class="bdg" style="background:' + (f ? '#FF6B6B22' : '#00B89422') + ';color:' + (f ? '#FF6B6B' : '#00B894') + '">' + (f ? t('full').replace('⚡ ','') : t('conf_lbl')) + '</span></td>' +
+      '<td><button class="ebtn" onclick="editSpots(' + i + ')">' + t('ed_btn') + '</button></td>' +
+    '</tr>';
+  }).join('');
+
+  // retranslate static admin labels
+  ['adm_dash','adm_out','adm_ov','adm_add','adm_abtn'].forEach(function(k){
+    var el = document.querySelector('[data-k="'+k+'"]'); if(el) el.textContent = t(k);
+  });
+  ['nt_ph','np_ph','nc_ph','npr_ph','pw_ph'].forEach(function(k){
+    var el = document.querySelector('[data-ph="'+k+'"]'); if(el) el.placeholder = t(k);
+  });
+}
+
+function editSpots(i) {
+  var c = courses[i];
+  var nv = prompt(t('spts_pr') + ' ' + c.spots + '):', c.spots);
+  if (nv && !isNaN(nv) && parseInt(nv) > 0) {
+    courses[i].spots = parseInt(nv);
+    rAdmin(); rHome();
+    toast(t('tsp'));
   }
 }
 
 function addCourse() {
-  const title    = document.getElementById('new-title').value.trim();
-  const provider = document.getElementById('new-provider').value.trim() || 'Unbekannt';
-  const category = document.getElementById('new-category').value.trim() || 'Diverses';
-  const price    = parseInt(document.getElementById('new-price').value) || 0;
-  if(!title) { showToast('Bitte Titel eingeben','info'); return; }
-  const colors = ['#FF6B6B','#4ECDC4','#A29BFE','#00B894','#FD79A8','#FDCB6E'];
-  const emojis = ['⭐','🎯','🌟','💡','🔥','✨'];
-  const newC = {
-    id: Date.now(), title, provider, category, price,
-    priceband: price===0?'low':price<=50?'mid':'market',
+  var title = (document.getElementById('nt') || {value:''}).value.trim();
+  if (!title) { toast(t('ttl'), 'i'); return; }
+  var prov  = (document.getElementById('np')  || {value:'?'}).value || '?';
+  var cat   = (document.getElementById('nc')  || {value:'Diverses'}).value || 'Diverses';
+  var price = parseInt((document.getElementById('npr') || {value:'0'}).value) || 0;
+  var cols  = ['#FF6B6B','#4ECDC4','#A29BFE','#00B894','#FD79A8','#FDCB6E'];
+  var ems   = ['⭐','🎯','🌟','💡','🔥','✨'];
+  var nc = {
+    id: Date.now(), prov: prov, cat: cat, price: price,
+    pb: price===0?'low':price<=50?'mid':'market',
     age:'8-14', spots:15, booked:0, week:'1. Sept',
-    emoji: emojis[Math.floor(Math.random()*emojis.length)],
-    color: colors[Math.floor(Math.random()*colors.length)],
-    desc:`Neuer Kurs: ${title}`, rating:0, reviews:0,
-    location:'Basel', duration:'3 Tage', time:'09:00–17:00'
+    em:  ems[Math.floor(Math.random() * ems.length)],
+    col: cols[Math.floor(Math.random() * cols.length)],
+    rat:0, rev:0, days:3, time:'09:00–17:00',
+    title:{de:title,fr:title,en:title},
+    desc:{de:'Neuer Kurs',fr:'Nouveau cours',en:'New course'},
+    loc:{de:'Basel',fr:'Bâle',en:'Basel'}
   };
-  courses.push(newC);
-  ['new-title','new-provider','new-category','new-price'].forEach(id => document.getElementById(id).value='');
-  renderAdmin(); renderHome();
-  showToast(`"${title}" wurde hinzugefügt!`);
+  courses.push(nc);
+  ['nt','np','nc','npr'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+  rAdmin(); rHome();
+  toast('"' + title + '" ' + t('tad'));
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────────────
-renderHome();
-updateBookingsNav();
+// ============================================================
+// INIT
+// ============================================================
+(function init() {
+  document.querySelectorAll('.lb').forEach(function(b){
+    b.classList.toggle('on', b.textContent.trim() === L.toUpperCase());
+  });
+  buildSelects();
+  applyTX();
+  rHome();
+  updNav();
+})();
 </script>
 
 </body>
