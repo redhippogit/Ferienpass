@@ -1,1239 +1,1047 @@
-<!DOCTYPE html>
-
+ <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Basler Ferienpass 2025</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Basler Ferienpass × goSNOB.ai — 2026</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito',sans-serif;background:#f7f8fc;color:#1a1a2e}
-button,input,select{font-family:inherit;cursor:pointer}
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --bk:#000;--wh:#fff;--pk:#d946ef;--pk2:rgba(217,70,239,0.09);
+  --g10:#111;--g15:#161616;--g20:#1a1a1a;--g30:#2a2a2a;
+  --g40:#383838;--g50:#555;--g70:#999;--g80:#ccc;
+  --gold:#b8860b;--red:#ef4444;
+  --fh:'Bebas Neue',Impact,sans-serif;
+  --fm:'DM Mono','Courier New',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bk);color:var(--wh);font-family:var(--fm);cursor:crosshair;overflow-x:hidden;line-height:1.6;}
+a{color:var(--pk);text-decoration:none;}
+
+/* LOGIN */
+#login-overlay{position:fixed;inset:0;z-index:9999;background:var(--bk);display:flex;align-items:center;justify-content:center;flex-direction:column;}
+#login-overlay.hidden{display:none;}
+.lb{border:1px solid var(--g30);padding:3rem 2.5rem;width:100%;max-width:400px;}
+.ll{font-family:var(--fh);font-size:1.8rem;letter-spacing:.1em;margin-bottom:.3rem;}
+.ll span{color:var(--pk);}
+.ls{font-size:.68rem;color:var(--g50);letter-spacing:.12em;margin-bottom:2rem;text-transform:uppercase;}
+.lbl{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g50);margin-bottom:.5rem;display:block;}
+.li{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;font-family:var(--fm);font-size:.9rem;padding:.8rem 1rem;margin-bottom:1rem;outline:none;cursor:crosshair;transition:border-color .2s;}
+.li:focus{border-color:var(--pk);}
+.li.err{border-color:var(--red);}
+.lbtn{width:100%;background:var(--pk);color:#000;font-family:var(--fm);font-size:.8rem;letter-spacing:.1em;padding:.9rem;border:none;cursor:crosshair;transition:background .2s;margin-top:.5rem;}
+.lbtn:hover{background:#fff;}
+.lerr{font-size:.75rem;color:var(--red);margin-top:.8rem;display:none;letter-spacing:.05em;}
+.lerr.show{display:block;}
+.lhint{font-size:.7rem;color:#1e1e1e;margin-top:3rem;letter-spacing:.08em;text-align:center;}
+
+/* LANDING */
+#landing{position:fixed;inset:0;z-index:9998;background:var(--bk);display:flex;flex-direction:column;}
+#landing.hidden{display:none;}
+.land-top{padding:1.2rem 2rem;border-bottom:1px solid var(--g30);display:flex;align-items:center;gap:1rem;flex-shrink:0;}
+.land-logo{font-family:var(--fh);font-size:1.3rem;letter-spacing:.1em;}
+.land-logo span{color:var(--pk);}
+.land-sub{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g50);}
+.land-split{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:auto;}
+.land-half{padding:3.5rem 3rem;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--g30);cursor:crosshair;transition:background .25s;}
+.land-half:last-child{border-right:none;}
+.land-half:hover{background:var(--g10);}
+.land-half.arg{border-top:3px solid var(--pk);}
+.land-half.prop{border-top:3px solid var(--g40);}
+.land-half.prop:hover{border-top-color:var(--pk);}
+.land-tag{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pk);margin-bottom:1rem;}
+.land-half.prop .land-tag{color:var(--g50);}
+.land-h{font-family:var(--fh);font-size:clamp(2rem,4vw,3.5rem);line-height:1.0;margin-bottom:1rem;}
+.land-h em{color:var(--pk);font-style:normal;}
+.land-desc{font-size:.85rem;color:var(--g80);line-height:1.7;max-width:400px;margin-bottom:1.5rem;}
+.land-for{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g50);margin-bottom:2rem;line-height:1.7;}
+.land-for strong{color:var(--g80);font-weight:normal;}
+.land-stats{display:flex;gap:2rem;margin-bottom:2rem;}
+.land-stat .n{font-family:var(--fh);font-size:2rem;color:var(--pk);line-height:1;}
+.land-stat .l{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g50);margin-top:.2rem;}
+.land-btn{display:inline-block;background:var(--pk);color:#000;font-family:var(--fm);font-size:.8rem;letter-spacing:.1em;padding:.9rem 2rem;border:none;cursor:crosshair;transition:all .2s;align-self:flex-start;}
+.land-btn:hover{background:#fff;}
+.land-half.prop .land-btn{background:var(--g30);color:var(--wh);}
+.land-half.prop .land-btn:hover{background:var(--pk);color:#000;}
+@media(max-width:700px){
+  .land-split{grid-template-columns:1fr;}
+  .land-half{padding:2.5rem 1.5rem;border-right:none;border-bottom:1px solid var(--g30);}
+}
+
 /* NAV */
-nav{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.07)}
-.nw{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:8px;height:62px}
-.logo{display:flex;align-items:center;gap:8px;border:none;background:none;padding:0;flex-shrink:0}
-.li{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B6B,#FDCB6E);display:flex;align-items:center;justify-content:center;font-size:18px}
-.lt{font-weight:900;font-size:13px;line-height:1.2;text-align:left}
-.lt span:first-child{color:#1a1a2e;display:block}
-.lt span:last-child{color:#FF6B6B;display:block}
-.navlinks{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
-.navlinks::-webkit-scrollbar{display:none}
-.nb{padding:6px 10px;border-radius:10px;border:none;background:transparent;color:#555;font-weight:600;font-size:12px;white-space:nowrap}
-.nb:hover{background:#f5f5f5}
-.nb.on{background:#FF6B6B;color:#fff;font-weight:700}
-.langbar{display:flex;gap:3px;flex-shrink:0}
-.lb{padding:4px 9px;border-radius:8px;border:2px solid #eee;background:#fff;font-size:11px;font-weight:800;color:#666}
-.lb:hover{border-color:#FF6B6B;color:#FF6B6B}
-.lb.on{background:#FF6B6B;color:#fff;border-color:#FF6B6B}
-.pbadge{background:linear-gradient(135deg,#6C5CE7,#A29BFE);color:#fff;border-radius:16px;padding:4px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
-/* PAGES */
-.pg{display:none}
-.pg.on{display:block;animation:fu .3s ease}
-@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,.97);border-bottom:1px solid var(--g30);display:none;align-items:center;justify-content:space-between;padding:0 2rem;height:52px;backdrop-filter:blur(8px);}
+.nav-logo{font-family:var(--fh);font-size:1.2rem;letter-spacing:.1em;cursor:pointer;}
+.nav-logo span{color:var(--pk);}
+.nav-center{display:flex;gap:0;border:1px solid var(--g30);}
+.tnb{background:none;border:none;border-right:1px solid var(--g30);color:var(--g50);font-family:var(--fm);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.4rem;cursor:crosshair;transition:all .2s;white-space:nowrap;}
+.tnb:last-child{border-right:none;}
+.tnb.active{background:var(--pk);color:#000;}
+.tnb:hover:not(.active){color:var(--wh);background:var(--g20);}
+.nav-right{display:flex;align-items:center;gap:.5rem;}
+.lang-pills{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;max-width:300px;}
+.lang-pills::-webkit-scrollbar{display:none;}
+.lp{background:none;border:1px solid var(--g30);border-right:none;color:var(--g50);font-family:var(--fm);font-size:.65rem;letter-spacing:.06em;padding:.3rem .5rem;cursor:crosshair;transition:all .15s;white-space:nowrap;min-width:32px;text-align:center;}
+.lp:last-child{border-right:1px solid var(--g30);}
+.lp.active{background:var(--pk);color:#000;border-color:var(--pk);}
+.lp:hover:not(.active){color:var(--wh);background:var(--g20);}
+.nav-dl{background:var(--pk);color:#000;font-family:var(--fm);font-size:.7rem;letter-spacing:.08em;padding:.38rem .9rem;cursor:crosshair;border:none;transition:background .2s;white-space:nowrap;flex-shrink:0;}
+.nav-dl:hover{background:#fff;}
+
+/* MAIN */
+.view{display:none;}
+.view.active{display:block;}
+.cont{max-width:1160px;margin:0 auto;padding:0 2rem;}
+section{padding:5.5rem 0;border-top:1px solid var(--g30);}
+section:first-of-type{border-top:none;}
+
+/* TYPE */
+.slbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pk);display:block;margin-bottom:.8rem;}
+.stit{font-family:var(--fh);font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin-bottom:1rem;}
+.slead{font-size:.9rem;color:var(--g80);max-width:640px;margin-bottom:3rem;line-height:1.7;}
+.fade{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.fade.vis{opacity:1;transform:none;}
+
 /* HERO */
-.hero{background:linear-gradient(135deg,#1a1a2e,#16213e 50%,#0f3460);padding:64px 20px 84px;position:relative;overflow:hidden;text-align:center}
-.orb{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}
-.hw{max-width:1100px;margin:0 auto;position:relative}
-.hpill{display:inline-block;background:rgba(255,107,107,.18);border:1px solid rgba(255,107,107,.4);border-radius:26px;padding:6px 16px;margin-bottom:18px;font-size:12px;color:#FF6B6B;font-weight:700}
-.htitle{color:#fff;font-size:clamp(28px,5.5vw,50px);font-weight:900;line-height:1.1;letter-spacing:-.5px;margin-bottom:14px}
-.htitle .grad{background:linear-gradient(135deg,#FF6B6B,#FDCB6E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hsub{color:rgba(255,255,255,.65);font-size:16px;max-width:500px;margin:0 auto 30px;line-height:1.7}
-.hstats{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
-.hv{font-size:26px;font-weight:900;color:#FDCB6E}
-.hl{font-size:11px;color:rgba(255,255,255,.45);font-weight:600;margin-top:1px}
-.sw{position:relative;max-width:440px;margin:0 auto}
-.sw input{width:100%;padding:14px 46px 14px 44px;border-radius:15px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.1);color:#fff;font-size:14px;outline:none;font-family:inherit}
-.sw input::placeholder{color:rgba(255,255,255,.4)}
-.sico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px}
-.sbtn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#FF6B6B;color:#fff;border:none;border-radius:10px;padding:7px 14px;font-weight:800;font-size:12px}
-.sbtn:hover{background:#e55}
-/* SECTION */
-.sec{max-width:1200px;margin:0 auto;padding:48px 20px}
-.sech{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:24px;flex-wrap:wrap}
-.sech h2{font-size:clamp(18px,3.5vw,27px);font-weight:900}
-.sech p{color:#888;font-size:13px;margin-top:3px}
-.obtn{border:2px solid #FF6B6B;border-radius:10px;padding:8px 15px;background:#fff;color:#FF6B6B;font-weight:700;font-size:13px;white-space:nowrap;flex-shrink:0}
-.obtn:hover{background:#fff0f0}
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-/* CARD */
-.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,.07);display:flex;flex-direction:column;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
-.card:hover{box-shadow:0 16px 50px rgba(0,0,0,.13);transform:translateY(-5px) scale(1.01)}
-.ch{padding:20px 18px 14px;position:relative}
-.ce{font-size:40px;line-height:1;margin-bottom:8px;display:block}
-.cbg{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
-.bdg{border-radius:16px;padding:2px 8px;font-size:10px;font-weight:700;display:inline-block}
-.fb{position:absolute;top:12px;right:12px;border-radius:50%;width:30px;height:30px;font-size:13px;display:flex;align-items:center;justify-content:center;border-width:2px;border-style:solid;transition:all .2s}
-.cb{padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:9px}
-.ct{font-size:14.5px;font-weight:800;line-height:1.3}
-.cp{font-size:11px;color:#888;margin-top:1px}
-.cd{font-size:12px;color:#555;line-height:1.5}
-.cm{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#666}
-.str{color:#FDCB6E;font-size:12px}
-.sr{display:flex;justify-content:space-between;font-size:10.5px;color:#888;margin-bottom:2px}
-.sbg{background:#eee;border-radius:8px;height:5px;overflow:hidden}
-.sfl{height:100%;border-radius:8px;transition:width .4s}
-.ca{display:flex;gap:5px;margin-top:auto;padding-top:5px}
-.dbt{flex:1;padding:8px;border-radius:9px;border:2px solid #e0e0e0;background:#fff;color:#333;font-weight:700;font-size:12px}
-.dbt:hover{border-color:#bbb;background:#fafafa}
-.bbt{flex:2;padding:8px;border-radius:9px;border:none;color:#fff;font-weight:800;font-size:12px}
-.bbt:hover{filter:brightness(1.07)}
-.bbt.full{background:#e0e0e0!important;color:#999;cursor:not-allowed}
-/* HOW */
-.how{background:#fff;padding:48px 20px}
-.howi{max-width:1100px;margin:0 auto;text-align:center}
-.howg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:36px}
-.howico{width:60px;height:60px;border-radius:50%;margin:0 auto 11px;display:flex;align-items:center;justify-content:center;font-size:26px}
-.hows{font-weight:900;color:#FF6B6B;font-size:10px;letter-spacing:1.5px;margin-bottom:4px}
-.howt{font-size:16px;font-weight:800;margin-bottom:4px}
-.howd{font-size:12px;color:#666;line-height:1.6}
-/* CAT */
-.catg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px}
-.catc{border-radius:15px;padding:18px 12px;text-align:center;border-width:2px;border-style:solid;background:#fff;transition:all .2s}
-.catc:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.09)}
-.catic{font-size:30px;margin-bottom:5px}
-.catn{font-weight:800;font-size:12px}
-.catct{font-size:10.5px;color:#888;margin-top:2px}
-/* FILTER */
-.fbar{background:#fff;border-radius:15px;padding:14px 18px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.fbar input,.fbar select{border:2px solid #eee;border-radius:9px;padding:7px 11px;font-size:13px;outline:none;flex:1 1 120px;background:#fff}
-.fbar input:focus,.fbar select:focus{border-color:#FF6B6B}
-.rbtn{border:2px solid #FF6B6B;border-radius:9px;padding:7px 12px;background:#fff;color:#FF6B6B;font-weight:700;font-size:12px;flex-shrink:0}
-.pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:20px}
-.pill{border:none;border-radius:16px;padding:5px 13px;background:#f0f0f0;color:#555;font-weight:700;font-size:11.5px}
-.pill.on{background:#FF6B6B;color:#fff}
-.pill:hover:not(.on){background:#e0e0e0}
-.empty{text-align:center;padding:64px 20px;color:#888}
-.empty .ei{font-size:54px;display:block;margin-bottom:11px}
-/* BOOKINGS */
-.bcard{background:#fff;border-radius:16px;padding:18px;box-shadow:0 3px 16px rgba(0,0,0,.07);display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:11px}
-.bico{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.binfo{flex:1;min-width:140px}
-.bt{font-size:14px;font-weight:800}
-.bs{font-size:11.5px;color:#888;margin-top:2px}
-.bact{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.ccbtn{border:2px solid #FF6B6B;border-radius:7px;padding:5px 10px;background:#fff;color:#FF6B6B;font-weight:700;font-size:11.5px}
-.ccbtn:hover{background:#fff0f0}
-.wlc{border-left:4px solid #FDCB6E}
-/* PROFILE */
-.wcard{background:#fff;border-radius:18px;padding:24px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin-bottom:16px}
-.ph{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
-.pav{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#FF6B6B,#FDCB6E);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
-.pn{font-size:19px;font-weight:900}
-.pe{color:#888;font-size:13px;margin-top:2px}
-.pcb{background:linear-gradient(135deg,#6C5CE7,#A29BFE);color:#fff;border-radius:14px;padding:9px 14px;font-weight:800;font-size:12px;text-align:center;margin-left:auto}
-.sdiv{border-top:1px solid #f0f0f0;padding-top:18px;margin-top:2px}
-.krow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.ktag{background:#f7f8fc;border-radius:11px;padding:8px 14px;font-weight:700;font-size:12.5px}
-.akbtn{background:none;border:2px dashed #ddd;border-radius:11px;padding:8px 14px;color:#888;font-weight:700;font-size:12.5px}
-.akbtn:hover{border-color:#FF6B6B;color:#FF6B6B}
-.frow{display:flex;align-items:center;gap:11px;padding:11px;background:#f7f8fc;border-radius:11px;margin-bottom:7px}
-.fi{flex:1}
-.ft{font-weight:700;font-size:13px}
-.fs{font-size:11px;color:#888;margin-top:1px}
-.bsm{background:#FF6B6B;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-weight:700;font-size:11.5px}
-/* ADMIN */
-.alockw{max-width:340px;margin:56px auto;text-align:center;padding:0 20px}
-.aei{font-size:54px;display:block;margin-bottom:11px}
-.ainp{width:100%;border:2px solid #eee;border-radius:11px;padding:12px 16px;font-size:14px;outline:none;margin-bottom:8px;font-family:inherit}
-.ainp:focus{border-color:#FF6B6B}
-.pbtn{background:#FF6B6B;color:#fff;border:none;border-radius:11px;padding:11px 18px;font-weight:800;font-size:14px;width:100%}
-.pbtn:hover{background:#e55}
-.statg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:24px}
-.stc{background:#fff;border-radius:15px;padding:18px;box-shadow:0 3px 16px rgba(0,0,0,.07)}
-.sti{font-size:22px;margin-bottom:5px}
-.stv{font-size:28px;font-weight:900}
-.stl{font-size:11.5px;color:#888;font-weight:600;margin-top:1px}
-.tw{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,.07)}
-.th2{padding:18px 22px;border-bottom:1px solid #f0f0f0;font-size:16px;font-weight:800}
-table{width:100%;border-collapse:collapse}
-th{padding:9px 12px;text-align:left;font-size:10px;font-weight:800;color:#888;letter-spacing:.4px;background:#f7f8fc}
-td{padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:12px}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafafa}
-.ebtn{border:2px solid #A29BFE;border-radius:6px;padding:3px 8px;background:#fff;color:#A29BFE;font-weight:700;font-size:11px}
-.aform{background:#fff;border-radius:18px;padding:22px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin-top:18px}
-.arow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.arow input{border:2px solid #eee;border-radius:9px;padding:8px 12px;font-size:12.5px;outline:none;flex:1 1 110px}
-.arow input:focus{border-color:#FF6B6B}
-.addbtn{background:#FF6B6B;color:#fff;border:none;border-radius:9px;padding:8px 18px;font-weight:800;font-size:13px;flex-shrink:0}
-.lgbtn{border:2px solid #FF6B6B;border-radius:9px;padding:6px 12px;background:#fff;color:#FF6B6B;font-weight:700;font-size:12px}
-/* MODAL */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(3px)}
-.ov.on{display:flex}
-.modal{background:#fff;border-radius:22px;max-width:510px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 36px 100px rgba(0,0,0,.28);animation:mi .3s cubic-bezier(.34,1.56,.64,1)}
-@keyframes mi{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:none}}
-.mh{padding:24px}
-.mb{padding:0 24px 24px}
-.mm{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.mi{background:#f7f8fc;border-radius:9px;padding:11px 12px}
-.mil{font-size:10px;color:#888;font-weight:700;letter-spacing:.4px;margin-bottom:2px}
-.miv{font-weight:700;font-size:12.5px}
-.mdesc{color:#555;line-height:1.75;font-size:13px;margin-bottom:14px}
-.mact{display:flex;gap:8px;margin-top:14px}
-.secbtn{flex:1;padding:11px;border-radius:11px;border:2px solid #eee;background:#fff;color:#333;font-weight:700;font-size:13px}
-.cnfbtn{flex:2;padding:11px;border-radius:11px;border:none;color:#fff;font-weight:800;font-size:13px}
-.xbtn{float:right;background:rgba(255,255,255,.85);border:none;border-radius:50%;width:31px;height:31px;font-size:13px;line-height:31px;text-align:center}
-.ksel{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
-.kbtn{border-width:2px;border-style:solid;border-radius:11px;padding:7px 14px;background:#fff;color:#333;font-weight:700;font-size:12.5px}
-/* TOAST */
-.toast{position:fixed;top:72px;right:18px;z-index:2000;color:#fff;border-radius:12px;padding:11px 16px;box-shadow:0 7px 24px rgba(0,0,0,.18);max-width:290px;font-size:13px;font-weight:600;animation:tin .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:none}
-.toast.s{background:#00B894}
-.toast.i{background:#6C5CE7}
-@keyframes tin{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
-/* FOOTER */
-footer{background:#1a1a2e;color:rgba(255,255,255,.45);padding:30px 20px;text-align:center;margin-top:48px;font-size:12px}
-.fw{max-width:1100px;margin:0 auto}
-.flogo{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:8px;font-size:16px}
-.flogo span{font-weight:900;color:#fff;font-size:13px}
-@media(max-width:600px){
-  .nb{padding:5px 7px;font-size:11px}
-  .bcard,.ph{flex-direction:column;align-items:flex-start}
-  .pcb{margin-left:0}
-  .mm{grid-template-columns:1fr}
-  table{font-size:11px}
-  th,td{padding:7px 8px}
+.hsec{padding-top:9rem;padding-bottom:5rem;position:relative;overflow:hidden;}
+.hsec::before{content:attr(data-bg);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fh);font-size:clamp(5rem,16vw,16rem);color:rgba(217,70,239,.03);pointer-events:none;white-space:nowrap;letter-spacing:.05em;}
+.hmeta{font-size:.72rem;letter-spacing:.15em;color:var(--g50);text-transform:uppercase;margin-bottom:1rem;}
+.hmeta span{color:var(--pk);}
+.htit{font-family:var(--fh);font-size:clamp(3rem,9vw,8rem);line-height:1.0;margin-bottom:1.5rem;}
+.htit em{color:var(--pk);font-style:normal;}
+.hsub{font-size:clamp(.85rem,1.5vw,1rem);color:var(--g80);max-width:640px;margin-bottom:2.5rem;line-height:1.7;}
+.hacts{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g30);max-width:680px;margin-top:3rem;}
+.scard{background:var(--g10);padding:1.5rem;transition:background .2s;}
+.scard:hover{background:var(--g20);}
+.scard .n{font-family:var(--fh);font-size:2.5rem;color:var(--pk);line-height:1;}
+.scard .l{font-size:.7rem;letter-spacing:.1em;color:var(--g50);text-transform:uppercase;margin-top:.3rem;}
+.claim-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g30);max-width:700px;margin-top:3rem;}
+.cc{background:var(--g10);padding:1.5rem;transition:background .2s;}
+.cc:hover{background:var(--g20);}
+.cc .t{font-family:var(--fh);font-size:1.1rem;letter-spacing:.05em;color:var(--pk);margin-bottom:.4rem;}
+.cc .d{font-size:.78rem;color:var(--g80);line-height:1.5;}
+
+/* BTNS */
+.bp{background:var(--pk);color:#000;font-family:var(--fm);font-size:.8rem;letter-spacing:.1em;padding:.9rem 2rem;cursor:crosshair;border:none;transition:all .2s;display:inline-block;}
+.bp:hover{background:#fff;}
+.bo{background:none;color:var(--wh);font-family:var(--fm);font-size:.8rem;letter-spacing:.1em;padding:.9rem 2rem;cursor:crosshair;border:1px solid var(--g30);transition:all .2s;display:inline-block;}
+.bo:hover{border-color:var(--pk);color:var(--pk);}
+
+/* AQUARIUM */
+.aq-wrap{margin:3rem 0;}
+.aq-lbl{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g50);margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;}
+.aq-lbl::after{content:'';flex:1;height:1px;background:var(--g30);}
+.aq-grid{display:grid;grid-template-columns:1fr 40px 1fr;align-items:start;}
+.aq-ist,.aq-sol{border:1px solid var(--g30);padding:1.8rem;}
+.aq-sol{border-color:var(--pk);}
+.aq-boxlbl{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g50);margin-bottom:1rem;}
+.aq-sol .aq-boxlbl{color:var(--pk);}
+.aq-ist ul,.aq-sol ul{list-style:none;}
+.aq-ist li,.aq-sol li{font-size:.82rem;padding:.35rem 0;border-bottom:1px solid var(--g30);color:var(--g80);}
+.aq-ist li:last-child,.aq-sol li:last-child{border-bottom:none;}
+.aq-ist li::before{content:'× ';color:var(--red);font-weight:700;}
+.aq-sol li::before{content:'→ ';color:var(--pk);}
+.aq-arr{font-family:var(--fh);font-size:2.5rem;color:var(--pk);display:flex;align-items:center;justify-content:center;padding-top:2rem;}
+
+/* SOZIAL */
+.sozial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g30);margin:3rem 0;}
+.soz-card{background:var(--g10);padding:2rem;transition:background .2s;}
+.soz-card:hover{background:var(--g15);}
+.soz-num{font-family:var(--fh);font-size:3.5rem;line-height:1;color:var(--pk);margin-bottom:.5rem;}
+.soz-title{font-family:var(--fh);font-size:1.2rem;letter-spacing:.04em;margin-bottom:.8rem;}
+.soz-desc{font-size:.82rem;color:var(--g80);line-height:1.65;}
+.soz-src{font-size:.65rem;color:var(--g50);margin-top:.8rem;letter-spacing:.05em;}
+.sozial-big{border:1px solid var(--g30);border-left:4px solid var(--pk);padding:2.5rem;margin:3rem 0;background:var(--g10);}
+.sozial-big p{font-size:clamp(.9rem,2vw,1.1rem);color:var(--wh);line-height:1.75;font-style:italic;}
+.sozial-big cite{display:block;margin-top:1rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--pk);font-style:normal;}
+.sozial-bar{margin:3rem 0;}
+.sbar-row{display:grid;grid-template-columns:200px 1fr auto;align-items:center;gap:1.5rem;padding:.8rem 0;border-bottom:1px solid var(--g30);}
+.sbar-row:last-child{border-bottom:none;}
+.sbar-label{font-size:.78rem;color:var(--g80);}
+.sbar-track{background:var(--g20);height:6px;overflow:hidden;}
+.sbar-fill{height:100%;background:var(--pk);transition:width 1.2s ease;}
+.sbar-val{font-family:var(--fh);font-size:1.2rem;color:var(--pk);white-space:nowrap;}
+
+/* CARDS */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--g30);}
+.card{background:var(--g10);padding:2rem;transition:background .2s;}
+.card:hover{background:var(--g20);}
+.card .ct{font-family:var(--fh);font-size:1.4rem;letter-spacing:.04em;margin-bottom:.6rem;}
+.card p{font-size:.82rem;color:var(--g80);line-height:1.65;}
+
+/* LANG GRID */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1px;background:var(--g30);margin:2rem 0;}
+.lcard{background:var(--g10);padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;transition:background .2s;}
+.lcard:hover{background:var(--g20);}
+.lcard-flag{font-size:1.4rem;flex-shrink:0;}
+.lcard-name{font-size:.82rem;color:var(--wh);}
+.lcard-type{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;}
+.lcard.uil{border-left:3px solid var(--pk);}
+.lcard.uil .lcard-type{color:var(--pk);}
+.lcard.ail{border-left:3px solid var(--gold);}
+.lcard.ail .lcard-type{color:var(--gold);}
+.lleg{font-size:.72rem;color:var(--g50);margin-top:.5rem;}
+.lleg .u{color:var(--pk);}
+.lleg .a{color:var(--gold);}
+
+/* QUOTE */
+.qbox{background:var(--g10);border:1px solid var(--g30);border-left:3px solid var(--pk);padding:2.5rem;margin:2.5rem 0;position:relative;}
+.qbox::before{content:'"';position:absolute;top:-1.5rem;left:1.5rem;font-family:var(--fh);font-size:8rem;color:rgba(217,70,239,.1);line-height:1;pointer-events:none;}
+.qbox p{font-size:clamp(.9rem,2vw,1.05rem);color:var(--wh);line-height:1.75;position:relative;z-index:1;font-style:italic;}
+.qbox cite{display:block;margin-top:1rem;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--pk);font-style:normal;}
+
+/* IMPACT TABLE */
+.itable{width:100%;border-collapse:collapse;margin:2rem 0;}
+.itable th{background:var(--g20);color:var(--wh);padding:.9rem 1.2rem;text-align:left;font-family:var(--fm);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--g30);}
+.itable td{padding:.9rem 1.2rem;border-bottom:1px solid var(--g30);font-size:.82rem;color:var(--g80);vertical-align:top;}
+.itable tr:hover td{background:var(--g10);}
+.itable td:first-child{color:var(--wh);}
+
+/* FUNDERS */
+.funders{list-style:none;margin-top:1.5rem;}
+.funders li{font-size:.82rem;color:var(--g80);padding:.6rem 0;border-bottom:1px solid var(--g30);}
+.funders li::before{content:'→ ';color:var(--pk);}
+.funders li:last-child{border-bottom:none;}
+
+/* FEAT TABS */
+.ftabs{display:flex;gap:0;border-bottom:1px solid var(--g30);overflow-x:auto;scrollbar-width:none;}
+.ftabs::-webkit-scrollbar{display:none;}
+.ftb{background:none;border:none;border-bottom:2px solid transparent;color:var(--g50);font-family:var(--fm);font-size:.8rem;letter-spacing:.08em;padding:.8rem 1.5rem;cursor:crosshair;transition:all .2s;margin-bottom:-1px;white-space:nowrap;}
+.ftb.active{color:var(--wh);border-bottom-color:var(--pk);}
+.ftb:hover:not(.active){color:var(--g80);}
+.ftab-body{display:none;}
+.ftab-body.active{display:block;}
+.frow{border:1px solid var(--g30);margin-bottom:-1px;transition:border-color .2s;}
+.frow:hover{border-color:var(--g50);}
+.frow.open{border-color:var(--pk);}
+.fhdr{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:1rem;padding:1.2rem 1.5rem;cursor:crosshair;}
+.fhdr h4{font-family:var(--fh);font-size:1.3rem;letter-spacing:.05em;}
+.fpr{font-family:var(--fh);font-size:1.4rem;color:var(--pk);white-space:nowrap;text-align:right;}
+.fpr.inc{font-family:var(--fm);font-size:.7rem;color:var(--g50);letter-spacing:.08em;}
+.ftog{font-size:1.2rem;color:var(--g50);transition:transform .3s;}
+.frow.open .ftog{transform:rotate(45deg);color:var(--pk);}
+.fbody{display:none;padding:0 1.5rem 1.5rem;}
+.frow.open .fbody{display:block;}
+.f2col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+.fclbl{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g50);margin-bottom:.8rem;}
+.fcol ul{list-style:none;}
+.fcol li{font-size:.82rem;color:var(--g80);padding:.25rem 0;border-bottom:1px solid var(--g30);}
+.fcol li::before{content:'· ';color:var(--pk);}
+.opt-opt{font-family:var(--fm);font-size:.68rem;color:var(--g50);letter-spacing:.08em;border:1px solid var(--g30);padding:.2rem .6rem;align-self:center;}
+.ophdr{display:flex;align-items:center;gap:1rem;padding:.8rem 1.5rem;cursor:crosshair;background:var(--g10);border:1px solid var(--g30);border-top:2px solid var(--g40);transition:background .2s;}
+.ophdr:hover{background:var(--g20);}
+.oplbl{font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;color:var(--g50);flex:1;text-transform:uppercase;}
+.opbdg{font-family:var(--fm);font-size:.65rem;letter-spacing:.08em;color:var(--g50);border:1px solid var(--g30);padding:.2rem .6rem;}
+.optog{font-size:1.1rem;color:var(--g50);transition:transform .3s;}
+.ophdr.open .optog{transform:rotate(45deg);color:var(--pk);}
+.opbody{display:none;}
+.opbody.open{display:block;}
+
+/* PRICING */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--g30);margin-top:3rem;}
+.pcard{background:var(--g10);padding:1.5rem;}
+.pcard .pl{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g50);margin-bottom:.5rem;}
+.pcard .pn{font-family:var(--fh);font-size:1.4rem;margin-bottom:.3rem;}
+.pcard .pa{font-family:var(--fh);font-size:2.2rem;color:var(--pk);line-height:1;}
+.pcard .pno{font-size:.72rem;color:var(--g50);margin-top:.5rem;}
+.pcard.tot{background:var(--pk2);border:1px solid var(--pk);}
+.pcard.tot .pa{font-size:3rem;}
+.pflow{display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;align-items:center;margin:2rem 0;}
+.pfbox{border:1px solid var(--g30);padding:1.2rem;text-align:center;}
+.pfbox.hi{border-color:var(--pk);}
+.pfbox .pfl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g50);margin-bottom:.5rem;}
+.pfbox .pfp{font-family:var(--fh);font-size:2rem;color:var(--pk);}
+.pfarr{font-size:1.5rem;color:var(--pk);text-align:center;}
+
+/* DS ACC */
+.dsacc{border:1px solid var(--g30);}
+.dshdr{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 1.5rem;cursor:crosshair;transition:background .2s;}
+.dshdr:hover{background:var(--g20);}
+.dshdr.open{border-bottom:1px solid var(--g30);}
+.dstit{font-family:var(--fm);font-size:.85rem;letter-spacing:.08em;}
+.dstog{font-size:1.2rem;color:var(--g50);transition:transform .3s;}
+.dshdr.open .dstog{transform:rotate(45deg);color:var(--pk);}
+.dsbody{display:none;padding:1.5rem;}
+.dsbody.open{display:block;}
+.dsgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.dsitem{display:flex;gap:1rem;align-items:flex-start;}
+.dsicon{font-size:1.3rem;flex-shrink:0;}
+.dsname{font-family:var(--fh);font-size:1rem;letter-spacing:.05em;margin-bottom:.3rem;}
+.dsdesc{font-size:.78rem;color:var(--g80);line-height:1.5;}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:2rem;}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--g30);}
+.tli{position:relative;margin-bottom:2.5rem;padding-left:2rem;}
+.tld{position:absolute;left:-2rem;top:.3rem;width:10px;height:10px;background:var(--g30);border:1px solid var(--g50);transform:translateX(-50%);}
+.tli.act .tld{background:var(--pk);border-color:var(--pk);}
+.tli.act .tlp{color:var(--pk);}
+.tlp{font-family:var(--fh);font-size:1.3rem;letter-spacing:.05em;margin-bottom:.3rem;}
+.tlx{font-size:.82rem;color:var(--g80);max-width:500px;}
+
+/* MILESTONE */
+.msbox{border:1px solid var(--g30);padding:2rem;margin-top:2rem;}
+.mslbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pk);margin-bottom:1.5rem;}
+.msgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g30);margin-bottom:1px;}
+.msi{background:var(--g10);padding:1.5rem;}
+.msn{font-family:var(--fh);font-size:2rem;color:var(--g30);margin-bottom:.5rem;}
+.msname{font-size:.8rem;color:var(--g80);margin-bottom:.8rem;}
+.msamt{font-family:var(--fh);font-size:1.6rem;}
+.mstot{background:var(--pk2);border:1px solid var(--pk);border-top:none;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;}
+.mstot span{font-size:.7rem;letter-spacing:.15em;color:var(--g50);}
+.mstot-amt{font-family:var(--fh);font-size:2rem;color:var(--pk);}
+
+/* WHY */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--g30);}
+.wcard{background:var(--g10);padding:2rem;transition:background .2s;}
+.wcard:hover{background:var(--g20);}
+.wicon{font-size:1.5rem;margin-bottom:1rem;}
+.wcard h4{font-family:var(--fh);font-size:1.2rem;letter-spacing:.05em;margin-bottom:.5rem;}
+.wcard p{font-size:.82rem;color:var(--g80);}
+
+/* CTA / FOOTER */
+.cta-sec{text-align:center;padding:7rem 0;}
+.cta-sec h2{font-family:var(--fh);font-size:clamp(2rem,5vw,4rem);margin-bottom:1rem;}
+.cta-sec p{font-size:.9rem;color:var(--g80);max-width:500px;margin:0 auto 2.5rem;}
+.cta-acts{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+footer{border-top:1px solid var(--g30);padding:2rem;font-size:.72rem;color:var(--g50);letter-spacing:.05em;}
+.fi{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1160px;margin:0 auto;padding:0 2rem;}
+.flogo{font-family:var(--fh);font-size:1.1rem;letter-spacing:.1em;color:var(--wh);}
+.flogo span{color:var(--pk);}
+
+@media print{
+  #nav,#login-overlay,#landing,.hacts,.cta-sec{display:none!important;}
+  .view{display:block!important;}
+  body{background:#fff;color:#000;}
+  :root{--bk:#fff;--wh:#000;--g10:#f5f5f5;--g20:#eee;--g30:#ccc;--g80:#333;}
+  section{page-break-inside:avoid;}
+}
+@media(max-width:768px){
+  #nav{padding:0 1rem;}
+  .lang-pills{max-width:180px;}
+  .nav-center .tnb{font-size:.65rem;padding:.4rem .8rem;}
+  .aq-grid{grid-template-columns:1fr;}
+  .aq-arr{transform:rotate(90deg);padding:.5rem 0;}
+  .cgrid,.f2col,.dsgrid,.sozial-grid{grid-template-columns:1fr;}
+  .msgrid{grid-template-columns:1fr;}
+  .stats-row,.claim-row{grid-template-columns:1fr;}
+  .pflow{grid-template-columns:1fr;}
+  .sbar-row{grid-template-columns:1fr;gap:.5rem;}
 }
 </style>
 </head>
 <body>
+<!-- LOGIN -->
+<div id="login-overlay">
+  <div class="lb">
+    <div class="ll">GO<span>SNOB</span>.AI</div>
+    <div class="ls" data-i18n="login_sub">Basler Ferienpass — Vertrauliche Dokumente 2026</div>
+    <span class="lbl" data-i18n="lbl_name">Name</span>
+    <input id="ln" class="li" type="text" autocomplete="off"/>
+    <span class="lbl" data-i18n="lbl_code">Zugangscode</span>
+    <input id="lc" class="li" type="password" autocomplete="off"/>
+    <button class="lbtn" onclick="doLogin()">→ <span data-i18n="login_btn">ZUGANG ANFORDERN</span></button>
+    <div id="lerr" class="lerr" data-i18n="lerr">Ungültige Zugangsdaten.</div>
+  </div>
+  <div class="lhint" data-i18n="login_hint">VERTRAULICH · NUR FÜR AUTORISIERTE PERSONEN</div>
+</div>
 
-<nav>
-  <div class="nw">
-    <button class="logo" onclick="go('home')">
-      <div class="li">☀️</div>
-      <div class="lt"><span>Basler</span><span>Ferienpass</span></div>
-    </button>
-    <div class="navlinks">
-      <button class="nb on" data-p="home" onclick="go('home')">🏠 <span data-k="n_home">Home</span></button>
-      <button class="nb" data-p="courses" onclick="go('courses')">📚 <span data-k="n_courses">Kurse</span></button>
-      <button class="nb" data-p="bookings" onclick="go('bookings')" id="bnav">📋 <span data-k="n_bookings">Buchungen</span></button>
-      <button class="nb" data-p="profile" onclick="go('profile')">👨‍👩‍👧‍👦 <span data-k="n_profile">Profil</span></button>
-      <button class="nb" data-p="admin" onclick="go('admin')">⚙️ <span data-k="n_admin">Admin</span></button>
+<!-- LANDING -->
+<div id="landing" class="hidden">
+  <div class="land-top">
+    <div class="land-logo">GO<span>SNOB</span>.AI</div>
+    <div class="land-sub" data-i18n="land_sub">× BASLER FERIENPASS 2026</div>
+  </div>
+  <div class="land-split">
+    <div class="land-half arg" onclick="openView('arg')">
+      <div>
+        <div class="land-tag" data-i18n="land_tag_arg">Gesellschaft · Soziales · Inklusion</div>
+        <h2 class="land-h" data-i18n-html="land_h_arg">WARUM DER FERIENPASS <em>FÜR ALLE.</em></h2>
+        <p class="land-desc" data-i18n="land_desc_arg">Das soziale Versprechen des Basler Ferienpasses — und warum eine moderne Grundlage keine Option, sondern eine Notwendigkeit ist.</p>
+        <div class="land-for" data-i18n-html="land_for_arg">FÜR: <strong>Politik · Förderpartner · Öffentlichkeit · Medien</strong></div>
+        <div class="land-stats">
+          <div class="land-stat"><div class="n">170+</div><div class="l" data-i18n="ls1">Nationalitäten</div></div>
+          <div class="land-stat"><div class="n">55.8%</div><div class="l" data-i18n="ls2">Migrationshintergrund</div></div>
+          <div class="land-stat"><div class="n">14</div><div class="l" data-i18n="ls3">Ferienwochen/Jahr</div></div>
+        </div>
+      </div>
+      <button class="land-btn" data-i18n="land_btn_arg">→ ARGUMENTARIUM ÖFFNEN</button>
     </div>
-    <div class="langbar">
-      <button class="lb on" onclick="setLang('de')">DE</button>
-      <button class="lb" onclick="setLang('fr')">FR</button>
-      <button class="lb" onclick="setLang('en')">EN</button>
+    <div class="land-half prop" onclick="openView('proposal')">
+      <div>
+        <div class="land-tag" data-i18n="land_tag_prop">Technologie · Investition · Umsetzung</div>
+        <h2 class="land-h" data-i18n-html="land_h_prop">WAS WIR BAUEN. <em>WIE ES GEHT.</em></h2>
+        <p class="land-desc" data-i18n="land_desc_prop">Das konkrete Angebot: Features, Preise, Timeline und Zahlungsplan für die vollständige Neugestaltung der Ferienpass-Plattform.</p>
+        <div class="land-for" data-i18n-html="land_for_prop">FÜR: <strong>Auftraggeber · Entscheider · Projektteam</strong></div>
+        <div class="land-stats">
+          <div class="land-stat"><div class="n" style="color:var(--g70)">CHF</div><div class="l" data-i18n="ls4">60k Investition</div></div>
+          <div class="land-stat"><div class="n" style="color:var(--g70)">6</div><div class="l" data-i18n="ls5">Projektphasen</div></div>
+          <div class="land-stat"><div class="n" style="color:var(--g70)">3</div><div class="l" data-i18n="ls6">Milestones</div></div>
+        </div>
+      </div>
+      <button class="land-btn" data-i18n="land_btn_prop">→ PROPOSAL ÖFFNEN</button>
     </div>
-    <div class="pbadge">✓ <span data-k="pass">Pass aktiv</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo" onclick="goLanding()">GO<span>SNOB</span>.AI</div>
+  <div class="nav-center">
+    <button class="tnb active" id="tnb-arg" onclick="openView('arg')" data-i18n="nav_arg">ARGUMENTARIUM</button>
+    <button class="tnb" id="tnb-prop" onclick="openView('proposal')" data-i18n="nav_prop">PROPOSAL</button>
+  </div>
+  <div class="nav-right">
+    <div class="lang-pills" id="langpills"></div>
+    <button class="nav-dl" onclick="window.print()" data-i18n="nav_dl">↓ PDF</button>
   </div>
 </nav>
 
-<div id="toast" class="toast"></div>
+<!-- ===== ARGUMENTARIUM ===== -->
+<div id="view-arg" class="view active">
 
-<!-- ===== HOME ===== -->
-
-<div id="pg-home" class="pg on">
-  <div class="hero">
-    <div class="orb" style="width:260px;height:260px;background:#FF6B6B15;top:-8%;left:-4%"></div>
-    <div class="orb" style="width:340px;height:340px;background:#FDCB6E15;top:4%;left:21%"></div>
-    <div class="orb" style="width:220px;height:220px;background:#4ECDC415;top:-4%;left:55%"></div>
-    <div class="orb" style="width:290px;height:290px;background:#A29BFE15;top:9%;left:73%"></div>
-    <div class="hw">
-      <div class="hpill" data-k="h_pill">🎉 Sommer 2025 — Anmeldung offen</div>
-      <div class="htitle"><span data-k="h1a">Ferienzeit ist</span><br><span class="grad" data-k="h1b">Abenteuerzeit</span></div>
-      <p class="hsub" data-k="h_sub">Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren.</p>
-      <div class="hstats">
-        <div><div class="hv">50+</div><div class="hl" data-k="s_c">Kurse</div></div>
-        <div><div class="hv">200+</div><div class="hl" data-k="s_s">Plätze</div></div>
-        <div><div class="hv">30+</div><div class="hl" data-k="s_p">Anbieter</div></div>
-        <div><div class="hv">0–80</div><div class="hl" data-k="s_pr">CHF</div></div>
-      </div>
-      <div class="sw">
-        <span class="sico">🔍</span>
-        <input id="hs" type="text" data-ph="srch_ph" placeholder="Kurs suchen..." oninput="heroSrch(this.value)"/>
-        <button class="sbtn" onclick="go('courses')" data-k="srch_btn">Suchen</button>
+  <section class="hsec" data-bg="ARGUMENTARIUM">
+    <div class="cont">
+      <div class="hmeta fade"><span data-i18n="a_ref">REF: JUAR-2026-001</span> · <span data-i18n="a_date">MAI 2026</span> · <span data-i18n="a_for">FÜR:</span> JUARBASEL</div>
+      <h1 class="htit fade" data-i18n="a_h1">BASLER FERIENPASS<br><em data-i18n="a_h2">FÜR ALLE.</em></h1>
+      <p class="hsub fade" data-i18n="a_sub">Der Basler Ferienpass ist seit Jahrzehnten eine Institution. Jetzt ist es Zeit, sein Versprechen mit einer modernen Grundlage zu erfüllen — für alle Familien, alle Ferienwochen, alle Sprachen.</p>
+      <div class="stats-row fade">
+        <div class="scard"><div class="n">170+</div><div class="l" data-i18n="s1">Nationalitäten</div></div>
+        <div class="scard"><div class="n">55.8%</div><div class="l" data-i18n="s2">Migrationshintergrund</div></div>
+        <div class="scard"><div class="n">14</div><div class="l" data-i18n="s3">Ferienwochen/Jahr</div></div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="sec">
-    <div class="sech">
-      <div><h2>🔥 <span data-k="feat_t">Beliebt diese Woche</span></h2><p data-k="feat_s">Die am stärksten gefragten Kurse</p></div>
-      <button class="obtn" onclick="go('courses')" data-k="all_btn">Alle Kurse →</button>
+  <!-- A01 -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a1_lbl">01 — WAS DER FERIENPASS BEDEUTET</span>
+      <h2 class="stit fade" data-i18n="a1_tit">Die Ambition des Ferienpasses ist Basel.</h2>
+      <p class="slead fade" data-i18n="a1_lead">Seit Jahrzehnten ein Versprechen an alle Basler Familien — unabhängig von Herkunft, Sprache und Budget.</p>
+      <div class="cgrid fade">
+        <div class="card"><div class="ct" data-i18n="ac1t">Jahrzehnte Tradition</div><p data-i18n="ac1p">Der Basler Ferienpass ist Teil der Basler Stadtidentität. Jedes Jahr nutzen tausende Kinder zwischen 6 und 16 Jahren das Angebot — Sport, Kultur, Natur, Kreativität.</p></div>
+        <div class="card"><div class="ct" data-i18n="ac2t">Soziale Brücke</div><p data-i18n="ac2p">Er ist einer der wenigen Orte, wo Kinder aus allen Schichten, allen Quartieren, allen Hintergründen gemeinsam Ferien erleben. Nicht als Ausnahme — als Selbstverständlichkeit.</p></div>
+        <div class="card"><div class="ct" data-i18n="ac3t">Chancengerechtigkeit</div><p data-i18n="ac3p">Er macht Ferien möglich für Familien, die es sich sonst nicht leisten könnten. Das ist kein Freizeitangebot — das ist aktive Sozialpolitik im Dienst der Stadt Basel.</p></div>
+        <div class="card"><div class="ct" data-i18n="ac4t">Regionale Verankerung</div><p data-i18n="ac4p">Basels vielfältigste Familien — Kernstadt, Riehen, Bettingen, Dreiländereck D–F–CH — alle haben Anspruch auf dieses Angebot. Heute erreicht es sie nicht alle.</p></div>
+      </div>
     </div>
-    <div class="grid" id="hfeat"></div>
-  </div>
+  </section>
 
-  <div class="how">
-    <div class="howi">
-      <h2 style="font-size:clamp(19px,4vw,28px);font-weight:900" data-k="how_t">So funktioniert's</h2>
-      <p style="color:#888;margin-top:4px" data-k="how_s">In 3 Schritten zum Ferienabenteuer</p>
-      <div class="howg">
-        <div>
-          <div class="howico" style="background:linear-gradient(135deg,#FF6B6B22,#FDCB6E22)">🎫</div>
-          <div class="hows" data-k="st1n">SCHRITT 1</div><div class="howt" data-k="st1t">Ferienpass kaufen</div>
-          <p class="howd" data-k="st1d">Einmalig kaufen und den ganzen Sommer profitieren.</p>
+  <!-- A02 SOZIALE WIRKLICHKEIT -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a2_lbl">02 — SOZIALE WIRKLICHKEIT BASEL</span>
+      <h2 class="stit fade" data-i18n="a2_tit">Die Zahlen hinter dem Versprechen.</h2>
+      <p class="slead fade" data-i18n="a2_lead">Inklusion ist kein Schlagwort — sie ist messbar. Und sie zeigt: der Ferienpass erreicht heute bei weitem nicht alle, die ihn brauchen.</p>
+      <div class="sozial-grid fade">
+        <div class="soz-card">
+          <div class="soz-num">44%</div>
+          <div class="soz-title" data-i18n="sz1t">Sprechen zu Hause keine Landessprache</div>
+          <div class="soz-desc" data-i18n="sz1d">Fast die Hälfte der Basler Haushalte kommuniziert zuhause auf Türkisch, Albanisch, Tamilisch, Arabisch oder einer anderen Sprache. Die aktuelle Website existiert für sie faktisch nicht.</div>
+          <div class="soz-src" data-i18n="sz1s">Quelle: Statistisches Amt Basel-Stadt 2024</div>
         </div>
-        <div>
-          <div class="howico" style="background:linear-gradient(135deg,#4ECDC422,#55EFC422)">🔍</div>
-          <div class="hows" data-k="st2n">SCHRITT 2</div><div class="howt" data-k="st2t">Kurse entdecken</div>
-          <p class="howd" data-k="st2d">Filter nach Kategorie, Alter, Woche und Budget.</p>
+        <div class="soz-card">
+          <div class="soz-num">2 Mo.</div>
+          <div class="soz-title" data-i18n="sz2t">Lernrückstand pro Sommer</div>
+          <div class="soz-desc" data-i18n="sz2d">Kinder aus einkommensschwachen Familien verlieren in den Sommerferien bis zu 2 Monate Lernfortschritt. Strukturiertes, günstiges Ferienprogramm ist Bildungspolitik — nicht Freizeitgestaltung.</div>
+          <div class="soz-src" data-i18n="sz2s">Quelle: OECD Education at a Glance 2023</div>
         </div>
-        <div>
-          <div class="howico" style="background:linear-gradient(135deg,#A29BFE22,#FD79A822)">🎉</div>
-          <div class="hows" data-k="st3n">SCHRITT 3</div><div class="howt" data-k="st3t">Buchen & loslegen</div>
-          <p class="howd" data-k="st3d">Ein Klick, Bestätigung per E-Mail.</p>
+        <div class="soz-card">
+          <div class="soz-num">07:00</div>
+          <div class="soz-title" data-i18n="sz3t">Anmeldestart — und wer verliert</div>
+          <div class="soz-desc" data-i18n="sz3d">Anmeldestart früh um 7 Uhr, Website nur auf Deutsch, kein Wartelistensystem. Wer die Sprache nicht beherrscht oder arbeiten muss, hat keine Chance. Das ist struktureller Ausschluss.</div>
+          <div class="soz-src" data-i18n="sz3s">Basler Ferienpass — aktueller Prozess</div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <h2 style="font-size:clamp(18px,3.5vw,27px);font-weight:900;margin-bottom:22px" data-k="cat_t">Nach Kategorie entdecken</h2>
-    <div class="catg" id="catg"></div>
-  </div>
-
-  <footer><div class="fw">
-    <div class="flogo">☀️ <span>Basler Ferienpass 2025</span></div>
-    <p data-k="foot">Demo · basler-ferienpass.ch</p>
-    <p style="margin-top:4px">Admin: <strong style="color:rgba(255,255,255,.75)">admin123</strong></p>
-  </div></footer>
-</div>
-
-<!-- ===== COURSES ===== -->
-
-<div id="pg-courses" class="pg">
-  <div class="sec" style="padding-top:34px">
-    <h1 style="font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:5px" data-k="cr_t">Kurse entdecken</h1>
-    <p id="cr-count" style="color:#888;margin-bottom:22px"></p>
-    <div class="fbar">
-      <input id="fi-s" type="text" data-ph="srch_ph" placeholder="🔍 Suchen..." oninput="doFilter()"/>
-      <select id="fi-c" onchange="doFilter()"></select>
-      <select id="fi-w" onchange="doFilter()"></select>
-      <select id="fi-p" onchange="doFilter()"></select>
-      <button class="rbtn" onclick="resetF()" data-k="rst">Reset</button>
-    </div>
-    <div class="pills" id="pills"></div>
-    <div class="grid" id="cgrid"></div>
-    <div id="nores" class="empty" style="display:none">
-      <span class="ei">😔</span>
-      <h3 data-k="nores_t">Keine Kurse gefunden</h3>
-      <p style="margin-top:5px" data-k="nores_s">Versuche andere Filter</p>
-    </div>
-  </div>
-  <footer><div class="fw">
-    <div class="flogo">☀️ <span>Basler Ferienpass 2025</span></div>
-    <p>Admin: <strong style="color:rgba(255,255,255,.75)">admin123</strong></p>
-  </div></footer>
-</div>
-
-<!-- ===== BOOKINGS ===== -->
-
-<div id="pg-bookings" class="pg">
-  <div class="sec" style="padding-top:34px">
-    <h1 style="font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:5px" data-k="bk_t">Meine Buchungen</h1>
-    <p id="bk-meta" style="color:#888;margin-bottom:22px"></p>
-    <div id="bklist"></div>
-  </div>
-</div>
-
-<!-- ===== PROFILE ===== -->
-
-<div id="pg-profile" class="pg">
-  <div class="sec" style="padding-top:34px;max-width:740px">
-    <h1 style="font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:24px" data-k="pr_t">Familienprofil</h1>
-    <div class="wcard">
-      <div class="ph">
-        <div class="pav">👩</div>
-        <div><div class="pn">Claudia Meier</div><div class="pe">claudia.meier@gmail.com</div></div>
-        <div class="pcb">✓ <span data-k="pass">Pass aktiv</span><br><span style="font-size:10px;opacity:.75;font-weight:600">Sommer 2025</span></div>
+      <div class="sozial-bar fade">
+        <div class="sbar-row"><div class="sbar-label" data-i18n="sbar1l">Deutsch als Erstsprache</div><div class="sbar-track"><div class="sbar-fill" style="width:44%"></div></div><div class="sbar-val">44%</div></div>
+        <div class="sbar-row"><div class="sbar-label" data-i18n="sbar2l">Migrationshintergrund</div><div class="sbar-track"><div class="sbar-fill" style="width:55.8%"></div></div><div class="sbar-val">55.8%</div></div>
+        <div class="sbar-row"><div class="sbar-label" data-i18n="sbar3l">Kinder in Armut (CH-Schnitt)</div><div class="sbar-track"><div class="sbar-fill" style="width:8%"></div></div><div class="sbar-val">8%</div></div>
+        <div class="sbar-row"><div class="sbar-label" data-i18n="sbar4l">Ferienwochen abgedeckt</div><div class="sbar-track"><div class="sbar-fill" style="width:14%"></div></div><div class="sbar-val">2/14</div></div>
       </div>
-      <div class="sdiv">
-        <strong style="font-size:13.5px;font-weight:800" data-k="kids_l">Kinder</strong>
-        <div class="krow" id="krow">
-          <div class="ktag">👧 Lena (8)</div>
-          <div class="ktag">👦 Tim (14)</div>
-          <button class="akbtn" onclick="addKid()" data-k="add_k">+ Kind hinzufügen</button>
+      <div class="sozial-big fade">
+        <p data-i18n="sz_quote">Der Ferienpass verspricht: Ferien für alle. Aber wer kein Deutsch spricht, keine Zeit hat sich um 7 Uhr morgens einzuloggen, kein Geld für die Verkaufsstelle — der ist ausgeschlossen. Nicht aus böser Absicht. Sondern weil die Infrastruktur nicht mitgewachsen ist.</p>
+        <cite data-i18n="sz_cite">Die Lösung ist nicht Goodwill. Die Lösung ist digitale Infrastruktur.</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- A03 AQUARIUM -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a3_lbl">03 — EIN VERSPRECHEN UNTER DRUCK</span>
+      <h2 class="stit fade" data-i18n="a3_tit">Das Angebot ist gewachsen. Die Infrastruktur nicht.</h2>
+      <p class="slead fade" data-i18n="a3_lead">Das trifft genau jene Familien am härtesten, die den Ferienpass am meisten brauchen.</p>
+      <div class="aq-wrap fade">
+        <div class="aq-lbl" data-i18n="aq_lbl">IST-ZUSTAND → VERBESSERUNG</div>
+        <div class="aq-grid">
+          <div class="aq-ist">
+            <div class="aq-boxlbl" data-i18n="aq_ist">VON — HEUTE</div>
+            <ul>
+              <li data-i18n="af1">Website aus einer anderen Ära — nicht mobil, nicht mehrsprachig</li>
+              <li data-i18n="af2">Physischer Pass nur an Verkaufsstellen — Aufwand für jede Familie</li>
+              <li data-i18n="af3">Anmeldestart 07:00 Uhr — Stress, Chaos, kein Wartelistensystem</li>
+              <li data-i18n="af4">Keine modernen Zahlungsmethoden — kein TWINT, kein Apple Pay</li>
+              <li data-i18n="af5">Telefonsupport nur Deutsch, Mo–Fr 9–12h</li>
+              <li data-i18n="af6">Nur Sommer- und Herbstferien — 14 Wochen möglich, 2 genutzt</li>
+              <li data-i18n="af7">Kein Familienprofil, kein Kalender, keine Erinnerungen</li>
+            </ul>
+          </div>
+          <div class="aq-arr">→</div>
+          <div class="aq-sol">
+            <div class="aq-boxlbl" data-i18n="aq_sol">ZU — ZIEL</div>
+            <ul>
+              <li data-i18n="at1">Moderne Plattform — mobil, dreisprachig, intuitiv</li>
+              <li data-i18n="at2">Digitaler Pass — sofort auf dem Smartphone, PDF-Download</li>
+              <li data-i18n="at3">Transparente Wartelisten, faire Buchung für alle</li>
+              <li data-i18n="at4">TWINT, Kreditkarte, Apple Pay — alles integriert</li>
+              <li data-i18n="at5">AI-Assistent in 11 Sprachen, 24/7</li>
+              <li data-i18n="at6">Alle 14 Ferienwochen ganzjährig abgedeckt</li>
+              <li data-i18n="at7">Familienprofile, Kalender, Erinnerungen, Favoriten</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-    <div class="wcard">
-      <strong style="font-size:15px;font-weight:800">❤️ <span data-k="sv_t">Gespeicherte Kurse</span></strong>
-      <div id="favlist" style="margin-top:12px"></div>
+  </section>
+
+  <!-- A04 SPRACHEN -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a4_lbl">04 — BASEL SPRICHT VIELE SPRACHEN</span>
+      <h2 class="stit fade" data-i18n="a4_tit">Der Ferienpass auch.</h2>
+      <p class="slead fade" data-i18n="a4_lead">Basel-Stadt hat über 170 Nationalitäten. 55.8% der Bevölkerung hat einen Migrationshintergrund. Der Ferienpass spricht heute nur Deutsch.</p>
+      <div class="lgrid fade">
+        <div class="lcard uil"><div class="lcard-flag">🇩🇪</div><div><div class="lcard-name">Deutsch</div><div class="lcard-type" data-i18n="ui_lang">Plattform UI</div></div></div>
+        <div class="lcard uil"><div class="lcard-flag">🇫🇷</div><div><div class="lcard-name">Français</div><div class="lcard-type" data-i18n="ui_lang">Plattform UI</div></div></div>
+        <div class="lcard uil"><div class="lcard-flag">🇬🇧</div><div><div class="lcard-name">English</div><div class="lcard-type" data-i18n="ui_lang">Plattform UI</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇮🇹</div><div><div class="lcard-name">Italiano</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇹🇷</div><div><div class="lcard-name">Türkçe</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇽🇰</div><div><div class="lcard-name">Shqip</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇷🇸</div><div><div class="lcard-name">Srpski / Hrvatski</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇪🇸</div><div><div class="lcard-name">Español</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇵🇹</div><div><div class="lcard-name">Português</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇺🇦</div><div><div class="lcard-name">Українська</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+        <div class="lcard ail"><div class="lcard-flag">🇮🇳</div><div><div class="lcard-name">தமிழ்</div><div class="lcard-type" data-i18n="ai_lang">AI Assistent</div></div></div>
+      </div>
+      <p class="lleg fade"><span class="u">■</span> <span data-i18n="leg_ui">Plattform-Interface (DE / FR / EN)</span> &nbsp;·&nbsp; <span class="a">■</span> <span data-i18n="leg_ai">AI-Telefonassistent (8 weitere Sprachen)</span></p>
+      <div class="qbox fade">
+        <p data-i18n="q1">Ein AI-Telefonassistent in Türkisch, Albanisch, Tamilisch und Ukrainisch bedeutet: Jede Mutter, jeder Vater kann in seiner Muttersprache anrufen — um 22 Uhr, wenn die Kinder schlafen — und einen Kurs buchen. Ohne Scham. Ohne Umweg. Ohne Wartezeit.</p>
+        <cite data-i18n="q1c">Das ist der Unterschied zwischen Teilhabe und Ausschluss.</cite>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- A05 INVESTITION -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a5_lbl">05 — MEHR ALS DIGITALISIERUNG</span>
+      <h2 class="stit fade" data-i18n="a5_tit">Eine Investition in Basel.</h2>
+      <p class="slead fade" data-i18n="a5_lead">Eine Investition in die Plattform ist eine Investition in Chancengerechtigkeit, Familienentlastung und die Zukunft der Region Basel.</p>
+      <div class="cgrid fade">
+        <div class="card"><div class="ct" data-i18n="ab1t">Chancengerechtigkeit in den Ferien</div><p data-i18n="ab1p">Kinder aus einkommensschwachen Familien verlieren in den Ferien stärker den Anschluss. Strukturiertes, günstiges Ferienprogramm ist Bildungspolitik.</p></div>
+        <div class="card"><div class="ct" data-i18n="ab2t">Entlastung berufstätiger Eltern</div><p data-i18n="ab2p">14 Ferienwochen pro Jahr sind eine logistische Dauerherausforderung. Kalenderintegration und transparente Wartelisten geben Planungssicherheit — weniger Stress, weniger Arbeitsausfälle.</p></div>
+        <div class="card"><div class="ct" data-i18n="ab3t">Ganzjährig — alle 14 Wochen</div><p data-i18n="ab3p">Heute: nur Sommer- und Herbstferien. Ziel: alle 14 Wochen. Ohne digitale Infrastruktur nicht realisierbar.</p></div>
+        <div class="card"><div class="ct" data-i18n="ab4t">Basel als überregionales Vorbild</div><p data-i18n="ab4p">Eine modernisierte Plattform positioniert Basel als Pionier in kommunaler Jugendförderung — sichtbar überregional.</p></div>
+        <div class="card"><div class="ct" data-i18n="ab5t">Resiliente Organisation</div><p data-i18n="ab5p">Digitale Prozesse machen das System unabhängig von Einzelpersonen. Wissen steckt in der Plattform — nicht im Kopf einer einzigen Mitarbeiterin.</p></div>
+        <div class="card"><div class="ct" data-i18n="ab6t">Mehr Wirkung mit gleichem Team</div><p data-i18n="ab6p">Mit automatisierten Zahlungen, Anbieter-Selfservice und AI-Support kann das Team deutlich mehr Familien, Anbieter und Ferienwochen abdecken.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A06 IMPACT TABLE -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a6_lbl">06 — WAS DIE INVESTITION BEWIRKT</span>
+      <h2 class="stit fade" data-i18n="a6_tit">Konkret. Messbar. Für alle.</h2>
+      <table class="itable fade">
+        <thead><tr><th data-i18n="th1">Was entsteht</th><th data-i18n="th2">Was das für Familien bedeutet</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="r1a">Digitaler Ferienpass (Smartphone)</td><td data-i18n="r1b">Kein Weg zur Verkaufsstelle — für alle sofort erreichbar</td></tr>
+          <tr><td data-i18n="r2a">Plattform in DE / FR / EN</td><td data-i18n="r2b">Keine Familie wird wegen Sprache ausgeschlossen</td></tr>
+          <tr><td data-i18n="r3a">AI-Assistent in 11 Sprachen, 24/7</td><td data-i18n="r3b">Jede Familie bucht in ihrer Muttersprache — zu jeder Zeit</td></tr>
+          <tr><td data-i18n="r4a">Automatische Zahlungen &amp; Wartelisten</td><td data-i18n="r4b">Transparenz, Fairness — kein Durchkämpfen um 7 Uhr morgens</td></tr>
+          <tr><td data-i18n="r5a">Familienprofile &amp; Kursfilter</td><td data-i18n="r5b">Richtige Angebote nach Alter, Preis, Datum — selbst gefunden</td></tr>
+          <tr><td data-i18n="r6a">Ganzjähriger Betrieb</td><td data-i18n="r6b">Alle 14 Ferienwochen: Sommer, Herbst, Winter, Frühling, Fasnacht</td></tr>
+          <tr><td data-i18n="r7a">Selfservice der Kursanbieter</td><td data-i18n="r7b">Mehr Angebote, höhere Qualität — ohne mehr Personal</td></tr>
+          <tr><td data-i18n="r8a">Überregionale Vernetzung</td><td data-i18n="r8b">Anbieter aus Riehen, Bettingen, Basel-Landschaft, Dreiländereck</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- A07 KERNBOTSCHAFT -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="a7_lbl">07 — KERNBOTSCHAFT</span>
+      <h2 class="stit fade" data-i18n="a7_tit">Für Kinder. Für Familien. Für Basel.</h2>
+      <div class="qbox fade">
+        <p data-i18n="core_msg">Der Basler Ferienpass ist seit Jahrzehnten ein Versprechen an alle Basler Familien: Ferien sind für jedes Kind möglich — unabhängig von Herkunft, Sprache und Budget. Dieses Versprechen zu halten braucht heute eine moderne Grundlage. Eine Investition in die Digitalisierung des Ferienpasses ist eine Investition in Chancengerechtigkeit, in Familienentlastung und in die Zukunft der gesamten Region Basel.</p>
+        <cite data-i18n="core_cite">Basler Ferienpass — Für Kinder. Für Familien. Für Basel.</cite>
+      </div>
+      <h3 style="font-family:var(--fh);font-size:1.6rem;letter-spacing:.05em;margin:3rem 0 1rem" data-i18n="funders_t">Mögliche Förderpartner</h3>
+      <ul class="funders fade">
+        <li data-i18n="fund1">Erziehungsdepartement Basel-Stadt (bestehender Partner)</li>
+        <li data-i18n="fund2">Bürgergemeinde Basel (bestehender Partner)</li>
+        <li data-i18n="fund3">Christoph Merian Stiftung — Schwerpunkt Soziales &amp; Stadtentwicklung</li>
+        <li data-i18n="fund4">Sophie und Karl Binding Stiftung — Schwerpunkt Kinder &amp; Jugend</li>
+        <li data-i18n="fund5">Jacobs Foundation — Schwerpunkt Bildung &amp; Chancengerechtigkeit</li>
+        <li data-i18n="fund6">Digitalisierungsfonds Kanton Basel-Stadt</li>
+        <li data-i18n="fund7">Private Sponsoren mit CSR-Fokus auf Inklusion, Bildung, Digitalisierung</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-sec">
+    <div class="cont">
+      <span class="slbl" data-i18n="cta_arg_lbl">08 — NÄCHSTE SCHRITTE</span>
+      <h2 data-i18n="cta_tit">Bereit loszulegen?</h2>
+      <p data-i18n="cta_sub">Wir freuen uns auf das Gespräch.</p>
+      <div class="cta-acts">
+        <a href="mailto:team@gosnob.com" class="bp">→ team@gosnob.com</a>
+        <button class="bo" onclick="window.print()" data-i18n="cta_pdf_arg">↓ ALS PDF</button>
+        <button class="bo" onclick="openView('proposal')" data-i18n="cta_to_prop">→ ZUM PROPOSAL</button>
+      </div>
+    </div>
+  </section>
+
 </div>
+<!-- ===== PROPOSAL ===== -->
+<div id="view-proposal" class="view">
 
-<!-- ===== ADMIN ===== -->
-
-<div id="pg-admin" class="pg">
-  <div id="alock">
-    <div class="alockw">
-      <span class="aei">🔐</span>
-      <h2 style="font-size:22px;font-weight:900;margin-bottom:5px" data-k="adm_t">Admin-Zugang</h2>
-      <p style="color:#888;margin-bottom:18px" data-k="adm_s">Bitte Passwort eingeben</p>
-      <input id="apw" class="ainp" type="password" placeholder="Passwort..." data-ph="pw_ph" onkeydown="if(event.key==='Enter')aLogin()"/>
-      <p style="font-size:11px;color:#aaa;margin-bottom:12px">Demo: "admin123"</p>
-      <button class="pbtn" onclick="aLogin()" data-k="adm_btn">Einloggen</button>
+  <section class="hsec" data-bg="PROPOSAL">
+    <div class="cont">
+      <div class="hmeta fade">REF: SNOB-2026-001 · <span data-i18n="p_date">DATUM: MAI 2026</span> · <span data-i18n="p_client">KUNDE:</span> BASLER FERIENPASS</div>
+      <h1 class="htit fade">BASLER FERIENPASS<br><em>JUAR</em></h1>
+      <p class="hsub fade" data-i18n="p_sub">Komplette Neugestaltung der Präsenz und manuellen Prozesse — AI-gestützt, modular, skalierbar.</p>
+      <div class="hacts fade">
+        <button class="bp" onclick="window.print()" data-i18n="p_dl">↓ PROPOSAL DOWNLOADEN</button>
+        <a href="mailto:team@gosnob.com" class="bo" data-i18n="p_contact">→ KONTAKT AUFNEHMEN</a>
+      </div>
+      <div class="claim-row fade">
+        <div class="cc"><div class="t" data-i18n="cl1t">FÜR ALLE FAMILIEN</div><div class="d" data-i18n="cl1d">Unabhängig von Hintergrund &amp; Budget</div></div>
+        <div class="cc"><div class="t" data-i18n="cl2t">NIEDERSCHWELLIG</div><div class="d" data-i18n="cl2d">Einfach. Digital. Für jeden zugänglich.</div></div>
+        <div class="cc"><div class="t" data-i18n="cl3t">INKLUSIV</div><div class="d" data-i18n="cl3d">DE / FR / EN — keine Sprachbarrieren</div></div>
+      </div>
     </div>
-  </div>
-  <div id="adash" style="display:none">
-    <div class="sec" style="padding-top:34px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:8px">
-        <h1 style="font-size:clamp(19px,4vw,27px);font-weight:900">⚙️ <span data-k="adm_dash">Admin Dashboard</span></h1>
-        <button class="lgbtn" onclick="aLogout()" data-k="adm_out">Logout</button>
-      </div>
-      <div class="statg" id="astats"></div>
-      <div class="tw">
-        <div class="th2" data-k="adm_ov">Kursübersicht</div>
-        <div style="overflow-x:auto"><table><thead><tr id="athead"></tr></thead><tbody id="atbody"></tbody></table></div>
-      </div>
-      <div class="aform">
-        <strong style="font-size:15px;font-weight:800" data-k="adm_add">➕ Neuen Kurs hinzufügen</strong>
-        <div class="arow">
-          <input id="nt" data-ph="nt_ph" placeholder="Titel"/>
-          <input id="np" data-ph="np_ph" placeholder="Anbieter"/>
-          <input id="nc" data-ph="nc_ph" placeholder="Kategorie"/>
-          <input id="npr" data-ph="npr_ph" placeholder="Preis CHF" type="number"/>
-          <button class="addbtn" onclick="addCourse()" data-k="adm_abtn">Hinzufügen</button>
+  </section>
+
+  <!-- P01 AUSGANGSLAGE -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="p1_lbl">01 — AUSGANGSLAGE</span>
+      <h2 class="stit fade" data-i18n="p1_tit">Die Ambition des Ferienpasses wächst.</h2>
+      <p class="slead fade" data-i18n="p1_lead">Die neue Ausrichtung erfordert eine vollständige Neugestaltung. Unsere Lösung: moderne AI-gestützte UX und modulare Architektur.</p>
+      <div class="aq-wrap fade">
+        <div class="aq-lbl" data-i18n="aq_lbl">IST-ZUSTAND → VERBESSERUNG</div>
+        <div class="aq-grid">
+          <div class="aq-ist">
+            <div class="aq-boxlbl" data-i18n="aq_ist">VON — HEUTE</div>
+            <ul>
+              <li data-i18n="pf1">Einer von vielen Anbietern von Sommerferienkursen</li>
+              <li data-i18n="pf2">Fokus auf Gratis / Günstigangebote</li>
+              <li data-i18n="pf3">Unterrepräsentierte Nischen-Kategorien</li>
+              <li data-i18n="pf4">Manuelle Prozesse &amp; veraltete digitale Präsenz</li>
+            </ul>
+          </div>
+          <div class="aq-arr">→</div>
+          <div class="aq-sol">
+            <div class="aq-boxlbl" data-i18n="aq_sol">ZU — ZIEL</div>
+            <ul>
+              <li data-i18n="pt1">Führende Plattform für Ferienkurse, ganzjährig</li>
+              <li data-i18n="pt2">Attraktives &amp; ausgewogenes Portfolio über alle Preiskategorien</li>
+              <li data-i18n="pt3">Ansprechend für alle Familien</li>
+              <li data-i18n="pt4">Moderne AI-gestützte User Experience</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- BOOK MODAL -->
+  <!-- P02 FEATURES -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="p2_lbl">02 — LEISTUNGSUMFANG</span>
+      <h2 class="stit fade" data-i18n="p2_tit">Was wir liefern.</h2>
+      <p class="slead fade" data-i18n="p2_lead">Drei User-Perspektiven: Familien, Kursanbieter, Ferienpass-Team — plus technische Infrastruktur als Fundament.</p>
+      <div class="fade">
+        <div class="ftabs">
+          <button class="ftb active" onclick="showFtab('families',this)" data-i18n="ftab_fam">FAMILIEN</button>
+          <button class="ftb" onclick="showFtab('providers',this)" data-i18n="ftab_prov">ANBIETER</button>
+          <button class="ftb" onclick="showFtab('team',this)" data-i18n="ftab_team">FERIENPASS TEAM</button>
+          <button class="ftb" onclick="showFtab('infra',this)" data-i18n="ftab_infra">WEB &amp; ARCHITEKTUR</button>
+        </div>
 
-<div id="bkmod" class="ov" onclick="if(event.target===this)this.classList.remove('on')">
-  <div class="modal">
-    <div class="mh" id="bkmod-h"></div>
-    <div class="mb">
-      <div class="mm" id="bkmod-m"></div>
-      <div>
-        <strong style="font-size:13px;font-weight:800" id="wck-lbl">Für welches Kind?</strong>
-        <div class="ksel" id="ksel"></div>
-      </div>
-      <div class="mact">
-        <button class="secbtn" id="bkmod-cancel" onclick="document.getElementById('bkmod').classList.remove('on')">Abbrechen</button>
-        <button class="cnfbtn" id="bkmod-ok" onclick="confirmBook()">🎉 Jetzt buchen</button>
+        <!-- FAMILIEN TAB -->
+        <div id="ftab-families" class="ftab-body active">
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="f1h">Streamlined Registration &amp; Access</h4><div class="fpr">CHF 4'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="f1w1">Guided Registration via Sign-up Form</li><li data-i18n="f1w2">Simple Sign-in mit Email oder Google</li><li data-i18n="f1w3">Persistentes Family Account / Profil</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="f1b1">Effortless Sign-up — keine Reibung</li><li data-i18n="f1b2">Family Profile vereinfacht Einschreibungen</li><li data-i18n="f1b3">Ermöglicht personalisierte Empfehlungen</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="f2h">All-Digital Ferienpass</h4><div class="fpr">CHF 4'500</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="f2w1">Digitaler Pass mit PDF-Download</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="f2b1">Eliminiert komplexe physische Logistik</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="f3h">Modern Course Marketplace</h4><div class="fpr">CHF 8'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="f3w1">Filter: Alter / Datum / Kategorie / Preis</li><li data-i18n="f3w2">Filter speicher- und teilbar</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="f3b1">Easy Filtering verbessert Kurs-Discovery</li><li data-i18n="f3b2">Erhöht Purchase Conversion</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="f4h">Integrated Payments &amp; Waitlists</h4><div class="fpr">CHF 12'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="f4w1">Payments via Stripe / TWINT (inkl. Refunds)</li><li data-i18n="f4w2">Automatisches Waitlist Matching</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="f4b1">Eliminiert kritische Reibungspunkte</li><li data-i18n="f4b2">Erhöht Enrollment-Vorhersagbarkeit</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="f5h">Intelligent Advice 24/7</h4><div class="fpr">CHF 6'500</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="f5w1">Conversational AI Agent — berät und unterstützt</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="f5b1">Shopping Experience zugänglich &amp; personalisiert</li><li data-i18n="f5b2">24/7 ohne manuellen Aufwand</li></ul></div></div></div></div>
+          <div class="ophdr" onclick="tOpt(this)"><span class="oplbl" data-i18n="opt_lbl">+ OPTIONALE ERWEITERUNGEN</span><span class="opbdg" data-i18n="opt_bdg">NICHT IM BASE PACKAGE</span><span class="optog">+</span></div>
+          <div class="opbody">
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Interactive Preference Profiling</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>AI führt Kinder &amp; Eltern durch Self-Discovery</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Interesse-Profile fördern Talente von Kindern</li></ul></div></div></div></div>
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Course Planning Calendar</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Kalenderansicht, Drag &amp; Drop</li><li>Outlook / Google / Apple Kalender Sync</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Vereinfacht Ferienplanung für beschäftigte Familien</li></ul></div></div></div></div>
+          </div>
+        </div>
+
+        <!-- ANBIETER TAB -->
+        <div id="ftab-providers" class="ftab-body">
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="p1h">Streamlined Registration</h4><div class="fpr" class="inc">Im Family-Preis</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="p1w1">Guided Registration via Sign-up Form</li><li data-i18n="p1w2">Transparente Profil-Freigabe</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="p1b1">Klare Registrierung schafft Vertrauen</li><li data-i18n="p1b2">Eliminiert Reibung im Onboarding</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="p2h">Assisted Course Publishing</h4><div class="fpr">CHF 8'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li data-i18n="p2w1">Geführte Kurs-Profil-Erstellung</li><li data-i18n="p2w2">Transparenter Publishing Review Status</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li data-i18n="p2b1">Guidance reduziert manuellen Aufwand</li><li data-i18n="p2b2">Anbieter liefern vollständige Daten von Anfang an</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Integrated Payments &amp; Waitlists</h4><div class="fpr inc" data-i18n="inc_fam">Im Family-Preis inbegriffen</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Payments via Stripe / TWINT (inkl. Refunds)</li><li>Transparente Waitlists</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Anbieter werden sofort ausgezahlt</li><li>Sichtbare Waitlists ermöglichen proaktives Management</li></ul></div></div></div></div>
+          <div class="ophdr" onclick="tOpt(this)"><span class="oplbl" data-i18n="opt_lbl">+ OPTIONALE ERWEITERUNGEN</span><span class="opbdg" data-i18n="opt_bdg">NICHT IM BASE PACKAGE</span><span class="optog">+</span></div>
+          <div class="opbody">
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Brand Asset Library &amp; Templates</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Upload &amp; Organisieren von Media Assets</li><li>Konfigurierbare Kurs-Listing-Templates</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Professional-Grade Kurs-Listing-Erstellung</li></ul></div></div></div></div>
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Automated Publishing Review</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>AI-basierte Quality Readiness Checklist</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Verbessert Listing-Qualität automatisch</li></ul></div></div></div></div>
+          </div>
+        </div>
+
+        <!-- TEAM TAB -->
+        <div id="ftab-team" class="ftab-body">
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="t1h">Reviewing Providers &amp; Courses</h4><div class="fpr" class="inc">Im Package</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Eingebettete Review-Workflows: Anbieter / Kurse</li><li>Automatische Notifications</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Eliminiert manuelle Übersicht</li><li>Verlässliche Kontrollpunkte</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="t2h">Portfolio Management Analytics</h4><div class="fpr">CHF 5'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Daten: Kategorie, Portfolio, Live-Kapazität</li><li>Admin Filter: Kurs-Kategorie &amp; Preisband</li><li>XLS-Export</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Reduziert manuelle Datenarbeit massiv</li><li>All-digital ersetzt Druck- &amp; Verteilkosten</li></ul></div></div></div></div>
+          <div class="ophdr" onclick="tOpt(this)"><span class="oplbl" data-i18n="opt_lbl">+ OPTIONALE ERWEITERUNGEN</span><span class="opbdg" data-i18n="opt_bdg">NICHT IM BASE PACKAGE</span><span class="optog">+</span></div>
+          <div class="opbody">
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Gifts &amp; Discounts</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Geschenk &amp; Rabatt-Vouchers</li><li>Sponsoring &amp; Seasonal Discounts</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Neue moderne Kaufmodalitäten</li></ul></div></div></div></div>
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Rating System</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Stern &amp; Kommentar-Bewertungssystem</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Natürliche Feedback-Schleife für Kurs-Performance</li></ul></div></div></div></div>
+          </div>
+        </div>
+
+        <!-- INFRA TAB -->
+        <div id="ftab-infra" class="ftab-body">
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="i1h">Modern Website Design</h4><div class="fpr">CHF 12'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Spacious &amp; uncluttered Design</li><li>Full Ferienpass Branding</li><li>Trilingual: DE / FR / EN</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Modernes Branding zieht mehr Familien an</li><li>Höhere Qualität bei Kursanbietern</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4 data-i18n="i2h">Modular Architecture</h4><div class="fpr">CHF 20'000</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Erweiterbar: Base → Advanced Features</li><li>Latest Industry Standards</li><li>Virtually Zero Maintenance</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Features über Zeit hinzufügen</li><li>Keine Abhängigkeit von einzelnem Admin</li></ul></div></div></div></div>
+          <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Metanet.ch Hosting</h4><div class="fpr inc" data-i18n="i3_note">Direkt von Metanet.ch</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Metanet.ch — Datenspeicherung in der Schweiz</li><li>Exzellenter Customer Support</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Direktverbindung mit lokalem Provider</li><li>Kontinuierliche Performance</li></ul></div></div></div></div>
+          <div class="ophdr" onclick="tOpt(this)"><span class="oplbl" data-i18n="opt_lbl">+ OPTIONALE ERWEITERUNGEN</span><span class="opbdg" data-i18n="opt_bdg">NICHT IM BASE PACKAGE</span><span class="optog">+</span></div>
+          <div class="opbody">
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Extended Language Assistance</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>Multi-Agent AI Support in 100+ Sprachen</li><li>Website-Inhalte übersetzen sich dynamisch</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Keine Sprachbarriere — für wirklich alle Familien</li></ul></div></div></div></div>
+            <div class="frow" onclick="tFeat(this)"><div class="fhdr"><h4>Mobile Communication</h4><div class="opt-opt" data-i18n="opt_tag">OPTIONAL</div><div class="ftog">+</div></div><div class="fbody"><div class="f2col"><div class="fcol"><div class="fclbl" data-i18n="col_w">WAS</div><ul><li>AI Support Agent in WhatsApp &amp; SMS</li></ul></div><div class="fcol"><div class="fclbl" data-i18n="col_why">WARUM</div><ul><li>Eltern on-the-go — keine App nötig</li></ul></div></div></div></div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
+
+  <!-- P03 INVESTITION -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="p3_lbl">03 — INVESTITION</span>
+      <h2 class="stit fade" data-i18n="p3_tit">Gesamtübersicht.</h2>
+      <p class="slead fade" data-i18n="p3_desc">Alle Preise in CHF, exkl. MwSt. Hosting wird separat direkt von Metanet.ch fakturiert.</p>
+      <div class="pgrid fade">
+        <div class="pcard"><div class="pl" data-i18n="pc_fam">Familien Features</div><div class="pn" data-i18n="pcn1">Registration &amp; Access</div><div class="pa">4'000</div><div class="pno">CHF</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_fam">Familien Features</div><div class="pn" data-i18n="pcn2">All-Digital Ferienpass</div><div class="pa">4'500</div><div class="pno">CHF</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_famp">Familien + Anbieter</div><div class="pn" data-i18n="pcn3">Marketplace + Publishing</div><div class="pa">8'000</div><div class="pno">CHF</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_fam">Familien Features</div><div class="pn" data-i18n="pcn4">Payments &amp; Waitlists</div><div class="pa">12'000</div><div class="pno">CHF</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_team">Team Features</div><div class="pn" data-i18n="pcn5">Portfolio Analytics</div><div class="pa">5'000</div><div class="pno">CHF</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_ai">AI Feature</div><div class="pn" data-i18n="pcn6">Intelligent Advice 24/7</div><div class="pa">6'500</div><div class="pno">CHF</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_infra">Infrastruktur</div><div class="pn" data-i18n="pcn7">Website &amp; Architektur</div><div class="pa">20'000</div><div class="pno">CHF</div></div>
+        <div class="pcard tot"><div class="pl" data-i18n="pc_tot">GESAMTINVESTITION</div><div class="pn" data-i18n="pcn_tot">Base Package</div><div class="pa">60'000</div><div class="pno" data-i18n="pc_exvat">CHF · exkl. MwSt. · Hosting separat</div></div>
+        <div class="pcard"><div class="pl" data-i18n="pc_run">LAUFENDE KOSTEN / JAHR</div><div class="pn" data-i18n="pcn_run">Hosting, AI Services &amp; E-Mail</div><div class="pa" style="color:var(--g80)">5'250</div><div class="pno">CHF/Jahr</div></div>
+      </div>
+      <div class="fade" style="margin-top:4rem">
+        <span class="slbl" data-i18n="pf_lbl">PAYMENT-MODELL — STRIPE TRIANGULATION</span>
+        <div class="pflow" style="margin-top:1.5rem">
+          <div class="pfbox"><div class="pfl" data-i18n="pf_fam">FAMILIE</div><div class="pfp">100%</div><div style="font-size:.68rem;color:var(--g50)" data-i18n="pf_pays">Zahlt</div></div>
+          <div class="pfarr">→</div>
+          <div class="pfbox hi"><div class="pfl">STRIPE</div><div style="font-family:var(--fh);font-size:1.2rem" data-i18n="pf_dist">Verteilt auto.</div></div>
+          <div class="pfarr">→</div>
+          <div class="pfbox">
+            <div style="margin-bottom:.5rem"><div class="pfl" data-i18n="pf_fp">FERIENPASS</div><div class="pfp" style="font-size:1.4rem">X%</div><div style="font-size:.68rem;color:var(--g50)" data-i18n="pf_fee">Platform Fee</div></div>
+            <div style="border-top:1px solid var(--g30);padding-top:.5rem"><div class="pfl" data-i18n="pf_prov">ANBIETER</div><div class="pfp" style="font-size:1.4rem">100-X%</div><div style="font-size:.68rem;color:var(--g50)" data-i18n="pf_net">Netto</div></div>
+          </div>
+        </div>
+        <p style="margin-top:1rem;font-size:.78rem;color:var(--g50)" data-i18n="pf_note">⚠ TWINT bietet kein 3-Way-Payment. Refund = gleicher Prozess in Umkehrung. Ferienpass Team: keine direkte Involvierung in Payments/Waitlists/Refunds.</p>
+      </div>
+      <div class="dsacc fade" style="margin-top:3rem">
+        <div class="dshdr" onclick="tDs(this)"><span class="dstit" data-i18n="ds_tit">🔒 Datenschutz — Wie schützen wir Ihre Daten?</span><span class="dstog">+</span></div>
+        <div class="dsbody">
+          <div class="dsgrid">
+            <div class="dsitem"><div class="dsicon">🇨🇭</div><div><div class="dsname" data-i18n="ds1n">Swiss Hosted</div><div class="dsdesc" data-i18n="ds1d">Alle Daten auf Metanet.ch Servern in der Schweiz. Kein Offshore-Hosting.</div></div></div>
+            <div class="dsitem"><div class="dsicon">🔒</div><div><div class="dsname" data-i18n="ds2n">Datensouveränität</div><div class="dsdesc" data-i18n="ds2d">Alle Daten gehören ausschliesslich JuAr / Basler Ferienpass. SNOB hat keinen eigenständigen Zugriff.</div></div></div>
+            <div class="dsitem"><div class="dsicon">⏱</div><div><div class="dsname" data-i18n="ds3n">90-Tage Retention</div><div class="dsdesc" data-i18n="ds3d">Aufzeichnungen werden nach 90 Tagen automatisch gelöscht.</div></div></div>
+            <div class="dsitem"><div class="dsicon">✅</div><div><div class="dsname" data-i18n="ds4n">DSG / revDSG Konform</div><div class="dsdesc" data-i18n="ds4d">Vollständig nach Schweizer Datenschutzgesetz umgesetzt.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P04 TIMELINE -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="p4_lbl">04 — PHASEN</span>
+      <h2 class="stit fade" data-i18n="p4_tit">Projektphasen.</h2>
+      <p class="slead fade" data-i18n="p4_lead">Strukturierte Umsetzung in klar definierten Phasen.</p>
+      <div class="tl fade">
+        <div class="tli act"><div class="tld"></div><div class="tlp" data-i18n="tl1p">KICKOFF</div><div class="tlx" data-i18n="tl1x">Projekt-Setup, Anforderungen finalisieren, Zugriffe &amp; Accounts einrichten, Branding-Briefing.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlp" data-i18n="tl2p">KONZEPT &amp; DESIGN</div><div class="tlx" data-i18n="tl2x">UI/UX Design für alle drei User-Perspektiven. Freigabe durch Ferienpass.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlp" data-i18n="tl3p">UMSETZUNG</div><div class="tlx" data-i18n="tl3x">Entwicklung aller Features: Registration, Marketplace, Payments/Waitlists, Analytics, AI Advice. Iterative Builds mit wöchentlichen Reviews.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlp" data-i18n="tl4p">TESTING &amp; QA</div><div class="tlx" data-i18n="tl4x">End-to-End Testing aller Flows, Payment-Tests (Stripe/TWINT), Multilingual-Check, Performance &amp; Security Review.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlp" data-i18n="tl5p">GO-LIVE</div><div class="tlx" data-i18n="tl5x">Launch auf Metanet.ch, DNS-Migration, Monitoring-Setup, Team-Onboarding &amp; Dokumentation.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlp" data-i18n="tl6p">SUPPORT &amp; ITERATION</div><div class="tlx" data-i18n="tl6x">Laufende Unterstützung, Fehlerbehebung, iterative Erweiterungen.</div></div>
+      </div>
+      <div class="msbox fade">
+        <div class="mslbl" data-i18n="ms_lbl">ZAHLUNGSPLAN — 3 MILESTONES</div>
+        <div class="msgrid">
+          <div class="msi"><div class="msn">01</div><div class="msname" data-i18n="ms1n">Bei Vertragsunterzeichnung</div><div class="msamt">CHF 20'000</div></div>
+          <div class="msi"><div class="msn">02</div><div class="msname" data-i18n="ms2n">Nach Go-Live</div><div class="msamt">CHF 25'000</div></div>
+          <div class="msi"><div class="msn">03</div><div class="msname" data-i18n="ms3n">Nach 3 Monaten Support</div><div class="msamt">CHF 15'000</div></div>
+        </div>
+        <div class="mstot"><span data-i18n="ms_tot">TOTAL</span><span class="mstot-amt">CHF 60'000</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P05 WHY SNOB -->
+  <section>
+    <div class="cont">
+      <span class="slbl fade" data-i18n="p5_lbl">05 — WARUM SNOB</span>
+      <h2 class="stit fade" data-i18n="p5_tit">Der Unterschied.</h2>
+      <div class="wgrid fade">
+        <div class="wcard"><div class="wicon">🌍</div><h4 data-i18n="w1h">Diversity &amp; Inklusion</h4><p data-i18n="w1p">Für alle kulturellen Hintergründe &amp; Nationalitäten. Der Ferienpass ist für jede Familie — unabhängig von Herkunft oder Budget.</p></div>
+        <div class="wcard"><div class="wicon">🗣</div><h4 data-i18n="w2h">Sprachbarrieren überwinden</h4><p data-i18n="w2p">Niederschwelliger Zugang in DE / FR / EN — damit keine Familie aufgrund der Sprache ausgeschlossen wird.</p></div>
+        <div class="wcard"><div class="wicon">🇨🇭</div><h4 data-i18n="w3h">Swiss-Based &amp; Reliable</h4><p data-i18n="w3p">Datenspeicherung in der Schweiz, direkter Kontakt, kein Offshore-Support.</p></div>
+        <div class="wcard"><div class="wicon">◈</div><h4 data-i18n="w4h">AI-Native</h4><p data-i18n="w4p">AI ist kein Add-on — sie ist das Fundament. Vom Advice-Agent bis zur automatisierten Prozesssteuerung.</p></div>
+        <div class="wcard"><div class="wicon">⚡</div><h4 data-i18n="w5h">Modular &amp; Skalierbar</h4><p data-i18n="w5p">Base Package heute — Advanced Features morgen. Architektur die mit dem Ferienpass wächst.</p></div>
+        <div class="wcard"><div class="wicon">▣</div><h4 data-i18n="w6h">Zero Vendor Lock-in</h4><p data-i18n="w6p">Offene Standards, direkt fakturiertes Hosting bei Metanet.ch — volle Kontrolle.</p></div>
+        <div class="wcard"><div class="wicon">◎</div><h4 data-i18n="w7h">Multilingual by Design</h4><p data-i18n="w7p">DE / FR / EN von Anfang an integriert — nicht nachträglich übersetzt.</p></div>
+        <div class="wcard"><div class="wicon">∞</div><h4 data-i18n="w8h">Massive Effizienzgewinne</h4><p data-i18n="w8p">Automatische Payments, Waitlists und Review-Workflows — Fokus auf das Portfolio, nicht auf Transaktionen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-sec">
+    <div class="cont">
+      <span class="slbl" data-i18n="p_cta_lbl">06 — NÄCHSTE SCHRITTE</span>
+      <h2 data-i18n="cta_tit">Bereit loszulegen?</h2>
+      <p data-i18n="cta_sub">Wir freuen uns auf das Gespräch. Meld dich direkt — schnell und unkompliziert.</p>
+      <div class="cta-acts">
+        <a href="mailto:team@gosnob.com" class="bp">→ team@gosnob.com</a>
+        <button class="bo" onclick="window.print()" data-i18n="cta_pdf_prop">↓ ALS PDF</button>
+        <button class="bo" onclick="openView('arg')" data-i18n="cta_to_arg">← ZUM ARGUMENTARIUM</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="fi">
+    <div class="flogo">GO<span>SNOB</span>.AI × BASLER <span>FERIENPASS</span></div>
+    <div>SNOB-2026-001 / JUAR-2026-001 · <span data-i18n="foot_law">Schweizer Recht · Basel-Stadt</span> · <a href="mailto:team@gosnob.com">team@gosnob.com</a></div>
+    <div data-i18n="foot_copy">© 2026 goSNOB.ai — Alle Rechte vorbehalten</div>
   </div>
-</div>
-
-<!-- DETAIL MODAL -->
-
-<div id="dtmod" class="ov" onclick="if(event.target===this)this.classList.remove('on')">
-  <div class="modal"><div id="dtmod-body"></div></div>
-</div>
-
+</footer>
 <script>
-// ============================================================
-// TRANSLATIONS
-// ============================================================
-var TX = {
-  de:{
-    n_home:"Home",n_courses:"Kurse",n_bookings:"Buchungen",n_profile:"Profil",n_admin:"Admin",
-    pass:"Pass aktiv",
-    h_pill:"🎉 Sommer 2025 — Anmeldung offen",
-    h1a:"Ferienzeit ist",h1b:"Abenteuerzeit",
-    h_sub:"Über 50 spannende Kurse für Kinder zwischen 6 und 17 Jahren. Günstig, vielfältig, unvergesslich.",
-    s_c:"Kurse",s_s:"Plätze",s_p:"Anbieter",s_pr:"CHF Preise",
-    srch_ph:"Kurs suchen... (Musik, Sport, Natur...)",srch_btn:"Suchen",
-    feat_t:"Beliebt diese Woche",feat_s:"Die am stärksten gefragten Kurse",
-    all_btn:"Alle Kurse →",
-    how_t:"So funktioniert's",how_s:"In 3 Schritten zum Ferienabenteuer",
-    st1n:"SCHRITT 1",st1t:"Ferienpass kaufen",st1d:"Einmalig kaufen und den ganzen Sommer profitieren.",
-    st2n:"SCHRITT 2",st2t:"Kurse entdecken",st2d:"Filter nach Kategorie, Alter, Woche und Budget.",
-    st3n:"SCHRITT 3",st3t:"Buchen & loslegen",st3d:"Ein Klick, Bestätigung per E-Mail.",
-    cat_t:"Nach Kategorie entdecken",
-    foot:"Demo · basler-ferienpass.ch",
-    cr_t:"Kurse entdecken",cr_found:"Kurse gefunden",
-    rst:"Reset",nores_t:"Keine Kurse gefunden",nores_s:"Versuche andere Filter",
-    bk_t:"Meine Buchungen",bk_act:"aktive Buchungen",bk_wl:"Wartelisten",
-    bk_cancel:"Abbrechen",bk_storno:"Stornieren",bk_rm:"Entfernen",
-    wl_lbl:"Warteliste",conf_lbl:"Bestätigt",
-    nobk_t:"Noch keine Buchungen",nobk_s:"Stöbere in den Kursen und buche dein erstes Abenteuer!",
-    expl_btn:"Kurse entdecken",
-    pr_t:"Familienprofil",kids_l:"Kinder",add_k:"+ Kind hinzufügen",
-    sv_t:"Gespeicherte Kurse",no_fav:"Noch keine gespeicherten Kurse. Klicke auf ♡ bei einem Kurs!",
-    adm_t:"Admin-Zugang",adm_s:"Bitte Passwort eingeben",pw_ph:"Passwort...",adm_btn:"Einloggen",
-    adm_dash:"Admin Dashboard",adm_out:"Logout",adm_ov:"Kursübersicht",
-    th_c:"Kurs",th_pr:"Anbieter",th_ca:"Kategorie",th_w:"Woche",th_p:"Preis",
-    th_l:"Auslastung",th_st:"Status",th_a:"Aktionen",ed_btn:"Bearbeiten",
-    adm_add:"➕ Neuen Kurs hinzufügen",nt_ph:"Titel",np_ph:"Anbieter",nc_ph:"Kategorie",npr_ph:"Preis (CHF)",adm_abtn:"Hinzufügen",
-    wck:"Für welches Kind?",cnf_bk:"Jetzt buchen",
-    bk_btn:"Buchen",wl_btn:"Warteliste",sv_btn:"♡ Speichern",svd_btn:"♥ Gespeichert",
-    free:"Gratis",bl:"Günstig",bm:"Standard",bh:"Premium",
-    full:"⚡ Ausgebucht",sp_free:"Plätze frei",
-    dw:"📅 WOCHE",dd:"⏱ DAUER",dt:"🕐 ZEITEN",dl:"📍 ORT",da:"👶 ALTER",dp:"💰 PREIS",
-    by:"von",
-    tf_a:"❤️ Zu Favoriten hinzugefügt",tf_r:"Aus Favoriten entfernt",
-    tb:"gebucht!",tw2:"Auf Warteliste gesetzt!",tc:"storniert.",tsp:"Plätze gesetzt.",tad:"wurde hinzugefügt!",
-    tpw:"Falsches Passwort",ttl:"Bitte Titel eingeben",
-    bon:"gebucht am",ron:"eingetragen am",
-    ca:"Alle",wa:"Alle Wochen",pa:"Alle Preise",pf:"Kostenlos",pm:"Günstig (CHF 1–50)",pp:"Premium (CHF 50+)",
-    sta_c:"Kurse total",sta_b:"Buchungen",sta_w:"Warteliste",sta_s:"Belegte Plätze",
-    rev:"Bewertungen",kid_pr:"Kind hinzufügen (Name (Alter)):",det:"Details",days:"Tage",
-    spts_pr:"Plätze (aktuell:"
-  },
-  fr:{
-    n_home:"Accueil",n_courses:"Cours",n_bookings:"Réservations",n_profile:"Profil",n_admin:"Admin",
-    pass:"Pass actif",
-    h_pill:"🎉 Été 2025 — Inscriptions ouvertes",
-    h1a:"Les vacances, c'est",h1b:"l'aventure!",
-    h_sub:"Plus de 50 cours passionnants pour les enfants de 6 à 17 ans. Abordable, varié, inoubliable.",
-    s_c:"Cours",s_s:"Places",s_p:"Prestataires",s_pr:"Prix CHF",
-    srch_ph:"Chercher... (Musique, Sport, Nature...)",srch_btn:"Chercher",
-    feat_t:"Populaire cette semaine",feat_s:"Les cours les plus demandés",
-    all_btn:"Tous les cours →",
-    how_t:"Comment ça marche",how_s:"3 étapes vers l'aventure de vacances",
-    st1n:"ÉTAPE 1",st1t:"Acheter le Ferienpass",st1d:"Achetez une fois et profitez tout l'été.",
-    st2n:"ÉTAPE 2",st2t:"Découvrir des cours",st2d:"Filtrez par catégorie, âge, semaine et budget.",
-    st3n:"ÉTAPE 3",st3t:"Réserver et partir",st3d:"Un clic, confirmation par e-mail.",
-    cat_t:"Découvrir par catégorie",
-    foot:"Démo · basler-ferienpass.ch",
-    cr_t:"Découvrir des cours",cr_found:"cours trouvés",
-    rst:"Réinitialiser",nores_t:"Aucun cours trouvé",nores_s:"Essayez d'autres filtres",
-    bk_t:"Mes réservations",bk_act:"réservations actives",bk_wl:"listes d'attente",
-    bk_cancel:"Annuler",bk_storno:"Annuler la réservation",bk_rm:"Supprimer",
-    wl_lbl:"Liste d'attente",conf_lbl:"Confirmé",
-    nobk_t:"Pas encore de réservations",nobk_s:"Parcourez les cours et réservez votre première aventure!",
-    expl_btn:"Découvrir des cours",
-    pr_t:"Profil de famille",kids_l:"Enfants",add_k:"+ Ajouter un enfant",
-    sv_t:"Cours enregistrés",no_fav:"Pas encore de cours enregistrés. Cliquez sur ♡!",
-    adm_t:"Accès administrateur",adm_s:"Veuillez entrer le mot de passe",pw_ph:"Mot de passe...",adm_btn:"Se connecter",
-    adm_dash:"Tableau de bord",adm_out:"Déconnexion",adm_ov:"Aperçu des cours",
-    th_c:"Cours",th_pr:"Prestataire",th_ca:"Catégorie",th_w:"Semaine",th_p:"Prix",
-    th_l:"Remplissage",th_st:"Statut",th_a:"Actions",ed_btn:"Modifier",
-    adm_add:"➕ Ajouter un nouveau cours",nt_ph:"Titre",np_ph:"Prestataire",nc_ph:"Catégorie",npr_ph:"Prix (CHF)",adm_abtn:"Ajouter",
-    wck:"Pour quel enfant?",cnf_bk:"Réserver maintenant",
-    bk_btn:"Réserver",wl_btn:"Liste d'attente",sv_btn:"♡ Enregistrer",svd_btn:"♥ Enregistré",
-    free:"Gratuit",bl:"Économique",bm:"Standard",bh:"Premium",
-    full:"⚡ Complet",sp_free:"places libres",
-    dw:"📅 SEMAINE",dd:"⏱ DURÉE",dt:"🕐 HORAIRES",dl:"📍 LIEU",da:"👶 ÂGE",dp:"💰 PRIX",
-    by:"par",
-    tf_a:"❤️ Ajouté aux favoris",tf_r:"Retiré des favoris",
-    tb:"réservé!",tw2:"Ajouté à la liste d'attente!",tc:"annulé.",tsp:"Places mises à jour.",tad:"a été ajouté!",
-    tpw:"Mot de passe incorrect",ttl:"Veuillez entrer un titre",
-    bon:"réservé le",ron:"inscrit le",
-    ca:"Toutes",wa:"Toutes les semaines",pa:"Tous les prix",pf:"Gratuit",pm:"Économique (CHF 1–50)",pp:"Premium (CHF 50+)",
-    sta_c:"Cours au total",sta_b:"Réservations",sta_w:"Liste d'attente",sta_s:"Places occupées",
-    rev:"avis",kid_pr:"Ajouter un enfant (Prénom (âge)) :",det:"Détails",days:"jours",
-    spts_pr:"Places (actuel:"
-  },
-  en:{
-    n_home:"Home",n_courses:"Courses",n_bookings:"Bookings",n_profile:"Profile",n_admin:"Admin",
-    pass:"Pass active",
-    h_pill:"🎉 Summer 2025 — Registration open",
-    h1a:"Holiday time is",h1b:"Adventure time!",
-    h_sub:"Over 50 exciting courses for children aged 6 to 17. Affordable, diverse, unforgettable.",
-    s_c:"Courses",s_s:"Spots",s_p:"Providers",s_pr:"CHF Prices",
-    srch_ph:"Search courses... (Music, Sport, Nature...)",srch_btn:"Search",
-    feat_t:"Popular this week",feat_s:"The most requested courses",
-    all_btn:"All courses →",
-    how_t:"How it works",how_s:"3 steps to your holiday adventure",
-    st1n:"STEP 1",st1t:"Buy the Ferienpass",st1d:"Buy once and enjoy the whole summer.",
-    st2n:"STEP 2",st2t:"Discover courses",st2d:"Filter by category, age, week and budget.",
-    st3n:"STEP 3",st3t:"Book and go",st3d:"One click, confirmation by email.",
-    cat_t:"Discover by category",
-    foot:"Demo · basler-ferienpass.ch",
-    cr_t:"Discover courses",cr_found:"courses found",
-    rst:"Reset",nores_t:"No courses found",nores_s:"Try different filters",
-    bk_t:"My bookings",bk_act:"active bookings",bk_wl:"waitlists",
-    bk_cancel:"Cancel",bk_storno:"Cancel booking",bk_rm:"Remove",
-    wl_lbl:"Waitlist",conf_lbl:"Confirmed",
-    nobk_t:"No bookings yet",nobk_s:"Browse courses and book your first adventure!",
-    expl_btn:"Discover courses",
-    pr_t:"Family profile",kids_l:"Children",add_k:"+ Add child",
-    sv_t:"Saved courses",no_fav:"No saved courses yet. Click ♡ on a course!",
-    adm_t:"Admin access",adm_s:"Please enter password",pw_ph:"Password...",adm_btn:"Log in",
-    adm_dash:"Admin Dashboard",adm_out:"Logout",adm_ov:"Course overview",
-    th_c:"Course",th_pr:"Provider",th_ca:"Category",th_w:"Week",th_p:"Price",
-    th_l:"Occupancy",th_st:"Status",th_a:"Actions",ed_btn:"Edit",
-    adm_add:"➕ Add new course",nt_ph:"Title",np_ph:"Provider",nc_ph:"Category",npr_ph:"Price (CHF)",adm_abtn:"Add",
-    wck:"For which child?",cnf_bk:"Book now",
-    bk_btn:"Book",wl_btn:"Waitlist",sv_btn:"♡ Save",svd_btn:"♥ Saved",
-    free:"Free",bl:"Budget",bm:"Standard",bh:"Premium",
-    full:"⚡ Full",sp_free:"spots available",
-    dw:"📅 WEEK",dd:"⏱ DURATION",dt:"🕐 TIMES",dl:"📍 LOCATION",da:"👶 AGE",dp:"💰 PRICE",
-    by:"by",
-    tf_a:"❤️ Added to favourites",tf_r:"Removed from favourites",
-    tb:"booked!",tw2:"Added to waitlist!",tc:"cancelled.",tsp:"Spots updated.",tad:"has been added!",
-    tpw:"Wrong password",ttl:"Please enter a title",
-    bon:"booked on",ron:"registered on",
-    ca:"All",wa:"All weeks",pa:"All prices",pf:"Free",pm:"Budget (CHF 1–50)",pp:"Premium (CHF 50+)",
-    sta_c:"Total courses",sta_b:"Bookings",sta_w:"Waitlist",sta_s:"Occupied spots",
-    rev:"reviews",kid_pr:"Add child (Name (age)):",det:"Details",days:"days",
-    spts_pr:"Spots (current:"
+// ── LOGIN
+const VN='ferienpass',VC='ferien4all';
+function doLogin(){
+  const n=document.getElementById('ln').value.trim().toLowerCase();
+  const c=document.getElementById('lc').value.trim();
+  const err=document.getElementById('lerr');
+  if(n===VN&&c===VC){
+    document.getElementById('login-overlay').classList.add('hidden');
+    document.getElementById('landing').classList.remove('hidden');
+    err.classList.remove('show');
+  } else {
+    ['ln','lc'].forEach(id=>{ document.getElementById(id).classList.add('err'); setTimeout(()=>document.getElementById(id).classList.remove('err'),1500); });
+    err.classList.add('show');
   }
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!document.getElementById('login-overlay').classList.contains('hidden')) doLogin(); });
+
+// ── VIEW SWITCHER
+function goLanding(){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('nav').style.display='none';
+  document.getElementById('landing').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openView(name){
+  document.getElementById('landing').classList.add('hidden');
+  const nav=document.getElementById('nav');
+  nav.style.display='flex';
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const view=document.getElementById('view-'+name);
+  if(view) view.classList.add('active');
+  document.querySelectorAll('.tnb').forEach(b=>b.classList.remove('active'));
+  const tb=document.getElementById('tnb-'+name);
+  if(tb) tb.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{
+    document.querySelectorAll('#view-'+name+' .fade').forEach(el=>{
+      if(!el.classList.contains('vis')){
+        const r=el.getBoundingClientRect();
+        if(r.top<window.innerHeight+50) el.classList.add('vis');
+      }
+    });
+  },60);
+}
+
+// ── TABS / ACCORDIONS
+function showFtab(name,btn){
+  const wrap=btn.closest('.fade')||btn.closest('section');
+  if(!wrap) return;
+  wrap.querySelectorAll('.ftab-body').forEach(t=>t.classList.remove('active'));
+  wrap.querySelectorAll('.ftb').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('ftab-'+name);
+  if(el) el.classList.add('active');
+  btn.classList.add('active');
+}
+function tFeat(row){
+  const isOpen=row.classList.contains('open');
+  const par=row.closest('.opbody')||row.closest('.ftab-body');
+  if(par) par.querySelectorAll('.frow').forEach(r=>r.classList.remove('open'));
+  if(!isOpen) row.classList.add('open');
+}
+function tOpt(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('open');}
+function tDs(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('open');}
+
+// ── SCROLL FADE
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:0.07});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+
+// ── LANG PILLS
+const LANGS=[{c:'de',l:'DE'},{c:'fr',l:'FR'},{c:'en',l:'EN'},{c:'it',l:'IT'},{c:'tr',l:'TR'},{c:'sq',l:'SQ'},{c:'sr',l:'SR'},{c:'es',l:'ES'},{c:'pt',l:'PT'},{c:'uk',l:'UK'},{c:'ta',l:'TA'}];
+const pillBox=document.getElementById('langpills');
+LANGS.forEach(lg=>{
+  const b=document.createElement('button');
+  b.className='lp'+(lg.c==='de'?' active':'');
+  b.textContent=lg.l;
+  b.setAttribute('aria-label',lg.l);
+  b.onclick=()=>setLang(lg.c);
+  pillBox.appendChild(b);
+});
+
+// ── TRANSLATIONS
+const T={
+de:{
+  login_sub:'Basler Ferienpass — Vertrauliche Dokumente 2026',lbl_name:'Name',lbl_code:'Zugangscode',lerr:'Ungültige Zugangsdaten.',login_btn:'ZUGANG ANFORDERN',login_hint:'VERTRAULICH · NUR FÜR AUTORISIERTE PERSONEN',
+  land_sub:'× BASLER FERIENPASS 2026',land_tag_arg:'Gesellschaft · Soziales · Inklusion',land_h_arg:'WARUM DER FERIENPASS <em>FÜR ALLE.</em>',land_desc_arg:'Das soziale Versprechen des Basler Ferienpasses — und warum eine moderne Grundlage keine Option, sondern eine Notwendigkeit ist.',land_for_arg:'FÜR: <strong>Politik · Förderpartner · Öffentlichkeit · Medien</strong>',ls1:'Nationalitäten',ls2:'Migrationshintergrund',ls3:'Ferienwochen/Jahr',land_btn_arg:'→ ARGUMENTARIUM ÖFFNEN',
+  land_tag_prop:'Technologie · Investition · Umsetzung',land_h_prop:'WAS WIR BAUEN. <em>WIE ES GEHT.</em>',land_desc_prop:'Das konkrete Angebot: Features, Preise, Timeline und Zahlungsplan für die vollständige Neugestaltung der Ferienpass-Plattform.',land_for_prop:'FÜR: <strong>Auftraggeber · Entscheider · Projektteam</strong>',ls4:'60k Investition',ls5:'Projektphasen',ls6:'Milestones',land_btn_prop:'→ PROPOSAL ÖFFNEN',
+  nav_arg:'ARGUMENTARIUM',nav_prop:'PROPOSAL',nav_dl:'↓ PDF',
+  a_ref:'REF: JUAR-2026-001',a_date:'MAI 2026',a_for:'FÜR:',a_h1:'BASLER FERIENPASS',a_h2:'FÜR ALLE.',a_sub:'Der Basler Ferienpass ist seit Jahrzehnten eine Institution. Jetzt ist es Zeit, sein Versprechen mit einer modernen Grundlage zu erfüllen — für alle Familien, alle Ferienwochen, alle Sprachen.',s1:'Nationalitäten',s2:'Migrationshintergrund',s3:'Ferienwochen/Jahr',
+  a1_lbl:'01 — WAS DER FERIENPASS BEDEUTET',a1_tit:'Die Ambition des Ferienpasses ist Basel.',a1_lead:'Seit Jahrzehnten ein Versprechen an alle Basler Familien — unabhängig von Herkunft, Sprache und Budget.',
+  ac1t:'Jahrzehnte Tradition',ac1p:'Der Basler Ferienpass ist Teil der Basler Stadtidentität. Jedes Jahr nutzen tausende Kinder zwischen 6 und 16 Jahren das Angebot — Sport, Kultur, Natur, Kreativität.',ac2t:'Soziale Brücke',ac2p:'Er ist einer der wenigen Orte, wo Kinder aus allen Schichten gemeinsam Ferien erleben. Nicht als Ausnahme — als Selbstverständlichkeit.',ac3t:'Chancengerechtigkeit',ac3p:'Er macht Ferien möglich für Familien, die es sich sonst nicht leisten könnten. Das ist aktive Sozialpolitik im Dienst der Stadt Basel.',ac4t:'Regionale Verankerung',ac4p:'Basels vielfältigste Familien — Kernstadt, Riehen, Bettingen, Dreiländereck D–F–CH — alle haben Anspruch auf dieses Angebot. Heute erreicht es sie nicht alle.',
+  a2_lbl:'02 — SOZIALE WIRKLICHKEIT BASEL',a2_tit:'Die Zahlen hinter dem Versprechen.',a2_lead:'Inklusion ist kein Schlagwort — sie ist messbar. Und sie zeigt: der Ferienpass erreicht heute bei weitem nicht alle, die ihn brauchen.',
+  sz1t:'Sprechen zu Hause keine Landessprache',sz1d:'Fast die Hälfte der Basler Haushalte kommuniziert zuhause auf Türkisch, Albanisch, Tamilisch, Arabisch oder einer anderen Sprache. Die aktuelle Website existiert für sie faktisch nicht.',sz1s:'Quelle: Statistisches Amt Basel-Stadt 2024',sz2t:'Lernrückstand pro Sommer',sz2d:'Kinder aus einkommensschwachen Familien verlieren in den Sommerferien bis zu 2 Monate Lernfortschritt. Strukturiertes, günstiges Ferienprogramm ist Bildungspolitik — nicht Freizeitgestaltung.',sz2s:'Quelle: OECD Education at a Glance 2023',sz3t:'Anmeldestart — und wer verliert',sz3d:'Anmeldestart früh um 7 Uhr, Website nur auf Deutsch, kein Wartelistensystem. Wer die Sprache nicht beherrscht oder arbeiten muss, hat keine Chance. Das ist struktureller Ausschluss.',sz3s:'Basler Ferienpass — aktueller Prozess',
+  sbar1l:'Deutsch als Erstsprache',sbar2l:'Migrationshintergrund',sbar3l:'Kinder in Armut (CH-Schnitt)',sbar4l:'Ferienwochen abgedeckt',sz_quote:'Der Ferienpass verspricht: Ferien für alle. Aber wer kein Deutsch spricht, keine Zeit hat sich um 7 Uhr morgens einzuloggen, kein Geld für die Verkaufsstelle — der ist ausgeschlossen. Nicht aus böser Absicht. Sondern weil die Infrastruktur nicht mitgewachsen ist.',sz_cite:'Die Lösung ist nicht Goodwill. Die Lösung ist digitale Infrastruktur.',
+  a3_lbl:'03 — EIN VERSPRECHEN UNTER DRUCK',a3_tit:'Das Angebot ist gewachsen. Die Infrastruktur nicht.',a3_lead:'Das trifft genau jene Familien am härtesten, die den Ferienpass am meisten brauchen.',aq_lbl:'IST-ZUSTAND → VERBESSERUNG',aq_ist:'VON — HEUTE',aq_sol:'ZU — ZIEL',
+  af1:'Website aus einer anderen Ära — nicht mobil, nicht mehrsprachig',af2:'Physischer Pass nur an Verkaufsstellen — Aufwand für jede Familie',af3:'Anmeldestart 07:00 Uhr — Stress, Chaos, kein Wartelistensystem',af4:'Keine modernen Zahlungsmethoden — kein TWINT, kein Apple Pay',af5:'Telefonsupport nur Deutsch, Mo–Fr 9–12h',af6:'Nur Sommer- und Herbstferien — 14 Wochen möglich, 2 genutzt',af7:'Kein Familienprofil, kein Kalender, keine Erinnerungen',
+  at1:'Moderne Plattform — mobil, dreisprachig, intuitiv',at2:'Digitaler Pass — sofort auf dem Smartphone, PDF-Download',at3:'Transparente Wartelisten, faire Buchung für alle',at4:'TWINT, Kreditkarte, Apple Pay — alles integriert',at5:'AI-Assistent in 11 Sprachen, 24/7',at6:'Alle 14 Ferienwochen ganzjährig abgedeckt',at7:'Familienprofile, Kalender, Erinnerungen, Favoriten',
+  a4_lbl:'04 — BASEL SPRICHT VIELE SPRACHEN',a4_tit:'Der Ferienpass auch.',a4_lead:'Basel-Stadt hat über 170 Nationalitäten. 55.8% der Bevölkerung hat einen Migrationshintergrund. Der Ferienpass spricht heute nur Deutsch.',ui_lang:'Plattform UI',ai_lang:'AI Assistent',leg_ui:'Plattform-Interface (DE / FR / EN)',leg_ai:'AI-Telefonassistent (8 weitere Sprachen)',
+  q1:'Ein AI-Telefonassistent in Türkisch, Albanisch, Tamilisch und Ukrainisch bedeutet: Jede Mutter, jeder Vater kann in seiner Muttersprache anrufen — um 22 Uhr, wenn die Kinder schlafen — und einen Kurs buchen. Ohne Scham. Ohne Umweg. Ohne Wartezeit.',q1c:'Das ist der Unterschied zwischen Teilhabe und Ausschluss.',
+  a5_lbl:'05 — MEHR ALS DIGITALISIERUNG',a5_tit:'Eine Investition in Basel.',a5_lead:'Eine Investition in die Plattform ist eine Investition in Chancengerechtigkeit, Familienentlastung und die Zukunft der Region Basel.',
+  ab1t:'Chancengerechtigkeit in den Ferien',ab1p:'Kinder aus einkommensschwachen Familien verlieren in den Ferien stärker den Anschluss. Strukturiertes, günstiges Ferienprogramm ist Bildungspolitik.',ab2t:'Entlastung berufstätiger Eltern',ab2p:'14 Ferienwochen pro Jahr sind eine logistische Dauerherausforderung. Kalenderintegration und transparente Wartelisten geben Planungssicherheit.',ab3t:'Ganzjährig — alle 14 Wochen',ab3p:'Heute: nur Sommer- und Herbstferien. Ziel: alle 14 Wochen. Ohne digitale Infrastruktur nicht realisierbar.',ab4t:'Basel als überregionales Vorbild',ab4p:'Eine modernisierte Plattform positioniert Basel als Pionier in kommunaler Jugendförderung.',ab5t:'Resiliente Organisation',ab5p:'Digitale Prozesse machen das System unabhängig von Einzelpersonen. Wissen steckt in der Plattform.',ab6t:'Mehr Wirkung mit gleichem Team',ab6p:'Mit automatisierten Zahlungen und AI-Support kann das Team deutlich mehr Familien und Ferienwochen abdecken.',
+  a6_lbl:'06 — WAS DIE INVESTITION BEWIRKT',a6_tit:'Konkret. Messbar. Für alle.',th1:'Was entsteht',th2:'Was das für Familien bedeutet',r1a:'Digitaler Ferienpass (Smartphone)',r1b:'Kein Weg zur Verkaufsstelle — für alle sofort erreichbar',r2a:'Plattform in DE / FR / EN',r2b:'Keine Familie wird wegen Sprache ausgeschlossen',r3a:'AI-Assistent in 11 Sprachen, 24/7',r3b:'Jede Familie bucht in ihrer Muttersprache',r4a:'Automatische Zahlungen & Wartelisten',r4b:'Transparenz, Fairness — kein Durchkämpfen um 7 Uhr',r5a:'Familienprofile & Kursfilter',r5b:'Richtige Angebote nach Alter, Preis, Datum',r6a:'Ganzjähriger Betrieb',r6b:'Alle 14 Wochen: Sommer, Herbst, Winter, Frühling, Fasnacht',r7a:'Selfservice der Kursanbieter',r7b:'Mehr Angebote, höhere Qualität — ohne mehr Personal',r8a:'Überregionale Vernetzung',r8b:'Anbieter aus Riehen, Bettingen, Basel-Landschaft, Dreiländereck',
+  a7_lbl:'07 — KERNBOTSCHAFT',a7_tit:'Für Kinder. Für Familien. Für Basel.',core_msg:'Der Basler Ferienpass ist seit Jahrzehnten ein Versprechen an alle Basler Familien: Ferien sind für jedes Kind möglich — unabhängig von Herkunft, Sprache und Budget. Dieses Versprechen zu halten braucht heute eine moderne Grundlage. Eine Investition in die Digitalisierung ist eine Investition in Chancengerechtigkeit, Familienentlastung und die Zukunft der gesamten Region Basel.',core_cite:'Basler Ferienpass — Für Kinder. Für Familien. Für Basel.',
+  funders_t:'Mögliche Förderpartner',fund1:'Erziehungsdepartement Basel-Stadt (bestehender Partner)',fund2:'Bürgergemeinde Basel (bestehender Partner)',fund3:'Christoph Merian Stiftung — Soziales & Stadtentwicklung',fund4:'Sophie und Karl Binding Stiftung — Kinder & Jugend',fund5:'Jacobs Foundation — Bildung & Chancengerechtigkeit',fund6:'Digitalisierungsfonds Kanton Basel-Stadt',fund7:'Private Sponsoren mit CSR-Fokus auf Inklusion, Bildung, Digitalisierung',
+  cta_arg_lbl:'08 — NÄCHSTE SCHRITTE',cta_tit:'Bereit loszulegen?',cta_sub:'Wir freuen uns auf das Gespräch.',cta_pdf_arg:'↓ ALS PDF',cta_to_prop:'→ ZUM PROPOSAL',
+  p_date:'DATUM: MAI 2026',p_client:'KUNDE:',p_sub:'Komplette Neugestaltung der Präsenz und manuellen Prozesse — AI-gestützt, modular, skalierbar.',p_dl:'↓ PROPOSAL DOWNLOADEN',p_contact:'→ KONTAKT AUFNEHMEN',cl1t:'FÜR ALLE FAMILIEN',cl1d:'Unabhängig von Hintergrund & Budget',cl2t:'NIEDERSCHWELLIG',cl2d:'Einfach. Digital. Für jeden zugänglich.',cl3t:'INKLUSIV',cl3d:'DE / FR / EN — keine Sprachbarrieren',
+  p1_lbl:'01 — AUSGANGSLAGE',p1_tit:'Die Ambition des Ferienpasses wächst.',p1_lead:'Die neue Ausrichtung erfordert eine vollständige Neugestaltung. Unsere Lösung: moderne AI-gestützte UX und modulare Architektur.',pf1:'Einer von vielen Anbietern von Sommerferienkursen',pf2:'Fokus auf Gratis / Günstigangebote',pf3:'Unterrepräsentierte Nischen-Kategorien',pf4:'Manuelle Prozesse & veraltete digitale Präsenz',pt1:'Führende Plattform für Ferienkurse, ganzjährig',pt2:'Attraktives & ausgewogenes Portfolio über alle Preiskategorien',pt3:'Ansprechend für alle Familien',pt4:'Moderne AI-gestützte User Experience',
+  p2_lbl:'02 — LEISTUNGSUMFANG',p2_tit:'Was wir liefern.',p2_lead:'Drei User-Perspektiven: Familien, Kursanbieter, Ferienpass-Team — plus technische Infrastruktur als Fundament.',ftab_fam:'FAMILIEN',ftab_prov:'ANBIETER',ftab_team:'FERIENPASS TEAM',ftab_infra:'WEB & ARCHITEKTUR',col_w:'WAS',col_why:'WARUM',
+  f1h:'Streamlined Registration & Access',f1w1:'Guided Registration via Sign-up Form',f1w2:'Simple Sign-in mit Email oder Google',f1w3:'Persistentes Family Account / Profil',f1b1:'Effortless Sign-up — keine Reibung',f1b2:'Family Profile vereinfacht Einschreibungen',f1b3:'Ermöglicht personalisierte Empfehlungen',f2h:'All-Digital Ferienpass',f2w1:'Digitaler Pass mit PDF-Download',f2b1:'Eliminiert komplexe physische Logistik',f3h:'Modern Course Marketplace',f3w1:'Filter: Alter / Datum / Kategorie / Preis',f3w2:'Filter speicher- und teilbar',f3b1:'Easy Filtering verbessert Kurs-Discovery',f3b2:'Erhöht Purchase Conversion',f4h:'Integrated Payments & Waitlists',f4w1:'Payments via Stripe / TWINT (inkl. Refunds)',f4w2:'Automatisches Waitlist Matching',f4b1:'Eliminiert kritische Reibungspunkte',f4b2:'Erhöht Enrollment-Vorhersagbarkeit',f5h:'Intelligent Advice 24/7',f5w1:'Conversational AI Agent — berät und unterstützt',f5b1:'Shopping Experience zugänglich & personalisiert',f5b2:'24/7 ohne manuellen Aufwand',
+  opt_lbl:'+ OPTIONALE ERWEITERUNGEN',opt_bdg:'NICHT IM BASE PACKAGE',opt_tag:'OPTIONAL',p1h:'Streamlined Registration',p1w1:'Guided Registration via Sign-up Form',p1w2:'Transparente Profil-Freigabe',p1b1:'Klare Registrierung schafft Vertrauen',p1b2:'Eliminiert Reibung im Onboarding',p2h:'Assisted Course Publishing',p2w1:'Geführte Kurs-Profil-Erstellung',p2w2:'Transparenter Publishing Review Status',p2b1:'Guidance reduziert manuellen Aufwand',p2b2:'Anbieter liefern vollständige Daten von Anfang an',p3h:'Integrated Payments & Waitlists',inc_fam:'Im Family-Preis inbegriffen',inc_fp:'Im Ferienpass-Preis',t1h:'Reviewing Providers & Courses',t2h:'Portfolio Management Analytics',i1h:'Modern Website Design',i2h:'Modular Architecture',i3_note:'Direkt von Metanet.ch',
+  p3_lbl:'03 — INVESTITION',p3_tit:'Gesamtübersicht.',p3_desc:'Alle Preise in CHF, exkl. MwSt. Hosting wird separat direkt von Metanet.ch fakturiert.',pc_fam:'Familien Features',pc_famp:'Familien + Anbieter',pc_team:'Team Features',pc_ai:'AI Feature',pc_infra:'Infrastruktur',pc_tot:'GESAMTINVESTITION',pcn_tot:'Base Package',pc_exvat:'CHF · exkl. MwSt. · Hosting separat',pc_run:'LAUFENDE KOSTEN / JAHR',pcn_run:'Hosting, AI Services & E-Mail',pcn1:'Registration & Access',pcn2:'All-Digital Ferienpass',pcn3:'Marketplace + Publishing',pcn4:'Payments & Waitlists',pcn5:'Portfolio Analytics',pcn6:'Intelligent Advice 24/7',pcn7:'Website & Architektur',
+  pf_lbl:'PAYMENT-MODELL — STRIPE TRIANGULATION',pf_fam:'FAMILIE',pf_pays:'Zahlt',pf_dist:'Verteilt auto.',pf_fp:'FERIENPASS',pf_fee:'Platform Fee',pf_prov:'ANBIETER',pf_net:'Netto',pf_note:'⚠ TWINT bietet kein 3-Way-Payment. Refund = gleicher Prozess in Umkehrung. Ferienpass Team: keine direkte Involvierung in Payments/Waitlists/Refunds.',
+  ds_tit:'🔒 Datenschutz — Wie schützen wir Ihre Daten?',ds1n:'Swiss Hosted',ds1d:'Alle Daten auf Metanet.ch Servern in der Schweiz. Kein Offshore-Hosting.',ds2n:'Datensouveränität',ds2d:'Alle Daten gehören ausschliesslich JuAr / Basler Ferienpass. SNOB hat keinen eigenständigen Zugriff.',ds3n:'90-Tage Retention',ds3d:'Aufzeichnungen werden nach 90 Tagen automatisch gelöscht.',ds4n:'DSG / revDSG Konform',ds4d:'Vollständig nach Schweizer Datenschutzgesetz umgesetzt.',
+  p4_lbl:'04 — PHASEN',p4_tit:'Projektphasen.',p4_lead:'Strukturierte Umsetzung in klar definierten Phasen.',tl1p:'KICKOFF',tl1x:'Projekt-Setup, Anforderungen finalisieren, Zugriffe & Accounts einrichten, Branding-Briefing.',tl2p:'KONZEPT & DESIGN',tl2x:'UI/UX Design für alle drei User-Perspektiven. Freigabe durch Ferienpass.',tl3p:'UMSETZUNG',tl3x:'Entwicklung aller Features: Registration, Marketplace, Payments/Waitlists, Analytics, AI Advice. Iterative Builds mit wöchentlichen Reviews.',tl4p:'TESTING & QA',tl4x:'End-to-End Testing aller Flows, Payment-Tests (Stripe/TWINT), Multilingual-Check, Performance & Security Review.',tl5p:'GO-LIVE',tl5x:'Launch auf Metanet.ch, DNS-Migration, Monitoring-Setup, Team-Onboarding & Dokumentation.',tl6p:'SUPPORT & ITERATION',tl6x:'Laufende Unterstützung, Fehlerbehebung, iterative Erweiterungen.',ms_lbl:'ZAHLUNGSPLAN — 3 MILESTONES',ms1n:'Bei Vertragsunterzeichnung',ms2n:'Nach Go-Live',ms3n:'Nach 3 Monaten Support',ms_tot:'TOTAL',
+  p5_lbl:'05 — WARUM SNOB',p5_tit:'Der Unterschied.',w1h:'Diversity & Inklusion',w1p:'Für alle kulturellen Hintergründe & Nationalitäten. Der Ferienpass ist für jede Familie — unabhängig von Herkunft oder Budget.',w2h:'Sprachbarrieren überwinden',w2p:'Niederschwelliger Zugang in DE / FR / EN — damit keine Familie aufgrund der Sprache ausgeschlossen wird.',w3h:'Swiss-Based & Reliable',w3p:'Datenspeicherung in der Schweiz, direkter Kontakt, kein Offshore-Support.',w4h:'AI-Native',w4p:'AI ist kein Add-on — sie ist das Fundament. Vom Advice-Agent bis zur automatisierten Prozesssteuerung.',w5h:'Modular & Skalierbar',w5p:'Base Package heute — Advanced Features morgen. Architektur die mit dem Ferienpass wächst.',w6h:'Zero Vendor Lock-in',w6p:'Offene Standards, direkt fakturiertes Hosting bei Metanet.ch — volle Kontrolle.',w7h:'Multilingual by Design',w7p:'DE / FR / EN von Anfang an integriert — nicht nachträglich übersetzt.',w8h:'Massive Effizienzgewinne',w8p:'Automatische Payments, Waitlists und Review-Workflows — Fokus auf das Portfolio, nicht auf Transaktionen.',
+  p_cta_lbl:'06 — NÄCHSTE SCHRITTE',cta_pdf_prop:'↓ ALS PDF',cta_to_arg:'← ZUM ARGUMENTARIUM',foot_law:'Schweizer Recht · Basel-Stadt',foot_copy:'© 2026 goSNOB.ai — Alle Rechte vorbehalten'
+},
+en:{
+  login_sub:'Basler Ferienpass — Confidential Documents 2026',lbl_name:'Name',lbl_code:'Access code',lerr:'Invalid credentials.',login_btn:'REQUEST ACCESS',login_hint:'CONFIDENTIAL · AUTHORISED PERSONS ONLY',
+  land_sub:'× BASLER FERIENPASS 2026',land_tag_arg:'Society · Social Impact · Inclusion',land_h_arg:'WHY THE FERIENPASS <em>FOR ALL.</em>',land_desc_arg:"The social promise of the Basler Ferienpass — and why a modern foundation is a necessity, not an option.",land_for_arg:'FOR: <strong>Politics · Funders · Public · Media</strong>',ls1:'Nationalities',ls2:'Migration background',ls3:'Holiday weeks/year',land_btn_arg:'→ OPEN CASE FOR SUPPORT',
+  land_tag_prop:'Technology · Investment · Delivery',land_h_prop:'WHAT WE BUILD. <em>HOW IT WORKS.</em>',land_desc_prop:'The concrete offer: features, pricing, timeline and payment plan for the complete redesign of the Ferienpass platform.',land_for_prop:'FOR: <strong>Client · Decision-makers · Project team</strong>',ls4:'60k Investment',ls5:'Project phases',ls6:'Milestones',land_btn_prop:'→ OPEN PROPOSAL',
+  nav_arg:'CASE FOR SUPPORT',nav_prop:'PROPOSAL',nav_dl:'↓ PDF',
+  a_ref:'REF: JUAR-2026-001',a_date:'MAY 2026',a_for:'FOR:',a_h1:'BASLER FERIENPASS',a_h2:'FOR EVERYONE.',a_sub:"The Basler Ferienpass has been an institution for decades. Now it's time to fulfil its promise with a modern foundation — for all families, all holiday weeks, all languages.",s1:'Nationalities',s2:'Migration background',s3:'Holiday weeks/year',
+  a1_lbl:'01 — WHAT THE FERIENPASS MEANS',a1_tit:'The ambition of the Ferienpass is Basel.',a1_lead:'For decades, a promise to all Basel families — regardless of origin, language and budget.',ac1t:'Decades of tradition',ac1p:"The Basler Ferienpass is part of Basel's civic identity. Every year, thousands of children benefit from the programme — sport, culture, nature, creativity.",ac2t:'Social bridge',ac2p:'One of the few places where children from all backgrounds experience holidays together. Not as an exception — as a matter of course.',ac3t:'Equal opportunities',ac3p:"It makes holidays possible for families who couldn't otherwise afford them. This is active social policy in service of the city.",ac4t:'Regional roots',ac4p:"Basel's most diverse families — city centre, Riehen, Bettingen, tri-border region — all have a right to this offer. Today it doesn't reach all of them.",
+  a2_lbl:'02 — SOCIAL REALITY BASEL',a2_tit:'The numbers behind the promise.',a2_lead:"Inclusion is not a buzzword — it is measurable. The Ferienpass is far from reaching everyone who needs it.",sz1t:'Speak no national language at home',sz1d:'Almost half of Basel households communicate at home in Turkish, Albanian, Tamil, Arabic or another language. The current website effectively does not exist for them.',sz1s:'Source: Statistical Office Basel-Stadt 2024',sz2t:'Learning loss per summer',sz2d:'Children from low-income families lose up to 2 months of learning progress during summer holidays. Structured, affordable holiday programmes are education policy.',sz2s:'Source: OECD Education at a Glance 2023',sz3t:'Registration opens — and who loses out',sz3d:"Registration opens at 7am, website only in German, no waiting list. Anyone who doesn't speak the language or has to work has no chance. This is structural exclusion.",sz3s:'Basler Ferienpass — current process',
+  sbar1l:'German as first language',sbar2l:'Migration background',sbar3l:'Children in poverty (CH average)',sbar4l:'Holiday weeks currently covered',sz_quote:"The Ferienpass promises: holidays for everyone. But anyone who doesn't speak German, can't log on at 7am, has no money for the sales point — is excluded. Not out of bad intent. But because the infrastructure hasn't kept up.",sz_cite:'The solution is not goodwill. The solution is digital infrastructure.',
+  a3_lbl:'03 — A PROMISE UNDER PRESSURE',a3_tit:'The offer has grown. The infrastructure has not.',a3_lead:'This hits hardest those families who need the Ferienpass most.',aq_lbl:'CURRENT STATE → IMPROVEMENT',aq_ist:'FROM — TODAY',aq_sol:'TO — GOAL',af1:'Website from another era — not mobile, not multilingual',af2:'Physical pass only at sales points — effort for every family',af3:'Registration opens at 07:00 — stress, chaos, no waiting list',af4:'No modern payment methods — no TWINT, no Apple Pay',af5:'Phone support in German only, Mon–Fri 9am–12pm',af6:'Only summer and autumn holidays — 14 weeks possible, 2 used',af7:'No family profile, no calendar, no reminders',at1:'Modern platform — mobile, trilingual, intuitive',at2:'Digital pass — instantly on smartphone, PDF download',at3:'Transparent waiting lists, fair booking for all',at4:'TWINT, credit card, Apple Pay — all integrated',at5:'AI assistant in 11 languages, 24/7',at6:'All 14 holiday weeks covered year-round',at7:'Family profiles, calendar, reminders, favourites',
+  a4_lbl:'04 — BASEL SPEAKS MANY LANGUAGES',a4_tit:'So does the Ferienpass.',a4_lead:'Basel-Stadt has over 170 nationalities. 55.8% have a migration background. Today the Ferienpass only speaks German.',ui_lang:'Platform UI',ai_lang:'AI Assistant',leg_ui:'Platform interface (DE / FR / EN)',leg_ai:'AI phone assistant (8 more languages)',q1:"An AI phone assistant in Turkish, Albanian, Tamil, Ukrainian and more: every parent can call in their mother tongue — at 10pm — and book a course. Without shame. Without detour. Without waiting.",q1c:'That is the difference between inclusion and exclusion.',
+  a5_lbl:'05 — MORE THAN DIGITALISATION',a5_tit:'An investment in Basel.',a5_lead:'An investment in the platform is an investment in equal opportunities, family support and the future of the Basel region.',ab1t:'Equal opportunities during holidays',ab1p:'Children from low-income families fall behind more during holidays. Structured, affordable programmes are education policy.',ab2t:'Relief for working parents',ab2p:'14 holiday weeks per year are a constant logistical challenge. Calendar integration and waiting lists give planning security.',ab3t:'Year-round — all 14 weeks',ab3p:'Today: only summer and autumn holidays. Goal: all 14 weeks. Not achievable without digital infrastructure.',ab4t:'Basel as a regional model',ab4p:'A modernised platform positions Basel as a pioneer in municipal youth promotion.',ab5t:'Resilient organisation',ab5p:'Digital processes make the system independent of individuals. Knowledge is in the platform.',ab6t:'More impact, same team',ab6p:'With automated payments and AI support, the team can cover significantly more families and holiday weeks.',
+  a6_lbl:'06 — WHAT THE INVESTMENT ACHIEVES',a6_tit:'Concrete. Measurable. For everyone.',th1:'What is created',th2:'What it means for families',r1a:'Digital Ferienpass (smartphone)',r1b:'No trip to a sales point — accessible to all immediately',r2a:'Platform in DE / FR / EN',r2b:'No family excluded due to language',r3a:'AI assistant in 11 languages, 24/7',r3b:'Every family books in their mother tongue',r4a:'Automatic payments & waiting lists',r4b:'Transparency, fairness — no scrambling at 7am',r5a:'Family profiles & course filters',r5b:'Right offers by age, price, date',r6a:'Year-round operation',r6b:'All 14 weeks: summer, autumn, winter, spring, carnival',r7a:'Provider self-management',r7b:'More offers, higher quality — without additional staff',r8a:'Regional networking',r8b:'Providers from Riehen, Bettingen, Basel-Landschaft, tri-border region',
+  a7_lbl:'07 — CORE MESSAGE',a7_tit:'For Children. For Families. For Basel.',core_msg:"The Basler Ferienpass has for decades been a promise to all Basel families: holidays are possible for every child — regardless of origin, language and budget. Keeping this promise today requires a modern foundation. An investment in digitalisation is an investment in equal opportunities, family support and the future of the entire Basel region.",core_cite:'Basler Ferienpass — For Children. For Families. For Basel.',funders_t:'Potential Funding Partners',fund1:'Department of Education Basel-Stadt (existing partner)',fund2:'Bürgergemeinde Basel (existing partner)',fund3:'Christoph Merian Foundation — Social & urban development',fund4:'Sophie and Karl Binding Foundation — Children & youth',fund5:'Jacobs Foundation — Education & equal opportunities',fund6:'Digitalisation Fund Canton Basel-Stadt',fund7:'Private sponsors with CSR focus on inclusion, education, digitalisation',
+  cta_arg_lbl:'08 — NEXT STEPS',cta_tit:'Ready to start?',cta_sub:'We look forward to the conversation.',cta_pdf_arg:'↓ AS PDF',cta_to_prop:'→ TO PROPOSAL',
+  p_date:'DATE: MAY 2026',p_client:'CLIENT:',p_sub:'Complete redesign of presence and manual processes — AI-powered, modular, scalable.',p_dl:'↓ DOWNLOAD PROPOSAL',p_contact:'→ GET IN TOUCH',cl1t:'FOR ALL FAMILIES',cl1d:'Regardless of background & budget',cl2t:'LOW-THRESHOLD',cl2d:'Simple. Digital. Accessible to everyone.',cl3t:'INCLUSIVE',cl3d:'DE / FR / EN — no language barriers',
+  p1_lbl:'01 — CONTEXT',p1_tit:'The ambition of the Ferienpass is expanding.',p1_lead:'The new direction requires a complete redesign. Our solution: modern AI-assisted UX and modular architecture.',pf1:'One of many providers of summer holiday courses',pf2:'Focus on free / low-cost offerings',pf3:'Under-represented niche categories',pf4:'Manual processes & outdated digital presence',pt1:'Leading platform for holiday courses, year-round',pt2:'Attractive & balanced portfolio across all price categories',pt3:'Appealing to all families',pt4:'Modern AI-assisted user experience',
+  p2_lbl:'02 — SCOPE OF WORK',p2_tit:'What we deliver.',p2_lead:'Three user perspectives: Families, Course Providers, Ferienpass Team — plus technical infrastructure as foundation.',ftab_fam:'FAMILIES',ftab_prov:'PROVIDERS',ftab_team:'FERIENPASS TEAM',ftab_infra:'WEB & ARCHITECTURE',col_w:'WHAT',col_why:'WHY',
+  f1h:'Streamlined Registration & Access',f1w1:'Guided registration via sign-up form',f1w2:'Simple sign-in with email or Google',f1w3:'Persistent family account / profile',f1b1:'Effortless sign-up — removes friction',f1b2:'Family profile simplifies enrolments',f1b3:'Enables personalised recommendations',f2h:'All-Digital Ferienpass',f2w1:'Digital pass with PDF download',f2b1:'Eliminates complex physical logistics',f3h:'Modern Course Marketplace',f3w1:'Filters: Age / Date / Category / Price',f3w2:'Filters can be saved and shared',f3b1:'Easy filtering improves course discovery',f3b2:'Increases purchase conversion',f4h:'Integrated Payments & Waitlists',f4w1:'Payments via Stripe / TWINT (incl. refunds)',f4w2:'Automated waitlist matching',f4b1:'Removes critical friction points',f4b2:'Increases enrolment predictability',f5h:'Intelligent Advice 24/7',f5w1:'Conversational AI agent — advises and supports',f5b1:'Shopping experience becomes accessible & personalised',f5b2:'Available 24/7 without manual effort',
+  opt_lbl:'+ OPTIONAL EXTENSIONS',opt_bdg:'NOT IN BASE PACKAGE',opt_tag:'OPTIONAL',p1h:'Streamlined Registration',p1w1:'Guided registration via sign-up form',p1w2:'Transparent profile approval',p1b1:'Clear registration builds trust',p1b2:'Removes friction in onboarding',p2h:'Assisted Course Publishing',p2w1:'Guided course profile creation',p2w2:'Transparent publishing review status',p2b1:'Built-in guidance reduces manual effort',p2b2:'Providers deliver complete data from the start',p3h:'Integrated Payments & Waitlists',inc_fam:'Included in family pricing',inc_fp:'Included in Ferienpass pricing',t1h:'Reviewing Providers & Courses',t2h:'Portfolio Management Analytics',i1h:'Modern Website Design',i2h:'Modular Architecture',i3_note:'Invoiced directly by Metanet.ch',
+  p3_lbl:'03 — INVESTMENT',p3_tit:'Summary.',p3_desc:'All prices in CHF, excl. VAT. Hosting invoiced separately directly from Metanet.ch.',pc_fam:'Family Features',pc_famp:'Family + Provider',pc_team:'Team Features',pc_ai:'AI Feature',pc_infra:'Infrastructure',pc_tot:'TOTAL INVESTMENT',pcn_tot:'Base Package',pc_exvat:'CHF · excl. VAT · Hosting separate',pc_run:'ONGOING COSTS / YEAR',pcn_run:'Hosting, AI Services & Email',pcn1:'Registration & Access',pcn2:'All-Digital Ferienpass',pcn3:'Marketplace + Publishing',pcn4:'Payments & Waitlists',pcn5:'Portfolio Analytics',pcn6:'Intelligent Advice 24/7',pcn7:'Website & Architecture',
+  pf_lbl:'PAYMENT MODEL — STRIPE TRIANGULATION',pf_fam:'FAMILY',pf_pays:'Pays',pf_dist:'Distributes auto.',pf_fp:'FERIENPASS',pf_fee:'Platform Fee',pf_prov:'PROVIDER',pf_net:'Net',pf_note:'⚠ TWINT does not offer 3-way payments. Refund = same process in reverse. Ferienpass Team: no direct involvement in payments/waitlists/refunds.',
+  ds_tit:'🔒 Data Protection — How do we protect your data?',ds1n:'Swiss Hosted',ds1d:'All data stored exclusively on Metanet.ch servers in Switzerland.',ds2n:'Data Sovereignty',ds2d:'All data belongs exclusively to JuAr / Basler Ferienpass. SNOB has no independent access.',ds3n:'90-Day Retention',ds3d:'Recordings are automatically deleted after 90 days.',ds4n:'DSG / revDSG Compliant',ds4d:'Fully implemented under Swiss data protection law.',
+  p4_lbl:'04 — PHASES',p4_tit:'Project Phases.',p4_lead:'Structured implementation in clearly defined phases.',tl1p:'KICKOFF',tl1x:'Project setup, finalise requirements, set up access & accounts, branding briefing.',tl2p:'CONCEPT & DESIGN',tl2x:'UI/UX design for all three user perspectives. Approval by Ferienpass.',tl3p:'IMPLEMENTATION',tl3x:'Development of all features: Registration, Marketplace, Payments/Waitlists, Analytics, AI Advice. Iterative builds with weekly reviews.',tl4p:'TESTING & QA',tl4x:'End-to-end testing, payment tests (Stripe/TWINT), multilingual check, performance & security review.',tl5p:'GO-LIVE',tl5x:'Launch on Metanet.ch, DNS migration, monitoring setup, team onboarding & documentation.',tl6p:'SUPPORT & ITERATION',tl6x:'Ongoing support, bug fixes, iterative enhancements.',ms_lbl:'PAYMENT PLAN — 3 MILESTONES',ms1n:'Upon contract signing',ms2n:'After Go-Live',ms3n:'After 3 months support',ms_tot:'TOTAL',
+  p5_lbl:'05 — WHY SNOB',p5_tit:'The difference.',w1h:'Diversity & Inclusion',w1p:'For all cultural backgrounds & nationalities. The Ferienpass is for every family — regardless of origin or budget.',w2h:'Breaking Language Barriers',w2p:'Low-threshold access in DE / FR / EN — so no family is excluded because of language.',w3h:'Swiss-Based & Reliable',w3p:'Data stored in Switzerland, direct contact, no offshore support.',w4h:'AI-Native',w4p:'AI is not an add-on — it is the foundation. From the advice agent to automated process control.',w5h:'Modular & Scalable',w5p:'Base package today — advanced features tomorrow. Architecture that grows with Ferienpass.',w6h:'Zero Vendor Lock-in',w6p:'Open standards, directly invoiced hosting at Metanet.ch — full control.',w7h:'Multilingual by Design',w7p:'DE / FR / EN integrated from day one — not translated afterwards.',w8h:'Massive Efficiency Gains',w8p:'Automatic payments, waitlists and review workflows — focus on the portfolio, not transactions.',
+  p_cta_lbl:'06 — NEXT STEPS',cta_pdf_prop:'↓ AS PDF',cta_to_arg:'← TO CASE FOR SUPPORT',foot_law:'Swiss Law · Basel-Stadt',foot_copy:'© 2026 goSNOB.ai — All rights reserved'
+},
+fr:{
+  login_sub:'Basler Ferienpass — Documents confidentiels 2026',lbl_name:'Nom',lbl_code:"Code d'accès",lerr:'Identifiants invalides.',login_btn:'DEMANDER ACCÈS',login_hint:'CONFIDENTIEL · PERSONNES AUTORISÉES UNIQUEMENT',
+  land_sub:'× BASLER FERIENPASS 2026',land_tag_arg:'Société · Social · Inclusion',land_h_arg:'POURQUOI LE FERIENPASS <em>POUR TOUS.</em>',land_desc_arg:"La promesse sociale du Basler Ferienpass — et pourquoi une base moderne est une nécessité.",land_for_arg:'POUR: <strong>Politique · Partenaires · Public · Médias</strong>',ls1:'Nationalités',ls2:'Origine migratoire',ls3:'Semaines vacances/an',land_btn_arg:'→ OUVRIR ARGUMENTAIRE',
+  land_tag_prop:'Technologie · Investissement · Réalisation',land_h_prop:'CE QUE NOUS CONSTRUISONS. <em>COMMENT.</em>',land_desc_prop:"L'offre concrète: fonctionnalités, prix, calendrier et plan de paiement pour la refonte complète de la plateforme.",land_for_prop:'POUR: <strong>Mandant · Décideurs · Équipe projet</strong>',ls4:"60k d'investissement",ls5:'Phases de projet',ls6:'Jalons',land_btn_prop:'→ OUVRIR PROPOSITION',
+  nav_arg:'ARGUMENTAIRE',nav_prop:'PROPOSITION',nav_dl:'↓ PDF',
+  a_ref:'RÉF: JUAR-2026-001',a_date:'MAI 2026',a_for:'POUR:',a_h1:'BASLER FERIENPASS',a_h2:'POUR TOUS.',a_sub:"Le Basler Ferienpass est une institution depuis des décennies. Il est temps de tenir sa promesse avec une base moderne — pour toutes les familles, toutes les semaines de vacances, toutes les langues.",s1:'Nationalités',s2:'Origine migratoire',s3:'Semaines vacances/an',
+  a1_lbl:'01 — CE QUE REPRÉSENTE LE FERIENPASS',a1_tit:"L'ambition du Ferienpass, c'est Bâle.",a1_lead:"Depuis des décennies, une promesse à toutes les familles bâloises — indépendamment de l'origine, de la langue et du budget.",ac1t:'Des décennies de tradition',ac1p:"Le Basler Ferienpass fait partie de l'identité de Bâle. Chaque année, des milliers d'enfants bénéficient du programme.",ac2t:'Pont social',ac2p:"L'un des rares endroits où des enfants de tous milieux vivent ensemble des vacances. Pas comme exception — comme normalité.",ac3t:'Équité des chances',ac3p:"Il rend les vacances possibles pour les familles qui n'en auraient pas les moyens. Politique sociale active.",ac4t:'Ancrage régional',ac4p:"Les familles les plus diverses de Bâle ont toutes droit à cette offre. Aujourd'hui elle ne les atteint pas toutes.",
+  a2_lbl:'02 — RÉALITÉ SOCIALE DE BÂLE',a2_tit:'Les chiffres derrière la promesse.',a2_lead:"L'inclusion n'est pas un slogan — elle est mesurable. Le Ferienpass n'atteint pas encore tous ceux qui en ont besoin.",sz1t:"Ne parlent pas de langue nationale à la maison",sz1d:"Près de la moitié des ménages bâlois communiquent chez eux en turc, albanais, tamoul, arabe ou une autre langue. Le site actuel n'existe pas pour eux.",sz1s:'Source: Office statistique de Bâle-Ville 2024',sz2t:"Retard d'apprentissage par été",sz2d:"Les enfants des familles à faibles revenus perdent jusqu'à 2 mois de progrès scolaire pendant les vacances d'été.",sz2s:'Source: OCDE Education at a Glance 2023',sz3t:'Ouverture des inscriptions — et qui en pâtit',sz3d:"Ouverture à 7h, site uniquement en allemand, pas de liste d'attente. Qui ne maîtrise pas la langue n'a aucune chance. C'est une exclusion structurelle.",sz3s:'Basler Ferienpass — processus actuel',
+  sbar1l:'Allemand comme première langue',sbar2l:'Origine migratoire',sbar3l:'Enfants en pauvreté (moyenne CH)',sbar4l:'Semaines de vacances couvertes',sz_quote:"Le Ferienpass promet: des vacances pour tous. Mais celui qui ne parle pas allemand, ne peut pas se connecter à 7h, n'a pas d'argent pour le point de vente — est exclu. Pas par mauvaise intention. Mais parce que l'infrastructure n'a pas suivi.",sz_cite:"La solution n'est pas la bonne volonté. La solution est l'infrastructure numérique.",
+  a3_lbl:"03 — UNE PROMESSE SOUS PRESSION",a3_tit:"L'offre a grandi. L'infrastructure, non.",a3_lead:"Cela touche précisément les familles qui ont le plus besoin du Ferienpass.",aq_lbl:'ÉTAT ACTUEL → AMÉLIORATION',aq_ist:"AUJOURD'HUI",aq_sol:'OBJECTIF',af1:"Site web d'une autre époque — pas mobile, pas multilingue",af2:'Pass physique uniquement en points de vente',af3:"Ouverture des inscriptions à 07h — stress, chaos, pas de liste d'attente",af4:'Pas de moyens de paiement modernes — pas de TWINT, pas Apple Pay',af5:'Support téléphonique uniquement en allemand, Lu–Ve 9h–12h',af6:"Seulement vacances d'été et d'automne — 14 semaines possibles, 2 utilisées",af7:'Pas de profil famille, pas de calendrier, pas de rappels',at1:'Plateforme moderne — mobile, trilingue, intuitive',at2:'Pass numérique — immédiatement sur smartphone',at3:"Listes d'attente transparentes, réservation équitable pour tous",at4:'TWINT, carte de crédit, Apple Pay — tout intégré',at5:'Assistant IA en 11 langues, 24/7',at6:"Toutes les 14 semaines couvertes toute l'année",at7:'Profils familles, calendrier, rappels, favoris',
+  a4_lbl:'04 — BÂLE PARLE DE NOMBREUSES LANGUES',a4_tit:'Le Ferienpass aussi.',a4_lead:"Bâle-Ville compte plus de 170 nationalités. 55.8% ont une origine migratoire. Le Ferienpass ne parle aujourd'hui qu'allemand.",ui_lang:'Interface plateforme',ai_lang:'Assistant IA',leg_ui:'Interface plateforme (DE / FR / EN)',leg_ai:'Assistant téléphonique IA (8 autres langues)',q1:"Un assistant IA en turc, albanais, tamoul, ukrainien: chaque parent peut appeler dans sa langue maternelle — à 22h — et réserver un cours. Sans honte. Sans détour. Sans attente.",q1c:"C'est la différence entre la participation et l'exclusion.",
+  a5_lbl:"05 — PLUS QUE LA DIGITALISATION",a5_tit:'Un investissement pour Bâle.',a5_lead:"Un investissement dans la plateforme est un investissement dans l'équité des chances, le soutien aux familles et l'avenir de la région de Bâle.",ab1t:'Équité des chances',ab1p:"Les enfants des familles à faibles revenus perdent davantage le fil. Un programme structuré est une politique éducative.",ab2t:'Soulagement des parents',ab2p:"14 semaines de vacances par an sont un défi logistique. L'intégration au calendrier donne une sécurité de planification.",ab3t:"Toute l'année — 14 semaines",ab3p:"Aujourd'hui: seulement été et automne. Objectif: toutes les 14 semaines.",ab4t:'Bâle comme modèle',ab4p:"Une plateforme modernisée positionne Bâle comme pionnier en promotion de la jeunesse.",ab5t:'Organisation résiliente',ab5p:"Les processus numériques rendent le système indépendant des individus.",ab6t:"Plus d'impact, même équipe",ab6p:"Avec des paiements automatisés et le support IA, l'équipe peut couvrir bien plus de familles.",
+  a6_lbl:"06 — CE QUE L'INVESTISSEMENT PRODUIT",a6_tit:'Concret. Mesurable. Pour tous.',th1:'Ce qui est créé',th2:'Ce que cela signifie pour les familles',r1a:'Pass Ferienpass numérique',r1b:'Plus besoin de se déplacer — accessible à tous',r2a:'Plateforme en DE / FR / EN',r2b:'Aucune famille exclue pour des raisons linguistiques',r3a:'Assistant IA en 11 langues, 24/7',r3b:'Chaque famille réserve dans sa langue maternelle',r4a:"Paiements et listes d'attente automatiques",r4b:'Transparence, équité — plus de course à 7h',r5a:'Profils familles & filtres',r5b:'Les bonnes offres par âge, prix, date',r6a:"Fonctionnement toute l'année",r6b:'14 semaines: été, automne, hiver, printemps, carnaval',r7a:'Auto-gestion des prestataires',r7b:"Plus d'offres, meilleure qualité",r8a:'Réseau régional élargi',r8b:'Prestataires de Riehen, Bettingen, Bâle-Campagne',
+  a7_lbl:'07 — MESSAGE CENTRAL',a7_tit:'Pour les enfants. Pour les familles. Pour Bâle.',core_msg:"Le Basler Ferienpass est depuis des décennies une promesse à toutes les familles bâloises: les vacances sont possibles pour chaque enfant — indépendamment de l'origine, de la langue et du budget. Tenir cette promesse nécessite aujourd'hui une base moderne.",core_cite:'Basler Ferienpass — Pour les enfants. Pour les familles. Pour Bâle.',funders_t:'Partenaires de financement possibles',fund1:"Département de l'éducation de Bâle-Ville (partenaire existant)",fund2:'Bourgeoisie de Bâle (partenaire existant)',fund3:'Fondation Christoph Merian — Social & développement urbain',fund4:'Fondation Sophie et Karl Binding — Enfants & jeunesse',fund5:"Jacobs Foundation — Éducation & équité des chances",fund6:'Fonds de digitalisation du canton de Bâle-Ville',fund7:'Sponsors privés avec focus RSE sur inclusion, éducation, digitalisation',
+  cta_arg_lbl:'08 — PROCHAINES ÉTAPES',cta_tit:'Prêt à commencer?',cta_sub:"Nous nous réjouissons de l'échange.",cta_pdf_arg:'↓ EN PDF',cta_to_prop:'→ VERS LA PROPOSITION',
+  p_date:'DATE: MAI 2026',p_client:'CLIENT:',p_sub:'Refonte complète — propulsée par IA, modulaire, évolutive.',p_dl:'↓ TÉLÉCHARGER',p_contact:'→ NOUS CONTACTER',cl1t:'POUR TOUTES LES FAMILLES',cl1d:"Indépendamment de l'origine & du budget",cl2t:'ACCESSIBLE',cl2d:'Simple. Numérique. Pour tous.',cl3t:'INCLUSIF',cl3d:'DE / FR / EN — aucune barrière linguistique',
+  p1_lbl:'01 — CONTEXTE',p1_tit:"L'ambition du Ferienpass s'élargit.",p1_lead:"La nouvelle orientation nécessite une refonte complète. Notre solution: UX moderne assistée par IA et architecture modulaire.",pf1:"L'un des nombreux prestataires de cours",pf2:'Accent sur les offres gratuites / bon marché',pf3:'Catégories de niche sous-représentées',pf4:'Processus manuels & présence numérique obsolète',pt1:"Plateforme leader pour les cours, toute l'année",pt2:'Portfolio attrayant & équilibré',pt3:'Accessible à toutes les familles',pt4:'Expérience utilisateur moderne assistée par IA',
+  p2_lbl:'02 — PRESTATIONS',p2_tit:'Ce que nous livrons.',p2_lead:'Trois perspectives utilisateurs: Familles, Prestataires, Équipe — plus infrastructure technique.',ftab_fam:'FAMILLES',ftab_prov:'PRESTATAIRES',ftab_team:"ÉQUIPE",ftab_infra:'WEB & ARCHITECTURE',col_w:'QUOI',col_why:'POURQUOI',
+  f1h:'Inscription & Accès',f1w1:'Inscription guidée',f1w2:'Connexion avec email ou Google',f1w3:'Compte famille persistant',f1b1:'Inscription sans friction',f1b2:'Profil famille simplifie les inscriptions',f1b3:'Recommandations personnalisées',f2h:'Ferienpass Tout-Numérique',f2w1:'Pass numérique avec téléchargement PDF',f2b1:'Élimine la logistique physique',f3h:'Marketplace de Cours',f3w1:'Filtres: Âge / Date / Catégorie / Prix',f3w2:'Filtres sauvegardables',f3b1:'Filtrage facile améliore la découverte',f3b2:'Augmente le taux de conversion',f4h:"Paiements & Listes d'Attente",f4w1:'Paiements via Stripe / TWINT',f4w2:"Correspondance automatique des listes d'attente",f4b1:'Supprime les points de friction',f4b2:"Augmente la prévisibilité",f5h:'Conseil Intelligent 24/7',f5w1:'Agent IA conversationnel',f5b1:"L'expérience devient accessible & personnalisée",f5b2:'Disponible 24/7',
+  opt_lbl:'+ EXTENSIONS OPTIONNELLES',opt_bdg:'PAS DANS LE PACKAGE DE BASE',opt_tag:'OPTIONNEL',p1h:'Inscription Simplifiée',p1w1:'Inscription guidée',p1w2:'Approbation transparente',p1b1:'Inspire confiance',p1b2:"Élimine les frictions",p2h:'Publication Assistée',p2w1:'Création guidée de profil',p2w2:'Statut transparent',p2b1:"Réduit l'effort manuel",p2b2:'Données complètes dès le départ',p3h:"Paiements & Listes d'Attente",inc_fam:'Inclus dans le tarif famille',inc_fp:'Inclus dans le tarif Ferienpass',t1h:'Révision Prestataires & Cours',t2h:'Analytique Portfolio',i1h:'Design Web Moderne',i2h:'Architecture Modulaire',i3_note:'Facturé directement par Metanet.ch',
+  p3_lbl:'03 — INVESTISSEMENT',p3_tit:'Récapitulatif.',p3_desc:'Tous les prix en CHF, hors TVA. Hébergement facturé séparément par Metanet.ch.',pc_fam:'Fonctionnalités Familles',pc_famp:'Familles + Prestataires',pc_team:'Fonctionnalités Équipe',pc_ai:'Fonctionnalité IA',pc_infra:'Infrastructure',pc_tot:'INVESTISSEMENT TOTAL',pcn_tot:'Package de Base',pc_exvat:'CHF · hors TVA · hébergement séparé',pc_run:'COÛTS COURANTS / AN',pcn_run:'Hébergement, Services IA & E-Mail',pcn1:'Inscription & Accès',pcn2:'Ferienpass Tout-Numérique',pcn3:'Marketplace + Publication',pcn4:"Paiements & Listes d'Attente",pcn5:'Analytique Portfolio',pcn6:'Conseil Intelligent 24/7',pcn7:'Site Web & Architecture',
+  pf_lbl:'MODÈLE DE PAIEMENT — STRIPE',pf_fam:'FAMILLE',pf_pays:'Paie',pf_dist:'Distribue auto.',pf_fp:'FERIENPASS',pf_fee:'Frais de plateforme',pf_prov:'PRESTATAIRE',pf_net:'Net',pf_note:"⚠ TWINT ne propose pas de paiements à 3 voies. Remboursement = même processus en sens inverse.",
+  ds_tit:'🔒 Protection des données',ds1n:'Hébergé en Suisse',ds1d:'Toutes les données sur les serveurs Metanet.ch en Suisse.',ds2n:'Souveraineté des données',ds2d:'Toutes les données appartiennent exclusivement à JuAr / Basler Ferienpass.',ds3n:'Rétention 90 jours',ds3d:'Les enregistrements sont automatiquement supprimés après 90 jours.',ds4n:'Conforme DSG / revDSG',ds4d:'Entièrement conforme à la loi suisse sur la protection des données.',
+  p4_lbl:'04 — PHASES',p4_tit:'Phases du Projet.',p4_lead:'Mise en œuvre structurée en phases clairement définies.',tl1p:'LANCEMENT',tl1x:'Configuration, finalisation des exigences, accès & comptes, briefing branding.',tl2p:'CONCEPT & DESIGN',tl2x:'Design UI/UX pour les trois perspectives. Validation par Ferienpass.',tl3p:'MISE EN ŒUVRE',tl3x:'Développement de toutes les fonctionnalités. Builds itératifs avec revues hebdomadaires.',tl4p:'TESTS & QA',tl4x:'Tests end-to-end, vérification multilingue, performance & sécurité.',tl5p:'MISE EN LIGNE',tl5x:'Lancement sur Metanet.ch, migration DNS, onboarding équipe & documentation.',tl6p:'SUPPORT & ITÉRATION',tl6x:'Support continu, corrections, améliorations itératives.',ms_lbl:'PLAN DE PAIEMENT — 3 JALONS',ms1n:'À la signature du contrat',ms2n:'Après la mise en ligne',ms3n:'Après 3 mois de support',ms_tot:'TOTAL',
+  p5_lbl:'05 — POURQUOI SNOB',p5_tit:'La différence.',w1h:'Diversité & Inclusion',w1p:"Pour toutes les origines. Le Ferienpass est pour chaque famille.",w2h:'Barrières Linguistiques',w2p:"Accès en DE / FR / EN — aucune famille exclue.",w3h:'Basé en Suisse',w3p:'Données en Suisse, contact direct.',w4h:'IA-Natif',w4p:"L'IA est le fondement — pas un ajout.",w5h:'Modulaire & Évolutif',w5p:"Package de base aujourd'hui — avancé demain.",w6h:'Zéro Dépendance',w6p:'Standards ouverts, hébergement direct Metanet.ch.',w7h:'Multilingue dès le départ',w7p:"DE / FR / EN intégré dès le premier jour.",w8h:"Gains d'Efficacité",w8p:"Paiements automatiques, listes d'attente — focus sur le portfolio.",
+  p_cta_lbl:'06 — PROCHAINES ÉTAPES',cta_pdf_prop:'↓ EN PDF',cta_to_arg:"← VERS L'ARGUMENTAIRE",foot_law:'Droit Suisse · Bâle-Ville',foot_copy:'© 2026 goSNOB.ai — Tous droits réservés'
+}
 };
 
-// ============================================================
-// COURSE DATA  (multilingual titles/desc/loc)
-// ============================================================
-var CDATA = [
-  {id:1,prov:"Fabio Landi",cat:"Musik",price:0,pb:"low",age:"8-14",spots:12,booked:9,week:"14. Juli",em:"🎵",col:"#FF6B6B",rat:4.8,rev:23,days:3,time:"09:00–16:00",
-   title:{de:"Musik & Klang Camp",fr:"Camp Musique & Son",en:"Music & Sound Camp"},
-   desc:{de:"Tauche ein in die Welt der Musik – von Rhythmus über Melodie bis zu eigenen Kompositionen.",fr:"Plongez dans le monde de la musique – du rythme à la mélodie jusqu'à vos propres compositions.",en:"Dive into the world of music – from rhythm and melody to your own compositions."},
-   loc:{de:"Musikschule Basel, Leonhardsgraben 6",fr:"École de musique Bâle, Leonhardsgraben 6",en:"Basel Music School, Leonhardsgraben 6"}},
-  {id:2,prov:"Zirkus Basilisk",cat:"Sport",price:45,pb:"mid",age:"6-12",spots:15,booked:15,week:"21. Juli",em:"🎪",col:"#4ECDC4",rat:4.9,rev:41,days:5,time:"08:30–17:00",
-   title:{de:"Zirkus Akrobatik",fr:"Acrobatie de Cirque",en:"Circus Acrobatics"},
-   desc:{de:"Jonglieren, Balancieren, Akrobatik – eine Woche voller Spass und neuer Fähigkeiten.",fr:"Jongler, équilibrer, acrobatie – une semaine pleine de plaisir et de nouvelles compétences.",en:"Juggling, balancing, acrobatics – a week full of fun and new skills."},
-   loc:{de:"Sportanlage Rankhof",fr:"Installation sportive Rankhof",en:"Rankhof Sports Complex"}},
-  {id:3,prov:"TechKids Basel",cat:"Technik",price:80,pb:"market",age:"10-16",spots:10,booked:6,week:"28. Juli",em:"🤖",col:"#A29BFE",rat:4.7,rev:18,days:4,time:"09:00–17:00",
-   title:{de:"Coding & Robotik",fr:"Codage & Robotique",en:"Coding & Robotics"},
-   desc:{de:"Programmieren lernen, eigene Roboter bauen und die Welt von morgen gestalten.",fr:"Apprendre à programmer, construire ses propres robots et façonner le monde de demain.",en:"Learn to code, build robots, and shape the world of tomorrow."},
-   loc:{de:"Digitalhub Basel, Hochbergerstrasse",fr:"Digitalhub Bâle, Hochbergerstrasse",en:"Digitalhub Basel, Hochbergerstrasse"}},
-  {id:4,prov:"NABU Basel",cat:"Natur",price:0,pb:"low",age:"7-12",spots:20,booked:14,week:"4. Aug",em:"🌿",col:"#00B894",rat:4.6,rev:35,days:3,time:"09:30–15:30",
-   title:{de:"Naturentdecker Camp",fr:"Camp Explorateurs Nature",en:"Nature Discovery Camp"},
-   desc:{de:"Käfer, Kräuter, Flussleben – die Natur Basels hautnah entdecken mit echten Biologen.",fr:"Insectes, herbes, vie fluviale – découvrez la nature de Bâle avec de vrais biologistes.",en:"Bugs, herbs, river life – discover Basel's nature up close with real biologists."},
-   loc:{de:"Petite Camargue Alsacienne",fr:"Petite Camargue Alsacienne",en:"Petite Camargue Alsacienne"}},
-  {id:5,prov:"Junges Theater Basel",cat:"Kunst",price:20,pb:"low",age:"9-15",spots:16,booked:10,week:"11. Aug",em:"🎭",col:"#FD79A8",rat:4.5,rev:29,days:5,time:"10:00–17:00",
-   title:{de:"Theater & Performance",fr:"Théâtre & Performance",en:"Theatre & Performance"},
-   desc:{de:"Eigene Stücke schreiben, proben und am Ende der Woche vor Eltern aufführen.",fr:"Écrire ses propres pièces, répéter et les jouer devant les parents en fin de semaine.",en:"Write your own plays, rehearse and perform for parents at the end of the week."},
-   loc:{de:"Theater Basel, Probe-Bühne",fr:"Théâtre de Bâle, scène de répétition",en:"Theater Basel, Rehearsal Stage"}},
-  {id:6,prov:"Kochschule Basilicum",cat:"Kulinarik",price:55,pb:"mid",age:"8-14",spots:12,booked:8,week:"18. Aug",em:"👨‍🍳",col:"#FDCB6E",rat:4.8,rev:22,days:3,time:"10:00–15:00",
-   title:{de:"Kochen & Backen",fr:"Cuisine & Pâtisserie",en:"Cooking & Baking"},
-   desc:{de:"Teig kneten, Saucen kochen, Kuchen dekorieren – Küchenmagie für Kinder.",fr:"Pétrir la pâte, cuisiner des sauces, décorer des gâteaux – magie culinaire pour les enfants.",en:"Knead dough, cook sauces, decorate cakes – kitchen magic for children."},
-   loc:{de:"Kochschule am Marktplatz",fr:"École de cuisine du Marktplatz",en:"Cooking School at Marktplatz"}},
-  {id:7,prov:"Kunsthalle Basel Youth",cat:"Kunst",price:35,pb:"mid",age:"12-17",spots:10,booked:7,week:"25. Aug",em:"🎨",col:"#E17055",rat:4.9,rev:15,days:3,time:"11:00–18:00",
-   title:{de:"Streetart & Graffiti",fr:"Street Art & Graffiti",en:"Street Art & Graffiti"},
-   desc:{de:"Legales Sprühen unter Anleitung professioneller Streetart-Künstler.",fr:"Spray légal sous la direction d'artistes de street art professionnels.",en:"Legal spraying guided by professional street art artists."},
-   loc:{de:"Gundeldinger Feld",fr:"Gundeldinger Feld",en:"Gundeldinger Feld"}},
-  {id:8,prov:"Sportamt Basel",cat:"Sport",price:0,pb:"low",age:"6-14",spots:25,booked:20,week:"1. Sept",em:"🏊",col:"#74B9FF",rat:4.4,rev:48,days:5,time:"09:00–12:00",
-   title:{de:"Schwimmen & Wassersport",fr:"Natation & Sports nautiques",en:"Swimming & Water Sports"},
-   desc:{de:"Kraul lernen, Wasserball spielen und sicher im Wasser sein – für alle Levels.",fr:"Apprendre le crawl, jouer au water-polo et être en sécurité dans l'eau – pour tous niveaux.",en:"Learn crawl, play water polo and be safe in the water – for all levels."},
-   loc:{de:"Gartenbad Bachgraben",fr:"Piscine Gartenbad Bachgraben",en:"Gartenbad Bachgraben Pool"}}
-];
-
-var CATS = [
-  {key:"Musik",  em:"🎵",col:"#FF6B6B",lbl:{de:"Musik",fr:"Musique",en:"Music"}},
-  {key:"Sport",  em:"⚽",col:"#4ECDC4",lbl:{de:"Sport",fr:"Sport",en:"Sport"}},
-  {key:"Technik",em:"🤖",col:"#A29BFE",lbl:{de:"Technik",fr:"Technologie",en:"Technology"}},
-  {key:"Natur",  em:"🌿",col:"#00B894",lbl:{de:"Natur",fr:"Nature",en:"Nature"}},
-  {key:"Kunst",  em:"🎨",col:"#FD79A8",lbl:{de:"Kunst",fr:"Arts",en:"Arts"}},
-  {key:"Kulinarik",em:"👨‍🍳",col:"#FDCB6E",lbl:{de:"Kulinarik",fr:"Cuisine",en:"Culinary"}}
-];
-
-// ============================================================
-// STATE
-// ============================================================
-var L = localStorage.getItem('fp_lang') || 'de';
-var courses = JSON.parse(JSON.stringify(CDATA));
-var favs    = JSON.parse(localStorage.getItem('fp_fav')  || '[]');
-var books   = JSON.parse(localStorage.getItem('fp_bk')   || '[]');
-var wlist   = JSON.parse(localStorage.getItem('fp_wl')   || '[]');
-var kids    = JSON.parse(localStorage.getItem('fp_kids') || '["Lena (8)","Tim (14)"]');
-var selKid  = kids[0];
-var curBook = null;
-var catF    = 'ALL';
-var adminOK = false;
-
-// ============================================================
-// HELPERS
-// ============================================================
-function t(k) { return (TX[L] && TX[L][k] != null) ? TX[L][k] : (TX.de[k] || k); }
-
-function sav() {
-  localStorage.setItem('fp_fav',  JSON.stringify(favs));
-  localStorage.setItem('fp_bk',   JSON.stringify(books));
-  localStorage.setItem('fp_wl',   JSON.stringify(wlist));
-  localStorage.setItem('fp_kids', JSON.stringify(kids));
-  localStorage.setItem('fp_lang', L);
-}
-
-function gt(c)  { return c.title[L] || c.title.de; }
-function gd(c)  { return c.desc[L]  || c.desc.de; }
-function gl(c)  { return (c.loc[L]  || c.loc.de); }
-function gls(c) { return gl(c).split(',')[0]; }
-
-function gcl(key) {
-  var x = CATS.filter(function(c){ return c.key === key; })[0];
-  return x ? (x.lbl[L] || x.lbl.de) : key;
-}
-
-function ptx(c)  { return c.price === 0 ? t('free') : 'CHF ' + c.price; }
-function blbl(b) { return {low:t('bl'),mid:t('bm'),market:t('bh')}[b] || b; }
-function dtx(c)  { return c.days + ' ' + t('days'); }
-function full(c) { return c.booked >= c.spots; }
-function sleft(c){ return c.spots - c.booked; }
-
-function ha(h, a) {
-  var v = Math.round(a * 255).toString(16);
-  if (v.length < 2) v = '0' + v;
-  return h + v;
-}
-
-function starsH(r) {
-  var s = '';
-  for(var i=0;i<Math.floor(r);i++) s += '★';
-  for(var i=Math.floor(r);i<5;i++) s += '☆';
-  return '<span style="color:#FDCB6E;font-size:12px">' + s + '</span>' +
-         '<span style="color:#999;font-size:10.5px;margin-left:2px">' + r + '</span>';
-}
-
-function sbarH(c) {
-  var p = Math.min(c.booked / c.spots * 100, 100);
-  var col = p >= 100 ? '#FF6B6B' : p >= 75 ? '#FDCB6E' : '#00B894';
-  var txt = full(c) ? t('full') : sleft(c) + ' ' + t('sp_free');
-  return '<div class="sr"><span>' + txt + '</span><span>' + c.booked + '/' + c.spots + '</span></div>' +
-         '<div class="sbg"><div class="sfl" style="width:' + p + '%;background:' + col + '"></div></div>';
-}
-
-// ============================================================
-// LANGUAGE SWITCH
-// ============================================================
-function setLang(l) {
-  L = l;
-  sav();
-  document.querySelectorAll('.lb').forEach(function(b) {
-    b.classList.toggle('on', b.textContent.trim() === l.toUpperCase());
+// ── SETLANG — robust innerHTML for keys with HTML tags
+const HTML_KEYS=new Set(['land_h_arg','land_h_prop','land_for_arg','land_for_prop']);
+let curLang='de';
+function setLang(lang){
+  if(!T[lang]) lang='de';
+  curLang=lang;
+  const L=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(L[k]===undefined) return;
+    el.textContent=L[k];
   });
-  applyTX();
-  rHome();
-  var ap = document.querySelector('.pg.on');
-  if (ap) {
-    var id = ap.id.replace('pg-','');
-    if (id === 'courses')  rCourses();
-    if (id === 'bookings') rBookings();
-    if (id === 'profile')  rProfile();
-    if (id === 'admin' && adminOK) rAdmin();
-  }
-}
-
-function applyTX() {
-  document.querySelectorAll('[data-k]').forEach(function(el) {
-    var k = el.getAttribute('data-k');
-    if (TX[L] && TX[L][k] != null) el.textContent = TX[L][k];
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k=el.getAttribute('data-i18n-html');
+    if(L[k]===undefined) return;
+    el.innerHTML=L[k];
   });
-  document.querySelectorAll('[data-ph]').forEach(function(el) {
-    var k = el.getAttribute('data-ph');
-    if (TX[L] && TX[L][k] != null) el.placeholder = TX[L][k];
-  });
-  buildSelects();
-}
-
-function buildSelects() {
-  var cs = document.getElementById('fi-c');
-  var ws = document.getElementById('fi-w');
-  var ps = document.getElementById('fi-p');
-  if (!cs) return;
-  cs.innerHTML = '<option value="ALL">' + t('ca') + '</option>' +
-    CATS.map(function(c){ return '<option value="'+c.key+'">'+(c.lbl[L]||c.lbl.de)+'</option>'; }).join('');
-  cs.value = catF;
-  ws.innerHTML = '<option value="ALL">' + t('wa') + '</option>' +
-    ['14. Juli','21. Juli','28. Juli','4. Aug','11. Aug','18. Aug','25. Aug','1. Sept']
-    .map(function(w){ return '<option>'+w+'</option>'; }).join('');
-  ps.innerHTML = '<option value="ALL">' + t('pa') + '</option>' +
-    '<option value="free">' + t('pf') + '</option>' +
-    '<option value="mid">'  + t('pm') + '</option>' +
-    '<option value="prem">' + t('pp') + '</option>';
-}
-
-// ============================================================
-// NAVIGATION
-// ============================================================
-function go(page) {
-  document.querySelectorAll('.pg').forEach(function(p){ p.classList.remove('on'); });
-  document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('on'); });
-  document.getElementById('pg-' + page).classList.add('on');
-  var btn = document.querySelector('.nb[data-p="' + page + '"]');
-  if (btn) btn.classList.add('on');
-  window.scrollTo({top:0, behavior:'smooth'});
-  if (page === 'courses')  rCourses();
-  if (page === 'bookings') rBookings();
-  if (page === 'profile')  rProfile();
-  if (page === 'admin')    rAdmin();
-}
-
-// ============================================================
-// TOAST
-// ============================================================
-var toastTM;
-function toast(msg, type) {
-  type = type || 's';
-  var el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast ' + type;
-  el.style.display = 'block';
-  clearTimeout(toastTM);
-  toastTM = setTimeout(function(){ el.style.display='none'; }, 3000);
-}
-
-// ============================================================
-// CARD HTML
-// ============================================================
-function cardH(c) {
-  var f    = full(c);
-  var isFav = favs.indexOf(c.id) >= 0;
-  var bbg  = f ? '#e0e0e0' : 'linear-gradient(135deg,' + c.col + ',' + c.col + 'cc)';
-  var btxt = f ? t('wl_btn') : t('bk_btn') + ' · ' + ptx(c);
-  return '<div class="card">' +
-    '<div class="ch" style="background:linear-gradient(135deg,' + ha(c.col,.10) + ',' + ha(c.col,.22) + ');border-bottom:3px solid ' + c.col + '">' +
-      '<span class="ce">' + c.em + '</span>' +
-      '<div class="cbg">' +
-        '<span class="bdg" style="background:' + ha(c.col,.16) + ';color:' + c.col + '">' + gcl(c.cat) + '</span>' +
-        '<span class="bdg" style="background:#f5f5f5;color:#666">' + blbl(c.pb) + '</span>' +
-        '<span class="bdg" style="background:#f0f0f0;color:#555">' + c.age + '</span>' +
-      '</div>' +
-      '<button class="fb" style="background:' + (isFav ? c.col : '#fff') + ';border-color:' + c.col + ';color:' + (isFav ? '#fff' : c.col) + '" onclick="toggleFav(' + c.id + ')">' + (isFav ? '♥' : '♡') + '</button>' +
-    '</div>' +
-    '<div class="cb">' +
-      '<div><div class="ct">' + gt(c) + '</div><div class="cp">' + t('by') + ' ' + c.prov + '</div></div>' +
-      '<p class="cd">' + gd(c) + '</p>' +
-      '<div class="cm"><div>📅 ' + c.week + '</div><div>⏱ ' + dtx(c) + '</div><div>🕐 ' + c.time + '</div><div>📍 ' + gls(c) + '</div></div>' +
-      '<div>' + starsH(c.rat) + '</div>' +
-      sbarH(c) +
-      '<div class="ca">' +
-        '<button class="dbt" onclick="openDet(' + c.id + ')">' + t('det') + '</button>' +
-        '<button class="bbt' + (f ? ' full' : '') + '" style="background:' + bbg + '" onclick="openBook(' + c.id + ')">' + btxt + '</button>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-// ============================================================
-// HOME
-// ============================================================
-function rHome() {
-  applyTX();
-  var hf = document.getElementById('hfeat');
-  if (hf) {
-    var sorted = courses.slice().sort(function(a,b){ return b.booked - a.booked; }).slice(0,3);
-    hf.innerHTML = sorted.map(cardH).join('');
-  }
-  var cg = document.getElementById('catg');
-  if (cg) {
-    cg.innerHTML = CATS.map(function(cat) {
-      var cnt = courses.filter(function(c){ return c.cat === cat.key; }).length;
-      var lbl = cat.lbl[L] || cat.lbl.de;
-      return '<button class="catc" style="border-color:' + cat.col + '44;background:linear-gradient(135deg,' + ha(cat.col,.07) + ',' + ha(cat.col,.14) + ')" onclick="filterByCat(\'' + cat.key + '\')">' +
-        '<div class="catic">' + cat.em + '</div>' +
-        '<div class="catn">' + lbl + '</div>' +
-        '<div class="catct">' + cnt + ' ' + t('s_c').toLowerCase() + '</div>' +
-      '</button>';
-    }).join('');
-  }
-}
-
-function heroSrch(v) {
-  var el = document.getElementById('fi-s');
-  if (el) el.value = v;
-  go('courses');
-}
-
-function filterByCat(key) {
-  catF = key;
-  go('courses');
-}
-
-// ============================================================
-// COURSES
-// ============================================================
-function rCourses() {
-  buildSelects();
-  buildPills();
-  doFilter();
-}
-
-function buildPills() {
-  var row = document.getElementById('pills');
-  if (!row) return;
-  var h = '<button class="pill' + (catF === 'ALL' ? ' on' : '') + '" onclick="setPill(\'ALL\')">' + t('ca') + '</button>';
-  CATS.forEach(function(cat) {
-    var lbl = cat.lbl[L] || cat.lbl.de;
-    h += '<button class="pill' + (catF === cat.key ? ' on' : '') + '" onclick="setPill(\'' + cat.key + '\')">' + lbl + '</button>';
-  });
-  row.innerHTML = h;
-}
-
-function setPill(key) {
-  catF = key;
-  var sel = document.getElementById('fi-c');
-  if (sel) sel.value = key;
-  doFilter();
-}
-
-function doFilter() {
-  var q  = (document.getElementById('fi-s')  || {value:''}).value.toLowerCase();
-  var ca = (document.getElementById('fi-c')  || {value:'ALL'}).value;
-  var wk = (document.getElementById('fi-w')  || {value:'ALL'}).value;
-  var pr = (document.getElementById('fi-p')  || {value:'ALL'}).value;
-  catF = ca;
-  buildPills();
-  var res = courses.filter(function(c) {
-    if (ca !== 'ALL' && c.cat !== ca) return false;
-    if (wk !== 'ALL' && c.week !== wk) return false;
-    if (pr === 'free' && c.price !== 0) return false;
-    if (pr === 'mid'  && (c.price === 0 || c.price > 50)) return false;
-    if (pr === 'prem' && c.price <= 50) return false;
-    if (q && !gt(c).toLowerCase().includes(q) && !gcl(c.cat).toLowerCase().includes(q)) return false;
-    return true;
-  });
-  var cc = document.getElementById('cr-count');
-  if (cc) cc.textContent = res.length + ' ' + t('cr_found');
-  var gr = document.getElementById('cgrid');
-  var ne = document.getElementById('nores');
-  if (res.length === 0) {
-    if (gr) gr.innerHTML = '';
-    if (ne) ne.style.display = 'block';
-  } else {
-    if (gr) gr.innerHTML = res.map(cardH).join('');
-    if (ne) ne.style.display = 'none';
-  }
-}
-
-function resetF() {
-  catF = 'ALL';
-  ['fi-c','fi-w','fi-p'].forEach(function(id){
-    var el = document.getElementById(id); if (el) el.value = 'ALL';
-  });
-  var si = document.getElementById('fi-s'); if (si) si.value = '';
-  doFilter();
-}
-
-// ============================================================
-// FAVOURITES
-// ============================================================
-function toggleFav(id) {
-  var i = favs.indexOf(id);
-  if (i >= 0) { favs.splice(i, 1); toast(t('tf_r'), 'i'); }
-  else         { favs.push(id);    toast(t('tf_a')); }
-  sav();
-  rHome();
-  if (document.getElementById('pg-courses').classList.contains('on'))  doFilter();
-  if (document.getElementById('pg-profile').classList.contains('on'))  rProfile();
-}
-
-// ============================================================
-// BOOK MODAL
-// ============================================================
-function openBook(id) {
-  var c = courses.filter(function(x){ return x.id === id; })[0];
-  if (!c) return;
-  if (full(c)) {
-    wlist.push(JSON.parse(JSON.stringify(c)));
-    wlist[wlist.length-1].addedAt = new Date().toLocaleDateString('de-CH');
-    sav(); rBookings(); updNav();
-    toast('⏳ ' + t('tw2'), 'i');
-    return;
-  }
-  curBook = c;
-  document.getElementById('bkmod-h').innerHTML =
-    '<div style="background:linear-gradient(135deg,' + ha(c.col,.10) + ',' + ha(c.col,.22) + ');border-radius:12px;padding:14px;text-align:center;margin-bottom:13px">' +
-      '<div style="font-size:38px">' + c.em + '</div>' +
-      '<h2 style="font-size:17px;font-weight:900;color:#1a1a2e;margin-top:5px">' + gt(c) + '</h2>' +
-      '<p style="color:#888;font-size:11.5px;margin-top:2px">📅 ' + c.week + ' · ⏱ ' + dtx(c) + '</p>' +
-    '</div>';
-  document.getElementById('bkmod-m').innerHTML =
-    '<div class="mi"><div class="mil">' + t('dl') + '</div><div class="miv">' + gls(c) + '</div></div>' +
-    '<div class="mi"><div class="mil">' + t('dt') + '</div><div class="miv">' + c.time + '</div></div>' +
-    '<div class="mi"><div class="mil">' + t('da') + '</div><div class="miv">' + c.age + '</div></div>' +
-    '<div class="mi"><div class="mil">' + t('dp') + '</div><div class="miv">' + ptx(c) + '</div></div>';
-  selKid = kids[0];
-  document.getElementById('wck-lbl').textContent = t('wck');
-  document.getElementById('ksel').innerHTML = kids.map(function(k) {
-    var sel = (k === selKid);
-    var esc = k.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return '<button class="kbtn' + (sel ? ' on' : '') + '" style="border-color:' + c.col + ';' + (sel ? 'background:' + c.col + ';color:#fff' : '') + '" onclick="selK(\'' + esc + '\',this)">' + k + '</button>';
-  }).join('');
-  var ok = document.getElementById('bkmod-ok');
-  ok.style.background = 'linear-gradient(135deg,' + c.col + ',' + c.col + 'cc)';
-  ok.textContent = '🎉 ' + t('cnf_bk') + ' · ' + ptx(c);
-  document.getElementById('bkmod-cancel').textContent = t('bk_cancel');
-  document.getElementById('bkmod').classList.add('on');
-}
-
-function selK(kid, btn) {
-  selKid = kid;
-  var c = curBook;
-  document.querySelectorAll('.kbtn').forEach(function(b) {
-    b.classList.remove('on');
-    b.style.background = '#fff';
-    b.style.color = '#333';
-  });
-  btn.classList.add('on');
-  btn.style.background = c.col;
-  btn.style.color = '#fff';
-}
-
-function confirmBook() {
-  var c = curBook; if (!c) return;
-  var idx = -1;
-  courses.forEach(function(x,i){ if(x.id===c.id) idx=i; });
-  if (idx >= 0) courses[idx].booked++;
-  var entry = JSON.parse(JSON.stringify(c));
-  entry.booked = courses[idx].booked;
-  entry.child  = selKid;
-  entry.bookedAt = new Date().toLocaleDateString('de-CH');
-  books.push(entry);
-  sav(); updNav();
-  document.getElementById('bkmod').classList.remove('on');
-  toast('🎉 "' + gt(c) + '" ' + t('tb'));
-  rHome();
-  if (document.getElementById('pg-courses').classList.contains('on')) doFilter();
-}
-
-// ============================================================
-// DETAIL MODAL
-// ============================================================
-function openDet(id) {
-  var c = courses.filter(function(x){ return x.id === id; })[0];
-  if (!c) return;
-  var isFav = favs.indexOf(c.id) >= 0;
-  var f = full(c);
-  document.getElementById('dtmod-body').innerHTML =
-    '<div style="background:linear-gradient(135deg,' + ha(c.col,.16) + ',' + ha(c.col,.30) + ');padding:24px;border-bottom:3px solid ' + c.col + '">' +
-      '<button class="xbtn" onclick="document.getElementById(\'dtmod\').classList.remove(\'on\')">✕</button>' +
-      '<div style="font-size:44px;margin-bottom:8px">' + c.em + '</div>' +
-      '<div class="cbg" style="margin-bottom:8px">' +
-        '<span class="bdg" style="background:' + ha(c.col,.18) + ';color:' + c.col + '">' + gcl(c.cat) + '</span>' +
-        '<span class="bdg" style="background:#f0f0f0;color:#555">' + c.age + '</span>' +
-        '<span class="bdg" style="background:#f0f0f0;color:#555">' + blbl(c.pb) + '</span>' +
-      '</div>' +
-      '<h2 style="font-size:21px;font-weight:900;color:#1a1a2e;margin-bottom:3px">' + gt(c) + '</h2>' +
-      '<div style="color:#666;font-size:12.5px">' + t('by') + ' ' + c.prov + '</div>' +
-    '</div>' +
-    '<div class="mb" style="padding-top:18px">' +
-      '<p class="mdesc">' + gd(c) + '</p>' +
-      '<div class="mm">' +
-        '<div class="mi"><div class="mil">' + t('dw') + '</div><div class="miv">' + c.week + '</div></div>' +
-        '<div class="mi"><div class="mil">' + t('dd') + '</div><div class="miv">' + dtx(c) + '</div></div>' +
-        '<div class="mi"><div class="mil">' + t('dt') + '</div><div class="miv">' + c.time + '</div></div>' +
-        '<div class="mi"><div class="mil">' + t('dl') + '</div><div class="miv">' + gls(c) + '</div></div>' +
-        '<div class="mi"><div class="mil">' + t('da') + '</div><div class="miv">' + c.age + '</div></div>' +
-        '<div class="mi"><div class="mil">' + t('dp') + '</div><div class="miv">' + ptx(c) + '</div></div>' +
-      '</div>' +
-      '<div style="margin-bottom:12px">' + starsH(c.rat) + ' <span style="color:#999;font-size:11.5px;margin-left:5px">(' + c.rev + ' ' + t('rev') + ')</span></div>' +
-      sbarH(c) +
-      '<div class="mact">' +
-        '<button class="secbtn" style="border-color:' + c.col + ';color:' + c.col + ';background:' + (isFav ? ha(c.col,.10) : '#fff') + ';flex:1" onclick="dtFav(' + c.id + ')">' + (isFav ? t('svd_btn') : t('sv_btn')) + '</button>' +
-        '<button class="cnfbtn" style="flex:2;background:' + (f ? '#e0e0e0' : 'linear-gradient(135deg,' + c.col + ',' + c.col + 'cc)') + ';color:' + (f ? '#999' : '#fff') + ';cursor:' + (f ? 'not-allowed' : 'pointer') + '" onclick="dtBook(' + c.id + ')">' +
-          (f ? ('⏳ ' + t('wl_btn')) : ('🎉 ' + t('bk_btn') + ' · ' + ptx(c))) +
-        '</button>' +
-      '</div>' +
-    '</div>';
-  document.getElementById('dtmod').classList.add('on');
-}
-
-function dtFav(id)  { toggleFav(id); openDet(id); }
-function dtBook(id) { document.getElementById('dtmod').classList.remove('on'); openBook(id); }
-
-// ============================================================
-// BOOKINGS
-// ============================================================
-function updNav() {
-  var el = document.getElementById('bnav'); if (!el) return;
-  var sp = el.querySelector('[data-k="n_bookings"]');
-  if (sp) sp.textContent = books.length ? t('n_bookings') + ' (' + books.length + ')' : t('n_bookings');
-}
-
-function cancelBook(i) {
-  var b = books[i];
-  courses.forEach(function(c){ if(c.id===b.id && c.booked>0) c.booked--; });
-  books.splice(i, 1);
-  sav(); rBookings(); updNav(); rHome();
-  if (document.getElementById('pg-courses').classList.contains('on')) doFilter();
-  toast('"' + gt(b) + '" ' + t('tc'), 'i');
-}
-
-function rmWL(i) {
-  wlist.splice(i, 1);
-  sav(); rBookings();
-  toast(t('tf_r'), 'i');
-}
-
-function rBookings() {
-  updNav();
-  var meta = document.getElementById('bk-meta');
-  if (meta) meta.textContent = books.length + ' ' + t('bk_act') + ' · ' + wlist.length + ' ' + t('bk_wl');
-  var lst = document.getElementById('bklist'); if (!lst) return;
-  if (books.length === 0 && wlist.length === 0) {
-    lst.innerHTML =
-      '<div class="wcard" style="text-align:center;padding:48px">' +
-        '<div style="font-size:52px;margin-bottom:10px">📋</div>' +
-        '<h3 style="font-size:18px;font-weight:800;margin-bottom:5px">' + t('nobk_t') + '</h3>' +
-        '<p style="color:#888">' + t('nobk_s') + '</p>' +
-        '<button class="pbtn" style="width:auto;padding:9px 18px;margin-top:14px" onclick="go(\'courses\')">' + t('expl_btn') + '</button>' +
-      '</div>';
-    return;
-  }
-  var h = '';
-  books.forEach(function(b, i) {
-    h += '<div class="bcard">' +
-      '<div class="bico" style="background:linear-gradient(135deg,' + ha(b.col,.16) + ',' + ha(b.col,.30) + ')">' + b.em + '</div>' +
-      '<div class="binfo"><div class="bt">' + gt(b) + '</div><div class="bs">👤 ' + b.child + ' · 📅 ' + b.week + ' · ✅ ' + t('bon') + ' ' + b.bookedAt + '</div></div>' +
-      '<div class="bact">' +
-        '<span class="bdg" style="background:#00B89422;color:#00B894">' + t('conf_lbl') + '</span>' +
-        '<span class="bdg" style="background:#f5f5f5;color:#666">' + ptx(b) + '</span>' +
-        '<button class="ccbtn" onclick="cancelBook(' + i + ')">' + t('bk_storno') + '</button>' +
-      '</div>' +
-    '</div>';
-  });
-  if (wlist.length > 0) {
-    h += '<h2 style="font-size:18px;font-weight:800;margin:18px 0 9px">⏳ ' + t('wl_lbl') + '</h2>';
-    wlist.forEach(function(b, i) {
-      h += '<div class="bcard wlc">' +
-        '<div style="font-size:22px;flex-shrink:0">' + b.em + '</div>' +
-        '<div class="binfo"><div class="bt">' + gt(b) + '</div><div class="bs">📅 ' + b.week + ' · ' + t('ron') + ' ' + b.addedAt + '</div></div>' +
-        '<div class="bact">' +
-          '<span class="bdg" style="background:#FDCB6E22;color:#FDCB6E">' + t('wl_lbl') + '</span>' +
-          '<button class="ccbtn" onclick="rmWL(' + i + ')">' + t('bk_rm') + '</button>' +
-        '</div>' +
-      '</div>';
-    });
-  }
-  lst.innerHTML = h;
-}
-
-// ============================================================
-// PROFILE
-// ============================================================
-function addKid() {
-  var name = prompt(t('kid_pr'));
-  if (name && name.trim()) {
-    kids.push(name.trim()); sav();
-    var row = document.getElementById('krow');
-    var abtn = row.querySelector('.akbtn');
-    var tag = document.createElement('div');
-    tag.className = 'ktag';
-    tag.textContent = '🧒 ' + name.trim();
-    row.insertBefore(tag, abtn);
-    toast(name.trim() + ' ✓');
-  }
-}
-
-function rProfile() {
-  var ab = document.querySelector('[data-k="add_k"]');
-  if (ab) ab.textContent = t('add_k');
-  var favCourses = courses.filter(function(c){ return favs.indexOf(c.id) >= 0; });
-  var fl = document.getElementById('favlist'); if (!fl) return;
-  if (favCourses.length === 0) {
-    fl.innerHTML = '<p style="color:#888">' + t('no_fav') + '</p>';
-    return;
-  }
-  fl.innerHTML = favCourses.map(function(c) {
-    return '<div class="frow">' +
-      '<span style="font-size:20px">' + c.em + '</span>' +
-      '<div class="fi"><div class="ft">' + gt(c) + '</div><div class="fs">📅 ' + c.week + ' · ' + ptx(c) + '</div></div>' +
-      '<button class="bsm" onclick="openBook(' + c.id + ')">' + t('bk_btn') + '</button>' +
-    '</div>';
-  }).join('');
-}
-
-// ============================================================
-// ADMIN
-// ============================================================
-function aLogin() {
-  if (document.getElementById('apw').value === 'admin123') {
-    adminOK = true;
-    document.getElementById('alock').style.display = 'none';
-    document.getElementById('adash').style.display = 'block';
-    rAdmin();
-  } else {
-    toast(t('tpw'), 'i');
-  }
-}
-
-function aLogout() {
-  adminOK = false;
-  document.getElementById('alock').style.display = 'block';
-  document.getElementById('adash').style.display = 'none';
-  document.getElementById('apw').value = '';
-}
-
-function rAdmin() {
-  if (!adminOK) return;
-  var tot = courses.reduce(function(s,c){ return s + c.booked; }, 0);
-  document.getElementById('astats').innerHTML = [
-    {l:t('sta_c'), v:courses.length, i:'📚', c:'#A29BFE'},
-    {l:t('sta_b'), v:books.length,   i:'✅', c:'#00B894'},
-    {l:t('sta_w'), v:wlist.length,   i:'⏳', c:'#FDCB6E'},
-    {l:t('sta_s'), v:tot,            i:'👥', c:'#FF6B6B'}
-  ].map(function(s) {
-    return '<div class="stc" style="border-left:4px solid ' + s.c + '">' +
-      '<div class="sti">' + s.i + '</div>' +
-      '<div class="stv" style="color:' + s.c + '">' + s.v + '</div>' +
-      '<div class="stl">' + s.l + '</div>' +
-    '</div>';
-  }).join('');
-
-  var th = document.getElementById('athead');
-  if (th) th.innerHTML = [t('th_c'),t('th_pr'),t('th_ca'),t('th_w'),t('th_p'),t('th_l'),t('th_st'),t('th_a')]
-    .map(function(h){ return '<th>' + h + '</th>'; }).join('');
-
-  document.getElementById('atbody').innerHTML = courses.map(function(c, i) {
-    var p = Math.min(c.booked / c.spots * 100, 100);
-    var f = full(c);
-    return '<tr>' +
-      '<td><span style="margin-right:4px">' + c.em + '</span><strong>' + gt(c) + '</strong></td>' +
-      '<td style="color:#666">' + c.prov + '</td>' +
-      '<td><span class="bdg" style="background:' + ha(c.col,.13) + ';color:' + c.col + '">' + gcl(c.cat) + '</span></td>' +
-      '<td style="color:#666">' + c.week + '</td>' +
-      '<td style="font-weight:700">' + ptx(c) + '</td>' +
-      '<td>' +
-        '<div style="font-size:10.5px;color:#888;margin-bottom:2px">' + c.booked + '/' + c.spots + '</div>' +
-        '<div style="background:#eee;border-radius:7px;height:5px;width:64px">' +
-          '<div style="width:' + p + '%;background:' + (f ? '#FF6B6B' : '#00B894') + ';height:100%;border-radius:7px"></div>' +
-        '</div>' +
-      '</td>' +
-      '<td><span class="bdg" style="background:' + (f ? '#FF6B6B22' : '#00B89422') + ';color:' + (f ? '#FF6B6B' : '#00B894') + '">' + (f ? t('full').replace('⚡ ','') : t('conf_lbl')) + '</span></td>' +
-      '<td><button class="ebtn" onclick="editSpots(' + i + ')">' + t('ed_btn') + '</button></td>' +
-    '</tr>';
-  }).join('');
-
-  // retranslate static admin labels
-  ['adm_dash','adm_out','adm_ov','adm_add','adm_abtn'].forEach(function(k){
-    var el = document.querySelector('[data-k="'+k+'"]'); if(el) el.textContent = t(k);
-  });
-  ['nt_ph','np_ph','nc_ph','npr_ph','pw_ph'].forEach(function(k){
-    var el = document.querySelector('[data-ph="'+k+'"]'); if(el) el.placeholder = t(k);
+  document.documentElement.lang=lang;
+  // Update nav buttons directly (they have data-i18n but also get called separately)
+  const ta=document.getElementById('tnb-arg');
+  const tp=document.getElementById('tnb-prop');
+  if(ta&&L.nav_arg) ta.textContent=L.nav_arg;
+  if(tp&&L.nav_prop) tp.textContent=L.nav_prop;
+  // Pill highlight
+  document.querySelectorAll('.lp').forEach(b=>{
+    b.classList.toggle('active',b.textContent===lang.toUpperCase());
   });
 }
 
-function editSpots(i) {
-  var c = courses[i];
-  var nv = prompt(t('spts_pr') + ' ' + c.spots + '):', c.spots);
-  if (nv && !isNaN(nv) && parseInt(nv) > 0) {
-    courses[i].spots = parseInt(nv);
-    rAdmin(); rHome();
-    toast(t('tsp'));
-  }
-}
-
-function addCourse() {
-  var title = (document.getElementById('nt') || {value:''}).value.trim();
-  if (!title) { toast(t('ttl'), 'i'); return; }
-  var prov  = (document.getElementById('np')  || {value:'?'}).value || '?';
-  var cat   = (document.getElementById('nc')  || {value:'Diverses'}).value || 'Diverses';
-  var price = parseInt((document.getElementById('npr') || {value:'0'}).value) || 0;
-  var cols  = ['#FF6B6B','#4ECDC4','#A29BFE','#00B894','#FD79A8','#FDCB6E'];
-  var ems   = ['⭐','🎯','🌟','💡','🔥','✨'];
-  var nc = {
-    id: Date.now(), prov: prov, cat: cat, price: price,
-    pb: price===0?'low':price<=50?'mid':'market',
-    age:'8-14', spots:15, booked:0, week:'1. Sept',
-    em:  ems[Math.floor(Math.random() * ems.length)],
-    col: cols[Math.floor(Math.random() * cols.length)],
-    rat:0, rev:0, days:3, time:'09:00–17:00',
-    title:{de:title,fr:title,en:title},
-    desc:{de:'Neuer Kurs',fr:'Nouveau cours',en:'New course'},
-    loc:{de:'Basel',fr:'Bâle',en:'Basel'}
-  };
-  courses.push(nc);
-  ['nt','np','nc','npr'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
-  rAdmin(); rHome();
-  toast('"' + title + '" ' + t('tad'));
-}
-
-// ============================================================
-// INIT
-// ============================================================
-(function init() {
-  document.querySelectorAll('.lb').forEach(function(b){
-    b.classList.toggle('on', b.textContent.trim() === L.toUpperCase());
-  });
-  buildSelects();
-  applyTX();
-  rHome();
-  updNav();
-})();
+setLang('de');
 </script>
-
 </body>
 </html>
